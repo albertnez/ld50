@@ -1,4 +1,5 @@
 extends Sprite
+class_name Trolley
 
 export (float, 10, 100, 5) var SPEED = 32
 export (float, 0.5, 5.0, 0.5) var SECONDS_PER_CELL = 1.0
@@ -15,7 +16,8 @@ var _is_crashed
 
 func reset(tilemap: MyTileMap) -> void:
 	_tilemap = tilemap
-	var initial_positions = tilemap.get_tile_world_endpoints(position)
+	position = _tilemap.get_trolley_starting_world_position()
+	var initial_positions = _tilemap.get_tile_world_endpoints(position)
 	_from_position = initial_positions[0]
 	_to_position = initial_positions[1]
 	position = _from_position

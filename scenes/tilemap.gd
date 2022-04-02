@@ -1,10 +1,15 @@
 extends TileMap
 class_name MyTileMap
 
-var _trolley_map_position := Vector2.ZERO
+var _trolley_world_position := Vector2.INF
+var _player_starting_world_pos := Vector2.INF
 
 const CELL_SIZE = 32
 const HALF_CELL = CELL_SIZE * 0.5
+
+const PLAYER_START_COORD = Vector2(0, 2)
+const TROLLEY_START_COORD = Vector2(0, 3)
+const MAIN_TILEMAP_ID = 0
 
 const TILEMAP_ENDPOINTS = {
 	Vector2(0, 0):  # Straight horizontal
@@ -23,6 +28,16 @@ const TILEMAP_FLIP_COORD = {
 	Vector2(1, 0): Vector2(2, 0),
 	Vector2(2, 0): Vector2(1, 0),
 }
+
+
+func get_trolley_starting_world_position() -> Vector2:
+	assert(_trolley_world_position != Vector2.INF)
+	return _trolley_world_position
+
+
+func get_player_starting_world_position() -> Vector2:
+	assert(_player_starting_world_pos != Vector2.INF)
+	return _player_starting_world_pos
 
 
 func toggle_world_pos_cell(world_pos: Vector2) -> void:
@@ -61,10 +76,6 @@ func is_autotile_coord_toggable(ind: Vector2) -> bool:
 	return ind in [Vector2(1, 0), Vector2(2, 0)]
 
 
-func set_trolley_position(map_pos: Vector2) -> void:
-	_trolley_map_position = map_pos
-
-
 func is_world_pos_a_toggable_tile(world_pos: Vector2) -> bool:
 	var pos := world_to_map(world_pos)
 	var coord := get_cell_autotile_coord(pos.x, pos.y)
@@ -72,4 +83,15 @@ func is_world_pos_a_toggable_tile(world_pos: Vector2) -> bool:
 
 
 func _ready() -> void:
+	for pos in get_used_cells_by_id(MAIN_TILEMAP_ID):
+		var coord := get_cell_autotile_coord(pos.x, pos.y)
+		if coord == PLAYER_START_COORD:
+			assert(_player_starting_world_pos == Vector2.INF)
+			_player_starting_world_pos = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
+			set_cell(pos.x, pos.y, -1)
+		elif coord == TROLLEY_START_COORD:
+			assert(_trolley_world_position == Vector2.INF)
+			_trolley_world_position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
+			set_cell(pos.x, pos.y, MAIN_TILEMAP_ID)
+	print("done ready")
 	pass

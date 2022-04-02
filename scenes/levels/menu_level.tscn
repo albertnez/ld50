@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/tilemap.tscn" type="PackedScene" id=1]
+
+[node name="TileMap" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( 9, 536870912, 131072, 65546, 2, 0, 327689, 536870912, 3, 327690, 536870912, 0, 327691, 536870912, 0, 327692, 536870912, 0, 327693, 536870912, 0, 327694, 536870912, 65536, 393216, 536870912, 0, 393217, 536870912, 0, 393218, 536870912, 0, 393219, 536870912, 0, 393220, 536870912, 0, 393221, 536870912, 0, 393222, 536870912, 0, 393223, 536870912, 0, 393224, 536870912, 0, 393225, 1073741824, 2, 393226, 536870912, 0, 393227, 536870912, 0, 393228, 536870912, 0, 393229, 536870912, 0, 393230, 536870912, 0, 393231, 536870912, 0, 393232, 536870912, 0, 393233, 536870912, 0, 393234, 536870912, 0, 393235, 536870912, 0 )
+
+[node name="UI" type="Control" parent="." index="0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 640.0
+margin_bottom = 480.0
+
+[node name="Label" type="Label" parent="UI" index="0"]
+margin_left = 240.0
+margin_top = 236.0
+margin_right = 366.0
+margin_bottom = 250.0
+text = "Toggle track to start"
