@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/player.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/player.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/toggle_indicator.png" type="Texture" id=3]
+
+[node name="Player" type="Sprite"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+script = ExtResource( 1 )
+SPEED = 85.176
+
+[node name="CanToggle" type="Sprite" parent="."]
+position = Vector2( 16.5, -13 )
+texture = ExtResource( 3 )
