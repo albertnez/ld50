@@ -7,21 +7,24 @@ enum GameState {
 	GAME_OVER,
 }
 
-var _current_level := 1
+var _current_level := 0
 var _game_state: int
 onready var _player := $ScaledView/Player
 onready var _tilemap := $ScaledView/TileMap
 onready var _trolley := $ScaledView/Trolley
 
 func _ready() -> void:
-	
+	_game_state = GameState.MENU
 	_start_level()
 	pass
 
 
 func _start_level() -> void:
 	var level = str(_current_level).pad_zeros(2)
-	var tilemap_scene := load(str("res://scenes/levels/level", level, ".tscn"))
+	var path = str("res://scenes/levels/level", level, ".tscn")
+	if _game_state == GameState.MENU:
+		path = "res://scenes/levels/menu_level.tscn"
+	var tilemap_scene := load(path)
 	var new_tilemap = tilemap_scene.instance()
 	_tilemap.replace_by(new_tilemap)
 	_tilemap.queue_free()
@@ -34,6 +37,8 @@ func _start_level() -> void:
 func _process(delta: float) -> void:
 	
 	match _game_state:
+		GameState.MENU:
+			continue
 		GameState.PLAYING:
 			var player_can_toggle = _tilemap.is_world_pos_a_toggable_tile(_player.position)
 			_player.set_toggle_is_visible(player_can_toggle)
@@ -42,6 +47,5 @@ func _process(delta: float) -> void:
 		GameState.GAME_OVER:
 			if Input.is_action_just_pressed("ui_accept"):
 				EventBus.emit_signal("level_restart")
-		GameState.MENU:
 			return
 	
