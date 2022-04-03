@@ -69,7 +69,6 @@ func _process(delta: float) -> void:
 			EventBus.emit_signal("level_restart")
 
 
-
 func _on_LevelStartTrolleyTimer_timeout() -> void:
 	EventBus.emit_signal("trolley_created")
 
