@@ -48,9 +48,6 @@ func _process(delta: float) -> void:
 	var player_toggled = false
 	
 	var player_can_toggle = _tilemap.is_world_pos_a_toggable_tile(_player.position) and not _player.is_dead()
-	
-#	if _game_state == GameState.MENU and _toggle_in_menu_used:
-#		player_can_toggle = false
 
 	_player.set_toggle_is_visible(player_can_toggle)
 	if Input.is_action_just_pressed("ui_accept") and player_can_toggle:
