@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/world.gd" type="Script" id=1]
 [ext_resource path="res://scenes/tilemap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/trolley.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/ui/game_ui.tscn" type="PackedScene" id=5]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -21,5 +22,9 @@ SECONDS_PER_CELL = 0.6
 
 [node name="LevelStartTrolleyTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="GameUI" parent="." instance=ExtResource( 5 )]
+margin_right = 1024.0
+margin_bottom = 600.0
 
 [connection signal="timeout" from="LevelStartTrolleyTimer" to="." method="_on_LevelStartTrolleyTimer_timeout"]
