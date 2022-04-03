@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ui/game_ui.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/font_splash.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/ui/font_small.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scenes/ui/font_med.tres" type="DynamicFont" id=4]
 
 [node name="GameUI" type="Control"]
 anchor_right = 1.0
@@ -24,6 +25,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "Level: 0"
 
 [node name="TimeUntilTrolley" type="VBoxContainer" parent="PlayingUI"]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -60.0
@@ -43,7 +45,6 @@ value = 100.0
 percent_visible = false
 
 [node name="GameOver" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -62,21 +63,22 @@ valign = 1
 [node name="FirstTimeGameOver" type="Label" parent="GameOver/VBoxContainer"]
 margin_top = 52.0
 margin_right = 1024.0
-margin_bottom = 103.0
-custom_fonts/font = ExtResource( 3 )
-text = "But there was no way to solve the trolley dilemma,
-you can only delay the inevitable..."
+margin_bottom = 115.0
+custom_fonts/font = ExtResource( 4 )
+text = "But there was no way to solve the TROLLEY DILEMMA,
+you can only DELAY THE INEVITABLE..."
 align = 1
 
 [node name="RestartLabel" type="Label" parent="GameOver/VBoxContainer"]
-margin_top = 107.0
+margin_top = 119.0
 margin_right = 1024.0
-margin_bottom = 131.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 149.0
+custom_fonts/font = ExtResource( 4 )
 text = "Press ENTER/START to restart"
 align = 1
 
 [node name="LevelCompleted" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LevelCompleted"]
@@ -96,7 +98,7 @@ align = 1
 [node name="RestartLabel2" type="Label" parent="LevelCompleted/VBoxContainer"]
 margin_top = 52.0
 margin_right = 1024.0
-margin_bottom = 76.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 82.0
+custom_fonts/font = ExtResource( 4 )
 text = "Press ENTER/START to go to the next level"
 align = 1

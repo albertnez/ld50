@@ -1,7 +1,7 @@
 extends TileMap
 class_name MyTileMap
 
-export (float, 1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 1.0
+export (float, 1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 2.0
 
 onready var _indicator_tilemap := $IndicatorTilemap
 onready var _tile_wobbler_timer := $TileWobblerTimer

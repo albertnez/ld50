@@ -20,7 +20,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 13, 8.5 )
+extents = Vector2( 10.5, 6.5 )
 
 [node name="Trolley" type="Area2D"]
 script = ExtResource( 2 )
@@ -31,7 +31,7 @@ frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 2.5 )
+position = Vector2( -0.5, 0.5 )
 shape = SubResource( 1 )
 
 [node name="SlowDownTimer" type="Timer" parent="."]

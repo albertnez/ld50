@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/tilemap.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/tilemap_indicators2.png" type="Texture" id=3]
 [ext_resource path="res://assets/images/tilemap_indicators1.png" type="Texture" id=4]
-[ext_resource path="res://scenes/ui/font_small.tres" type="DynamicFont" id=5]
+[ext_resource path="res://scenes/ui/font_tilemap.tres" type="DynamicFont" id=5]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap_indicators1.png 0"
@@ -64,7 +64,7 @@ cell_size = Vector2( 32, 32 )
 format = 1
 
 [node name="TileWobblerTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.35
 autostart = true
 
 [node name="Control" type="Control" parent="."]
@@ -76,6 +76,7 @@ margin_bottom = 600.0
 [node name="DefaultLabel" type="Label" parent="Control"]
 margin_right = 40.0
 margin_bottom = 14.0
+custom_constants/line_spacing = -4
 custom_fonts/font = ExtResource( 5 )
 
 [connection signal="timeout" from="TileWobblerTimer" to="." method="_on_TileWobblerTimer_timeout"]

@@ -2,7 +2,7 @@ extends Node2D
 
 export (int, 0, 10) var _current_level := 0
 
-var _toggle_in_menu_used := false
+var _toggle_triggered_trolley_already := false
 onready var _player := $ScaledView/Player
 onready var _tilemap := $ScaledView/TileMap
 onready var _trolley := $ScaledView/Trolley
@@ -20,11 +20,15 @@ func _ready() -> void:
 	pass
 
 
+func _trolley_waits_for_player() -> bool:
+	return GlobalState.level < 3
+
+
 func _start_level() -> void:
 	GlobalState.level = _current_level
 	GlobalState.level_completed = false
 	GlobalState.level_lost = false
-	_toggle_in_menu_used = false
+	_toggle_triggered_trolley_already = false
 
 	var level = str(_current_level).pad_zeros(2)
 	var path = str("res://scenes/levels/level", level, ".tscn")
@@ -38,7 +42,7 @@ func _start_level() -> void:
 	_player.position = _tilemap.get_player_starting_world_position()
 	_trolley.set_process(false)
 	_trolley.position = Vector2.INF
-	if not GlobalState.in_menu:
+	if not _trolley_waits_for_player():
 		# On Menu, trolley starts upon player action
 		_trolley_timer.start(_tilemap.TROLLEY_WAIT_TIME)
 
@@ -58,10 +62,10 @@ func _process(delta: float) -> void:
 		_tilemap.toggle_world_pos_cell(_player.position)
 		player_toggled = true
 
-	if GlobalState.in_menu:
-		if player_toggled and not _toggle_in_menu_used:
+	if _trolley_waits_for_player():
+		if player_toggled and not _toggle_triggered_trolley_already:
 			EventBus.emit_signal("trolley_created")
-			_toggle_in_menu_used = true
+			_toggle_triggered_trolley_already = true
 	
 	if GlobalState.level_completed and Input.is_action_just_pressed("restart"):
 		_next_level()
