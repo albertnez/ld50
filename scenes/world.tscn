@@ -19,3 +19,8 @@ scale = Vector2( 1, 1 )
 [node name="Trolley" parent="ScaledView" instance=ExtResource( 4 )]
 position = Vector2( 12.5, 9.5 )
 scale = Vector2( 1, 1 )
+
+[node name="LevelStartTrolleyTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="LevelStartTrolleyTimer" to="." method="_on_LevelStartTrolleyTimer_timeout"]

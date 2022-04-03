@@ -23,6 +23,7 @@ func reset(tilemap: MyTileMap) -> void:
 	position = _from_position
 	_is_resetted = true
 	_is_crashed = false
+	set_process(true)
 
 
 func _ready() -> void:

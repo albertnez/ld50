@@ -1,6 +1,8 @@
 extends TileMap
 class_name MyTileMap
 
+export (float, 1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 1.0
+
 var _trolley_world_position := Vector2.INF
 var _player_starting_world_pos := Vector2.INF
 
@@ -22,6 +24,8 @@ const TILEMAP_ENDPOINTS = {
 		[Vector2(0, HALF_CELL), Vector2(HALF_CELL, CELL_SIZE)],
 	Vector2(0, 1):  # Victim
 		[Vector2(0, HALF_CELL), Vector2(CELL_SIZE, HALF_CELL)],	
+	Vector2(1, 1):  # Left-Right,Left-Down
+		[]
 }
 
 const TILEMAP_FLIP_COORD = {
@@ -56,8 +60,8 @@ func is_out_of_bounds(world_pos: Vector2) -> bool:
 	return get_cell(pos.x, pos.y) == -1
 
 
-func get_tile_world_endpoints(world_pos: Vector2) -> Array:
-	var pos := world_to_map(world_pos)
+func get_tile_world_endpoints(tile_world_pos: Vector2, coming_from_world_pos: Vector2 = Vector2.INF) -> Array:
+	var pos := world_to_map(tile_world_pos)
 	var tileset_ind = get_cell(pos.x, pos.y)
 	var ind := get_cell_autotile_coord(pos.x, pos.y)
 	var points = TILEMAP_ENDPOINTS[ind].duplicate()
