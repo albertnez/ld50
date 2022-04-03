@@ -39,9 +39,10 @@ func _start_level() -> void:
 		path = "res://scenes/levels/menu_level.tscn"
 	var tilemap_scene := load(path)
 	var new_tilemap = tilemap_scene.instance()
-	_tilemap.replace_by(new_tilemap)
+	_tilemap.get_parent().add_child_below_node(_tilemap, new_tilemap)
 	_tilemap.queue_free()
 	_tilemap = new_tilemap
+	
 	
 	_player.position = _tilemap.get_player_starting_world_position()
 	_trolley.set_process(false)
