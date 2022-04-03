@@ -15,12 +15,18 @@ _global_script_classes=[ {
 "path": "res://scenes/tilemap.gd"
 }, {
 "base": "Area2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scenes/player.gd"
+}, {
+"base": "Area2D",
 "class": "Trolley",
 "language": "GDScript",
 "path": "res://scenes/trolley.gd"
 } ]
 _global_script_class_icons={
 "MyTileMap": "",
+"Player": "",
 "Trolley": ""
 }
 

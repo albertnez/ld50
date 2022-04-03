@@ -21,6 +21,8 @@ func update_trolley_speed(new_seconds_per_cell: float) -> void:
 	var ratio = new_seconds_per_cell / SECONDS_PER_CELL	
 	_time_in_cell *= ratio
 	SECONDS_PER_CELL = new_seconds_per_cell
+	if SECONDS_PER_CELL > 1000:
+		_slowdown_timer.stop()
 
 
 func reset(tilemap: MyTileMap) -> void:
@@ -46,8 +48,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	assert(_is_resetted)
-	_time_in_cell += delta
+	if SECONDS_PER_CELL < 1000:
+		_time_in_cell += delta
 	if not _is_crashed and _time_in_cell > SECONDS_PER_CELL:
+		var old_time_in_cell = _time_in_cell
 		_time_in_cell -= SECONDS_PER_CELL
 		# OK for curves to consider them as diagonals
 		var direction = _to_position - _from_position
@@ -55,13 +59,18 @@ func _process(delta: float) -> void:
 		var pos_in_old_tile = _to_position - direction*0.1
 		var from_pos_in_old_tile = _from_position - direction*0.1
 		if _tilemap.is_out_of_bounds(pos_in_new_tile):
+			# Went out in the emptyness
 			EventBus.emit_signal("trolley_crashed")
-			GlobalState.level_lost = true
-			_is_crashed = true
 			return
 		_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile)
+		var next_tile_positions = _tilemap.get_tile_world_endpoints(pos_in_new_tile, _to_position)
+		if not _to_position in next_tile_positions:
+			# Took rail the wrong way
+			# Undo the time subtraction from earlier:
+			_time_in_cell = old_time_in_cell
+			EventBus.emit_signal("trolley_crashed")
+			return
 		_from_position = _to_position
-		var next_tile_positions = _tilemap.get_tile_world_endpoints(pos_in_new_tile, _from_position)
 		_to_position = next_tile_positions[0]
 		if _to_position == _from_position:
 			_to_position = next_tile_positions[1]
@@ -83,8 +92,8 @@ func _handle_trolley_crash() -> void:
 	GlobalState.level_lost = true
 	_is_crashed = true
 	_slowdown_timer.start()
+	_on_SlowDownTimer_timeout()
 
-	
 
 
 func _on_SlowDownTimer_timeout() -> void:

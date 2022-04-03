@@ -1,9 +1,15 @@
 extends Area2D
+class_name Player
 
 export (float, 10, 3000, 10.0) var SPEED = 140.0
 onready var _can_toggle := $CanToggle
 onready var _animation := $Animation
 var _dead := false
+
+
+func is_dead() -> bool:
+	return _dead
+
 
 func _ready() -> void:
 	EventBus.connect("level_restart", self, "_on_Eventbus_level_restart")

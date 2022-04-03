@@ -1,7 +1,7 @@
 extends Node2D
 
+export (int, 0, 10) var _current_level := 0
 
-var _current_level := 0
 var _toggle_in_menu_used := false
 onready var _player := $ScaledView/Player
 onready var _tilemap := $ScaledView/TileMap
@@ -10,6 +10,7 @@ onready var _trolley_timer := $LevelStartTrolleyTimer
 onready var _level_completed_timer := $LevelCompletedTimer
 
 func _ready() -> void:
+	GlobalState.in_menu = _current_level == 0
 	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
 	EventBus.connect("person_crashed", self, "_on_EventBus_person_crashed")
 	EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
@@ -48,9 +49,11 @@ func _process(delta: float) -> void:
 	
 	var player_toggled = false
 	
-	var player_can_toggle = _tilemap.is_world_pos_a_toggable_tile(_player.position)
-#			if _game_state == GameState.MENU and _toggle_in_menu_used:
-#				player_can_toggle = false
+	var player_can_toggle = _tilemap.is_world_pos_a_toggable_tile(_player.position) and not _player.is_dead()
+	
+#	if _game_state == GameState.MENU and _toggle_in_menu_used:
+#		player_can_toggle = false
+
 	_player.set_toggle_is_visible(player_can_toggle)
 	if Input.is_action_just_pressed("ui_accept") and player_can_toggle:
 		_tilemap.toggle_world_pos_cell(_player.position)
