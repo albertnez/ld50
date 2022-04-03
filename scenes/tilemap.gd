@@ -4,6 +4,8 @@ class_name MyTileMap
 export (float, 1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 1.0
 
 onready var _indicator_tilemap := $IndicatorTilemap
+onready var _tile_wobbler_timer := $TileWobblerTimer
+onready var _current_main_tileset_id := 1
 
 var _trolley_world_position := Vector2.INF
 var _player_starting_world_pos := Vector2.INF
@@ -32,7 +34,6 @@ const HALF_CELL = CELL_SIZE * 0.5
 
 const PLAYER_START_COORD = Vector2(0, 2)
 const TROLLEY_START_COORD = Vector2(0, 3)
-const MAIN_TILEMAP_ID = 0
 const MAIN_INDICATOR_TILEMAP_ID = 0
 const INDICATOR_TILEMAP_GREEN_COORD = Vector2(0, 0)
 
@@ -250,7 +251,7 @@ func is_world_pos_a_toggable_tile(world_pos: Vector2) -> bool:
 
 
 func _ready() -> void:
-	for pos in get_used_cells_by_id(MAIN_TILEMAP_ID):
+	for pos in get_used_cells_by_id(_current_main_tileset_id):
 		var coord := get_cell_autotile_coord(pos.x, pos.y)
 		if coord == PLAYER_START_COORD:
 			assert(_player_starting_world_pos == Vector2.INF)
@@ -259,6 +260,22 @@ func _ready() -> void:
 		elif coord == TROLLEY_START_COORD:
 			assert(_trolley_world_position == Vector2.INF)
 			_trolley_world_position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
-			set_cell(pos.x, pos.y, MAIN_TILEMAP_ID)
+			set_cell(pos.x, pos.y, _current_main_tileset_id)
 	print("done ready")
 	pass
+
+
+func _on_TileWobblerTimer_timeout() -> void:
+	var new_id = [null, 2, 1][_current_main_tileset_id]
+	for pos in get_used_cells_by_id(_current_main_tileset_id):
+		set_cell(
+			pos.x,
+			pos.y,
+			new_id,
+			is_cell_x_flipped(pos.x, pos.y),
+			is_cell_y_flipped(pos.x, pos.y),
+			is_cell_transposed(pos.x, pos.y),
+			get_cell_autotile_coord(pos.x, pos.y) 
+		)
+	_current_main_tileset_id = new_id
+	pass # Replace with function body.
