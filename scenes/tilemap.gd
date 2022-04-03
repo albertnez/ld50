@@ -264,7 +264,7 @@ func _ready() -> void:
 			assert(_trolley_world_position == Vector2.INF)
 			_trolley_world_position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
 			set_cell(pos.x, pos.y, _current_main_tileset_id)
-	print("done ready")
+
 	pass
 
 
