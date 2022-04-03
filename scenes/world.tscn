@@ -1,14 +1,20 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/world.gd" type="Script" id=1]
 [ext_resource path="res://scenes/tilemap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/trolley.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/ui/game_ui.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/audio/walk.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/audio/level_up.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/select.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/audio/trolley_crash.wav" type="AudioStream" id=9]
+[ext_resource path="res://scenes/audio_controller.gd" type="Script" id=10]
+[ext_resource path="res://assets/audio/click.wav" type="AudioStream" id=11]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
-_current_level = 10
+_current_level = 8
 
 [node name="ScaledView" type="Node2D" parent="."]
 scale = Vector2( 2, 2 )
@@ -31,5 +37,23 @@ margin_bottom = 600.0
 [node name="LevelCompletedTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="AudioController" type="Node2D" parent="."]
+script = ExtResource( 10 )
+
+[node name="WalkPlayer" type="AudioStreamPlayer" parent="AudioController"]
+stream = ExtResource( 6 )
+
+[node name="LevelUpPlayer" type="AudioStreamPlayer" parent="AudioController"]
+stream = ExtResource( 7 )
+
+[node name="TogglePlayer" type="AudioStreamPlayer" parent="AudioController"]
+stream = ExtResource( 8 )
+
+[node name="CrashPlayer" type="AudioStreamPlayer" parent="AudioController"]
+stream = ExtResource( 9 )
+
+[node name="ClickPlayer" type="AudioStreamPlayer" parent="AudioController"]
+stream = ExtResource( 11 )
 
 [connection signal="timeout" from="LevelStartTrolleyTimer" to="." method="_on_LevelStartTrolleyTimer_timeout"]

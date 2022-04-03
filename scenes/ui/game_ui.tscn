@@ -66,17 +66,19 @@ valign = 1
 visible = false
 margin_top = 52.0
 margin_right = 1024.0
-margin_bottom = 115.0
+margin_bottom = 181.0
 custom_fonts/font = ExtResource( 4 )
 text = "But there was no way to solve the TROLLEY DILEMMA,
-you can only DELAY THE INEVITABLE..."
+you can only DELAY THE INEVITABLE...
+
+Press ENTER/START to go to the NEXT LEVEL"
 align = 1
 
 [node name="LastTimeGameOver" type="Label" parent="GameOver/VBoxContainer"]
 visible = false
-margin_top = 52.0
+margin_top = 185.0
 margin_right = 1024.0
-margin_bottom = 253.0
+margin_bottom = 386.0
 custom_fonts/font = ExtResource( 2 )
 text = "
 
@@ -87,9 +89,10 @@ align = 1
 [node name="RestartLabel" type="Label" parent="GameOver/VBoxContainer"]
 margin_top = 52.0
 margin_right = 1024.0
-margin_bottom = 82.0
+margin_bottom = 115.0
 custom_fonts/font = ExtResource( 4 )
-text = "Press ENTER/START to restart"
+text = "
+Press ENTER/START to RESTART"
 align = 1
 
 [node name="LevelCompleted" type="Control" parent="."]
@@ -113,7 +116,8 @@ align = 1
 [node name="RestartLabel2" type="Label" parent="LevelCompleted/VBoxContainer"]
 margin_top = 52.0
 margin_right = 1024.0
-margin_bottom = 82.0
+margin_bottom = 115.0
 custom_fonts/font = ExtResource( 4 )
-text = "Press ENTER/START to go to the next level"
+text = "
+Press ENTER/START to go to the NEXT LEVEL"
 align = 1

@@ -60,6 +60,8 @@ const TILEMAP_ENDPOINT_DIRS = {
 			[Vector2.LEFT, Vector2.DOWN],
 		]
 }
+# Here be dragons: In an ideal situation, this would be cleaned up.
+# In a Ludum Dare, I'd rather continue with the tech debt and see where we go.
 const TILEMAP_ENDPOINTS = {
 	Vector2(0, 0):  # Straight horizontal
 		[Vector2(0, HALF_CELL), Vector2(CELL_SIZE, HALF_CELL)],
@@ -187,6 +189,7 @@ func get_tile_next_pos(pos: Vector2, from_dir: Vector2) -> Vector2:
 	var valid_options = []
 	for option_pair in options:
 		# transform each of the vector
+		# TODO: Dedup with the functions below for transforming points
 		for i in option_pair.size():
 			if is_cell_transposed(pos.x, pos.y):
 				option_pair[i] = Vector2(option_pair[i].y, option_pair[i].x)

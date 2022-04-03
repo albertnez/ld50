@@ -26,6 +26,7 @@ func _ready() -> void:
 func _on_game_over(msg: String, killed_someone: bool) -> void:
 	_game_over_reason_label.text = str("Game Over: ", msg)
 	_first_time_gameover.visible = killed_someone and GlobalState.level == 0
+	_restart_label.visible = not (killed_someone and GlobalState.level == 0)
 	if GlobalState.in_true_end:
 		_game_over_reason_label.text = "Game Over: the end"
 		_restart_label.hide()

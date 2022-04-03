@@ -60,6 +60,7 @@ func _process(delta: float) -> void:
 	_player.set_toggle_is_visible(player_can_toggle)
 	if Input.is_action_just_pressed("ui_accept") and player_can_toggle:
 		_tilemap.toggle_world_pos_cell(_player.position)
+		EventBus.emit_signal("toggle")
 		player_toggled = true
 
 	if _trolley_waits_for_player():

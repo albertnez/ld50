@@ -87,5 +87,6 @@ shape = SubResource( 1 )
 [node name="CanToggle" type="AnimatedSprite" parent="."]
 position = Vector2( 21, -24 )
 frames = SubResource( 13 )
+playing = true
 
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
