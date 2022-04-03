@@ -51,7 +51,7 @@ func _process(delta: float) -> void:
 	assert(_is_resetted)
 	if SECONDS_PER_CELL < 1000:
 		_time_in_cell += delta
-	if not _is_crashed and _time_in_cell > SECONDS_PER_CELL:
+	if not GlobalState.level_lost and _time_in_cell > SECONDS_PER_CELL:
 		var old_time_in_cell = _time_in_cell
 		_time_in_cell -= SECONDS_PER_CELL
 		# OK for curves to consider them as diagonals
@@ -84,7 +84,7 @@ func _process(delta: float) -> void:
 
 
 func _on_Trolley_body_entered(body: Node) -> void:
-	if body is TileMap:
+	if body is TileMap and not GlobalState.level_lost:
 		EventBus.emit_signal("trolley_killed_someone")
 	pass # Replace with function body.
 
