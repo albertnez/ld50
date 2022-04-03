@@ -50,7 +50,7 @@ text = "Time until Trolley"
 [node name="ProgressBar" type="ProgressBar" parent="PlayingUI/TimeUntilTrolley"]
 margin_top = 18.0
 margin_right = 120.0
-margin_bottom = 37.0
+margin_bottom = 20.0
 value = 100.0
 percent_visible = false
 
