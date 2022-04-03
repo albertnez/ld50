@@ -266,16 +266,24 @@ func _ready() -> void:
 
 
 func _on_TileWobblerTimer_timeout() -> void:
-	var new_id = [null, 2, 1][_current_main_tileset_id]
-	for pos in get_used_cells_by_id(_current_main_tileset_id):
-		set_cell(
-			pos.x,
-			pos.y,
-			new_id,
-			is_cell_x_flipped(pos.x, pos.y),
-			is_cell_y_flipped(pos.x, pos.y),
-			is_cell_transposed(pos.x, pos.y),
-			get_cell_autotile_coord(pos.x, pos.y) 
-		)
-	_current_main_tileset_id = new_id
-	pass # Replace with function body.
+	var next_id = [null, 2, 1][_current_main_tileset_id]
+	for tm in [self, _indicator_tilemap]:
+		# Since ids are not easy to change, and the Main tileset has ids 1,2
+		# while the _indicator has 0,1.
+		var id = _current_main_tileset_id
+		var new_id = next_id
+		if tm == _indicator_tilemap:
+			id -= 1
+			new_id -= 1
+		for pos in tm.get_used_cells_by_id(id):
+			tm.set_cell(
+				pos.x,
+				pos.y,
+				new_id,
+				tm.is_cell_x_flipped(pos.x, pos.y),
+				tm.is_cell_y_flipped(pos.x, pos.y),
+				tm.is_cell_transposed(pos.x, pos.y),
+				tm.get_cell_autotile_coord(pos.x, pos.y))
+
+	_current_main_tileset_id = next_id
+

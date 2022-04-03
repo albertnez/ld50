@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/tilemap.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/ui/font_small.tres" type="DynamicFont" id=2]
 
 [node name="TileMap" instance=ExtResource( 1 )]
 tile_data = PoolIntArray( 9, 536870913, 131072, 327689, -1073741823, 3, 327690, 1, 0, 327691, 1, 0, 327692, 1, 0, 327693, 1, 0, 327694, 536870913, 65536, 393216, 536870913, 196608, 393217, 1, 0, 393218, 1, 0, 393219, 1, 0, 393220, 1, 0, 393221, 1, 0, 393222, 1, 0, 393223, 1, 0, 393224, 1073741825, 0, 393225, 1073741825, 2, 393226, 1, 0, 393227, 1, 0, 393228, 1, 0, 393229, 1, 0, 393230, 536870913, 65537, 393231, 1, 3, 458766, 1610612737, 3, 458767, -1610612735, 3 )
@@ -16,7 +17,8 @@ margin_left = 240.0
 margin_top = 236.0
 margin_right = 366.0
 margin_bottom = 250.0
+custom_fonts/font = ExtResource( 2 )
 text = "Toggle track to start"
 
 [node name="IndicatorTilemap" parent="." index="1"]
-tile_data = PoolIntArray( 393224, 0, 0, 393225, 0, 0 )
+tile_data = PoolIntArray( 393225, 0, 0 )

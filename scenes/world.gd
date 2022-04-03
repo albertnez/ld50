@@ -27,8 +27,6 @@ func _start_level() -> void:
 
 	var level = str(_current_level).pad_zeros(2)
 	var path = str("res://scenes/levels/level", level, ".tscn")
-	if GlobalState.in_menu:
-		path = "res://scenes/levels/menu_level.tscn"
 	var tilemap_scene := load(path)
 	var new_tilemap = tilemap_scene.instance()
 	_tilemap.get_parent().add_child_below_node(_tilemap, new_tilemap)

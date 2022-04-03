@@ -1,18 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap.gd" type="Script" id=2]
-[ext_resource path="res://assets/images/tilemap_indicators.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/tilemap_indicators2.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/tilemap_indicators1.png" type="Texture" id=4]
 
 [sub_resource type="TileSet" id=1]
-0/name = "TilemapIndicator"
-0/texture = ExtResource( 3 )
+0/name = "tilemap_indicators1.png 0"
+0/texture = ExtResource( 4 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 96, 32 )
-0/tile_mode = 1
-0/autotile/bitmask_mode = 0
-0/autotile/bitmask_flags = [  ]
+0/tile_mode = 2
 0/autotile/icon_coordinate = Vector2( 0, 0 )
 0/autotile/tile_size = Vector2( 32, 32 )
 0/autotile/spacing = 0
@@ -28,6 +27,27 @@
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
+1/name = "tilemap_indicators2.png 1"
+1/texture = ExtResource( 3 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 96, 32 )
+1/tile_mode = 2
+1/autotile/icon_coordinate = Vector2( 0, 0 )
+1/autotile/tile_size = Vector2( 32, 32 )
+1/autotile/spacing = 0
+1/autotile/occluder_map = [  ]
+1/autotile/navpoly_map = [  ]
+1/autotile/priority_map = [  ]
+1/autotile/z_index_map = [  ]
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
 
 [node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
@@ -45,5 +65,11 @@ format = 1
 [node name="TileWobblerTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1024.0
+margin_bottom = 600.0
 
 [connection signal="timeout" from="TileWobblerTimer" to="." method="_on_TileWobblerTimer_timeout"]

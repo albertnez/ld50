@@ -3,7 +3,6 @@ extends Control
 onready var _game_over_control = $GameOver
 onready var _game_over_reason_label = $GameOver/VBoxContainer/ReasonLabel
 onready var _person_crashed_label = $PlayingUI/LevelLabel/GameOver/PersonCrashedLabel
-onready var _menu_ui = $Menu
 onready var _playing_ui = $PlayingUI
 onready var _trolley_timer_container = $PlayingUI/TimeUntilTrolley
 onready var _trolley_timer_progress_bar = $PlayingUI/TimeUntilTrolley/ProgressBar
@@ -27,7 +26,6 @@ func _on_game_over(reason: String) -> void:
 
 func _on_EventBus_level_restart() -> void:
 	_game_over_control.hide()
-	_menu_ui.hide()
 	_level_completed.hide()
 
 

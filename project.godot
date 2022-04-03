@@ -41,10 +41,6 @@ config/icon="res://icon.png"
 EventBus="*res://scenes/event_bus.gd"
 GlobalState="*res://scenes/global_state.gd"
 
-[display]
-
-window/size/height=640
-
 [input]
 
 ui_left={
