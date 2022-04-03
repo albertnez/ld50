@@ -8,7 +8,7 @@ var level
 var in_true_end = false
 
 func is_last_level() -> bool:
-	return level == 10
+	return level == 11
 
 func _ready() -> void:
 	pass
