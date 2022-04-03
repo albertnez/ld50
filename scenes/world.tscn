@@ -49,6 +49,7 @@ stream = ExtResource( 7 )
 
 [node name="TogglePlayer" type="AudioStreamPlayer" parent="AudioController"]
 stream = ExtResource( 8 )
+volume_db = -8.74
 
 [node name="CrashPlayer" type="AudioStreamPlayer" parent="AudioController"]
 stream = ExtResource( 9 )
