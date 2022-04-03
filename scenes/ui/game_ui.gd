@@ -7,6 +7,7 @@ onready var _menu_ui = $Menu
 onready var _playing_ui = $PlayingUI
 onready var _trolley_timer_container = $PlayingUI/TimeUntilTrolley
 onready var _trolley_timer_progress_bar = $PlayingUI/TimeUntilTrolley/ProgressBar
+onready var _level_completed_label = $LevelCompleted/LevelCompletedLabel
 
 func _ready() -> void:
 	EventBus.connect("trolley_crashed", self, "_on_EventBus_trolley_crashed")
@@ -14,6 +15,7 @@ func _ready() -> void:
 	EventBus.connect("new_level_waiting_for_trolley", self, "_on_EventBus_new_level_waiting_for_trolley")
 	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
 	EventBus.connect("person_crashed", self, "_on_EventBus_person_crashed")
+	EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
 	pass # Replace with function body.
 
 
@@ -30,6 +32,7 @@ func _on_EventBus_person_crashed() -> void:
 func _on_EventBus_level_restart() -> void:
 	_game_over_control.hide()
 	_menu_ui.hide()
+	_level_completed_label.hide()
 
 
 func _on_EventBus_new_level_waiting_for_trolley(seconds: float) -> void:
@@ -42,6 +45,8 @@ func _on_EventBus_trolley_created() -> void:
 	_trolley_timer_container.hide()
 
 
+func _on_EventBus_level_completed() -> void:
+	_level_completed_label.show()
 
 func _process(delta: float) -> void:
 	_trolley_timer_progress_bar.value = max(0, _trolley_timer_progress_bar.value - delta)

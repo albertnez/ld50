@@ -27,4 +27,8 @@ one_shot = true
 margin_right = 1024.0
 margin_bottom = 600.0
 
+[node name="LevelCompletedTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="timeout" from="LevelStartTrolleyTimer" to="." method="_on_LevelStartTrolleyTimer_timeout"]

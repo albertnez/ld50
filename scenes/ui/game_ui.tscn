@@ -111,3 +111,19 @@ margin_right = 203.0
 margin_bottom = 32.0
 text = "Press ENTER/START to restart"
 align = 1
+
+[node name="LevelCompleted" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="LevelCompletedLabel" type="Label" parent="LevelCompleted"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 436.0
+margin_top = 293.0
+margin_right = 548.0
+margin_bottom = 307.0
+text = "Level Completed!"

@@ -14,17 +14,20 @@ onready var _player := $ScaledView/Player
 onready var _tilemap := $ScaledView/TileMap
 onready var _trolley := $ScaledView/Trolley
 onready var _trolley_timer := $LevelStartTrolleyTimer
+onready var _level_completed_timer := $LevelCompletedTimer
 
 func _ready() -> void:
 	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
 	EventBus.connect("person_crashed", self, "_on_EventBus_person_crashed")
 	EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
+	EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
 	_game_state = GameState.MENU
 	_start_level()
 	pass
 
 
 func _start_level() -> void:
+	GlobalState.level_completed = false
 	_toggle_in_menu_used = false
 	if _current_level == 0:
 		_game_state = GameState.MENU
@@ -79,9 +82,18 @@ func _on_LevelStartTrolleyTimer_timeout() -> void:
 func _on_EventBus_person_crashed() -> void:
 	_game_state = GameState.GAME_OVER
 
+
 func _on_EventBus_trolley_created() -> void:
 	_trolley.reset(_tilemap)
 
 
 func _on_EventBus_level_restart() -> void:
+	_start_level()
+
+
+func _on_EventBus_level_completed() -> void:
+	GlobalState.level_completed = true
+	_level_completed_timer.start()
+	yield(_level_completed_timer, "timeout")
+	_current_level += 1
 	_start_level()

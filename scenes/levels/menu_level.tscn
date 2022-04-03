@@ -17,3 +17,6 @@ margin_top = 236.0
 margin_right = 366.0
 margin_bottom = 250.0
 text = "Toggle track to start"
+
+[node name="IndicatorTilemap" parent="." index="1"]
+tile_data = PoolIntArray( 393224, 0, 0, 393225, 0, 0 )

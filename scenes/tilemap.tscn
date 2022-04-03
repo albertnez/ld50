@@ -1,7 +1,33 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap.gd" type="Script" id=2]
+[ext_resource path="res://assets/images/tilemap_indicators.png" type="Texture" id=3]
+
+[sub_resource type="TileSet" id=1]
+0/name = "TilemapIndicator"
+0/texture = ExtResource( 3 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 96, 32 )
+0/tile_mode = 1
+0/autotile/bitmask_mode = 0
+0/autotile/bitmask_flags = [  ]
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
 
 [node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
@@ -9,3 +35,9 @@ cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 2, 3, 0, 0, 4, 0, 0, 5, 0, 1, 6, 0, 0, 7, 0, 65536, 65538, -1610612736, 0, 65541, 1610612736, 3, 65542, 1610612736, 0, 65543, 0, 65536, 65546, 2, 0, 131074, -1610612736, 0, 196610, -1073741824, 1, 196611, 1073741824, 0, 196612, 1073741824, 0, 196613, -536870912, 3, 262146, -2147483648, 1, 262147, 1073741824, 0, 262148, 1073741824, 0, 262149, 1073741824, 3 )
 script = ExtResource( 2 )
+
+[node name="IndicatorTilemap" type="TileMap" parent="."]
+show_behind_parent = true
+tile_set = SubResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1

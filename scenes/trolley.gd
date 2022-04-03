@@ -40,10 +40,13 @@ func _process(delta: float) -> void:
 		# OK for curves to consider them as diagonals
 		var direction = _to_position - _from_position
 		var pos_in_new_tile = _to_position + direction*0.1
+		var pos_in_old_tile = _to_position - direction*0.1
+		var from_pos_in_old_tile = _from_position - direction*0.1
 		if _tilemap.is_out_of_bounds(pos_in_new_tile):
 			EventBus.emit_signal("trolley_crashed")
 			_is_crashed = true
 			return
+		_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile)
 		_from_position = _to_position
 		var next_tile_positions = _tilemap.get_tile_world_endpoints(pos_in_new_tile, _from_position)
 		_to_position = next_tile_positions[0]
