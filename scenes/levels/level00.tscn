@@ -10,10 +10,10 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 2, 3, 0, 0, 4, 0, 0, 5, 536870
 tile_data = PoolIntArray( 262153, -536870912, 1 )
 
 [node name="Label" type="Label" parent="Control" index="0"]
-margin_left = 11.0
-margin_top = 55.0
-margin_right = 156.0
-margin_bottom = 79.0
+margin_left = 10.0
+margin_top = 76.0
+margin_right = 247.0
+margin_bottom = 127.0
 custom_fonts/font = ExtResource( 2 )
 text = "move to the tracks"
 
@@ -23,4 +23,10 @@ margin_top = 164.0
 margin_right = 416.0
 margin_bottom = 188.0
 custom_fonts/font = ExtResource( 2 )
-text = "toggle bifurcation to start"
+text = "toggle bifurcation to start
+use spacebar/action to activate"
+align = 1
+
+[node name="Credits" type="Label" parent="Control" index="3"]
+margin_right = 40.0
+margin_bottom = 14.0

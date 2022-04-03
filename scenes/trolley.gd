@@ -85,12 +85,15 @@ func _process(delta: float) -> void:
 
 func _on_Trolley_body_entered(body: Node) -> void:
 	if body is TileMap and not GlobalState.level_lost:
+		if GlobalState.level == 0:
+			GlobalState.level_completed = true
 		EventBus.emit_signal("trolley_killed_someone")
-		GlobalState.level_completed = true
+
 	pass # Replace with function body.
 
 
 func _handle_trolley_crash() -> void:
+
 	GlobalState.level_lost = true
 	_is_crashed = true
 	_slowdown_timer.start()

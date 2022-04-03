@@ -14,7 +14,7 @@ func _ready() -> void:
 	EventBus.connect("new_level_waiting_for_trolley", self, "_on_EventBus_new_level_waiting_for_trolley")
 	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
 	EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
-	EventBus.connect("trolley_crashed", self, "_on_game_over", ["The trolley crashed!", false])
+	EventBus.connect("trolley_crashed", self, "_on_game_over", ["The trolley crashed off piste!", false])
 	EventBus.connect("person_crashed", self, "_on_game_over", ["You died!", false])
 	EventBus.connect("trolley_killed_someone", self, "_on_game_over", ["The trolley killed someone", true])
 	pass # Replace with function body.
