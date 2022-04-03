@@ -43,6 +43,7 @@ func reset(tilemap: MyTileMap) -> void:
 func _ready() -> void:
 	EventBus.connect("trolley_crashed", self, "_handle_trolley_crash")
 	EventBus.connect("trolley_killed_someone", self, "_handle_trolley_crash")
+	EventBus.connect("person_crashed", self, "_handle_trolley_crash")
 	pass
 
 
