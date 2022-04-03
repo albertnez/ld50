@@ -125,8 +125,8 @@ func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, clear: bool = false) 
 		_visited_cells.erase(pos)
 		_indicator_tilemap.set_cell(pos.x, pos.y, -1)
 		return
-		
-	if not GlobalState.level_completed and is_cell_already_visited(pos, from_dir):
+	
+	if not GlobalState.level_lost and not GlobalState.level_completed and is_cell_already_visited(pos, from_dir):
 
 		if _has_visited_loop(pos, from_dir):
 			EventBus.emit_signal("level_completed")

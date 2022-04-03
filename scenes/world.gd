@@ -22,12 +22,14 @@ func _ready() -> void:
 	EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
 	EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
 	_game_state = GameState.MENU
-	_start_level()
+	
+	EventBus.emit_signal("level_restart")
 	pass
 
 
 func _start_level() -> void:
 	GlobalState.level_completed = false
+	GlobalState.level_lost = false
 	_toggle_in_menu_used = false
 	if _current_level == 0:
 		_game_state = GameState.MENU
@@ -50,6 +52,7 @@ func _start_level() -> void:
 	if _game_state != GameState.MENU:
 		# On Menu, trolley starts upon player action
 		_trolley_timer.start(_tilemap.TROLLEY_WAIT_TIME)
+
 
 
 func _process(delta: float) -> void:
@@ -97,4 +100,4 @@ func _on_EventBus_level_completed() -> void:
 	_level_completed_timer.start()
 	yield(_level_completed_timer, "timeout")
 	_current_level += 1
-	_start_level()
+	EventBus.emit_signal("level_restart")

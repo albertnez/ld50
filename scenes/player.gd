@@ -40,6 +40,7 @@ func _on_Player_area_entered(area: Area2D) -> void:
 	if area is Trolley:
 		EventBus.emit_signal("person_crashed")
 		_dead = true
+		GlobalState.level_lost = true
 		_animation.play("dead")
 	pass # Replace with function body.
 

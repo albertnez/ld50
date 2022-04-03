@@ -15,6 +15,7 @@ var _is_crashed
 
 
 func reset(tilemap: MyTileMap) -> void:
+	_time_in_cell = 0.0
 	_tilemap = tilemap
 	position = _tilemap.get_trolley_starting_world_position()
 	var initial_positions = _tilemap.get_tile_world_endpoints(position)
