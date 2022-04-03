@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 
 
 func _on_Player_area_entered(area: Area2D) -> void:
-	if area is Trolley and not GlobalState.level_lost:
+	if area is Trolley and not GlobalState.level_lost and not GlobalState.level_completed:
 		EventBus.emit_signal("person_crashed")
 		_dead = true
 		GlobalState.level_lost = true

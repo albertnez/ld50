@@ -21,6 +21,7 @@ func _ready() -> void:
 
 
 func _start_level() -> void:
+	GlobalState.level = _current_level
 	GlobalState.level_completed = false
 	GlobalState.level_lost = false
 	_toggle_in_menu_used = false
@@ -47,7 +48,7 @@ func _process(delta: float) -> void:
 	
 	var player_toggled = false
 	
-	var player_can_toggle = _tilemap.is_world_pos_a_toggable_tile(_player.position) and not _player.is_dead()
+	var player_can_toggle = _tilemap.is_world_pos_a_toggable_tile(_player.position) and not _player.is_dead() and not GlobalState.level_completed
 
 	_player.set_toggle_is_visible(player_can_toggle)
 	if Input.is_action_just_pressed("ui_accept") and player_can_toggle:
@@ -59,14 +60,19 @@ func _process(delta: float) -> void:
 			EventBus.emit_signal("trolley_created")
 			_toggle_in_menu_used = true
 	
-	if GlobalState.level_lost:
-		if Input.is_action_just_pressed("restart"):
+	if GlobalState.level_completed and Input.is_action_just_pressed("restart"):
+		_next_level()
+		return
+	
+	if GlobalState.level_lost and Input.is_action_just_pressed("restart"):
+		if GlobalState.level == 0 and GlobalState.level_completed:
+			_next_level()
+		else:
 			EventBus.emit_signal("level_restart")
 
 
 func _on_LevelStartTrolleyTimer_timeout() -> void:
 	EventBus.emit_signal("trolley_created")
-
 
 
 func _on_EventBus_trolley_created() -> void:
@@ -79,8 +85,12 @@ func _on_EventBus_level_restart() -> void:
 
 func _on_EventBus_level_completed() -> void:
 	GlobalState.level_completed = true
-	_level_completed_timer.start()
-	yield(_level_completed_timer, "timeout")
+#	_level_completed_timer.start()
+#	yield(_level_completed_timer, "timeout")
+#	_next_level()
+
+
+func _next_level():
 	_current_level += 1
 	GlobalState.in_menu = false
 	EventBus.emit_signal("level_restart")
