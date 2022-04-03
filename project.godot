@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/tilemap.gd"
 }, {
-"base": "Sprite",
+"base": "Area2D",
 "class": "Trolley",
 "language": "GDScript",
 "path": "res://scenes/trolley.gd"

@@ -1,4 +1,4 @@
-extends Sprite
+extends Area2D
 class_name Trolley
 
 export (float, 10, 100, 5) var SPEED = 32

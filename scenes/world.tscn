@@ -14,12 +14,10 @@ scale = Vector2( 2, 2 )
 [node name="TileMap" parent="ScaledView" instance=ExtResource( 2 )]
 
 [node name="Player" parent="ScaledView" instance=ExtResource( 3 )]
-scale = Vector2( 1, 1 )
 
 [node name="Trolley" parent="ScaledView" instance=ExtResource( 4 )]
 position = Vector2( 12.5, 9.5 )
-scale = Vector2( 1, 1 )
-SECONDS_PER_CELL = 0.2
+SECONDS_PER_CELL = 0.8
 
 [node name="LevelStartTrolleyTimer" type="Timer" parent="."]
 one_shot = true

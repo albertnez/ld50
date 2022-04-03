@@ -1,15 +1,70 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/player.gd" type="Script" id=1]
-[ext_resource path="res://assets/images/player.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/player-sheet.png" type="Texture" id=2]
 [ext_resource path="res://assets/images/toggle_indicator.png" type="Texture" id=3]
 
-[node name="Player" type="Sprite"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 2 )
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 32, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 12.5, 11.5 )
+
+[node name="Player" type="Area2D"]
 script = ExtResource( 1 )
-SPEED = 85.176
+
+[node name="Animation" type="AnimatedSprite" parent="."]
+frames = SubResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1.5, -2.5 )
+shape = SubResource( 1 )
 
 [node name="CanToggle" type="Sprite" parent="."]
-position = Vector2( 16.5, -13 )
+position = Vector2( 33, -26 )
 texture = ExtResource( 3 )
+
+[connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]

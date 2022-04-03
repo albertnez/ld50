@@ -1,7 +1,9 @@
-extends Sprite
+extends Area2D
 
-onready var _can_toggle := $CanToggle
 export (float, 10, 3000, 10.0) var SPEED = 140.0
+onready var _can_toggle := $CanToggle
+onready var _animation := $Animation
+var _dead := false
 
 func _ready() -> void:
 	pass
@@ -12,6 +14,9 @@ func set_toggle_is_visible(visible: bool) -> void:
 
 
 func _process(delta: float) -> void:
+	if _dead:
+		return
+
 	var dir := Vector2.ZERO
 	
 	if Input.is_action_pressed("ui_down"):
@@ -24,3 +29,15 @@ func _process(delta: float) -> void:
 		dir += Vector2.RIGHT
 	
 	position += dir.normalized() * SPEED * delta
+	if dir == Vector2.ZERO:
+		_animation.play("default")
+	else:
+		_animation.play("walk")
+
+
+func _on_Player_area_entered(area: Area2D) -> void:
+	if area is Trolley:
+		EventBus.emit_signal("person_crashed")
+		_dead = true
+		_animation.play("dead")
+	pass # Replace with function body.
