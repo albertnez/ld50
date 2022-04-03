@@ -8,6 +8,9 @@ onready var _trolley_timer_progress_bar = $PlayingUI/TimeUntilTrolley/ProgressBa
 onready var _level_completed = $LevelCompleted
 onready var _level_label = $PlayingUI/LevelLabel
 onready var _first_time_gameover = $GameOver/VBoxContainer/FirstTimeGameOver
+onready var _last_time_gameover = $GameOver/VBoxContainer/LastTimeGameOver
+onready var _restart_label = $GameOver/VBoxContainer/RestartLabel
+
 
 func _ready() -> void:
 	EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
@@ -22,8 +25,12 @@ func _ready() -> void:
 
 func _on_game_over(msg: String, killed_someone: bool) -> void:
 	_game_over_reason_label.text = str("Game Over: ", msg)
-	_game_over_control.show()
 	_first_time_gameover.visible = killed_someone and GlobalState.level == 0
+	if GlobalState.in_true_end:
+		_game_over_reason_label.text = "Game Over: the end"
+		_restart_label.hide()
+		_last_time_gameover.show()
+	_game_over_control.show()
 		
 
 

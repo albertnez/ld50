@@ -67,6 +67,9 @@ func _process(delta: float) -> void:
 			EventBus.emit_signal("trolley_created")
 			_toggle_triggered_trolley_already = true
 	
+	if GlobalState.in_true_end:
+		return
+
 	if GlobalState.level_completed and Input.is_action_just_pressed("restart"):
 		_next_level()
 		return

@@ -56,11 +56,12 @@ margin_bottom = 76.0
 margin_right = 1024.0
 margin_bottom = 48.0
 custom_fonts/font = ExtResource( 2 )
-text = "Game Over: The trolley crashed"
+text = "Game Over: THE END"
 align = 1
 valign = 1
 
 [node name="FirstTimeGameOver" type="Label" parent="GameOver/VBoxContainer"]
+visible = false
 margin_top = 52.0
 margin_right = 1024.0
 margin_bottom = 115.0
@@ -69,10 +70,22 @@ text = "But there was no way to solve the TROLLEY DILEMMA,
 you can only DELAY THE INEVITABLE..."
 align = 1
 
-[node name="RestartLabel" type="Label" parent="GameOver/VBoxContainer"]
-margin_top = 119.0
+[node name="LastTimeGameOver" type="Label" parent="GameOver/VBoxContainer"]
+visible = false
+margin_top = 52.0
 margin_right = 1024.0
-margin_bottom = 149.0
+margin_bottom = 253.0
+custom_fonts/font = ExtResource( 2 )
+text = "
+
+TROLLEY'S DELAYMA
+by albertnez"
+align = 1
+
+[node name="RestartLabel" type="Label" parent="GameOver/VBoxContainer"]
+margin_top = 52.0
+margin_right = 1024.0
+margin_bottom = 82.0
 custom_fonts/font = ExtResource( 4 )
 text = "Press ENTER/START to restart"
 align = 1
