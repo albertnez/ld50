@@ -4,6 +4,9 @@ class_name Trolley
 export (float, 10, 100, 5) var SPEED = 32
 export (float, 0.1, 5.0, 0.1) var SECONDS_PER_CELL = 1.0
 
+onready var _original_seconds_per_cell = SECONDS_PER_CELL
+onready var _slowdown_timer := $SlowDownTimer
+
 var _tilemap: MyTileMap = null
 
 var _time_in_cell := 0.0
@@ -14,7 +17,15 @@ var _is_resetted: bool = false
 var _is_crashed
 
 
+func update_trolley_speed(new_seconds_per_cell: float) -> void:
+	var ratio = new_seconds_per_cell / SECONDS_PER_CELL	
+	_time_in_cell *= ratio
+	SECONDS_PER_CELL = new_seconds_per_cell
+
+
 func reset(tilemap: MyTileMap) -> void:
+	SECONDS_PER_CELL = _original_seconds_per_cell
+	_slowdown_timer.stop()
 	_time_in_cell = 0.0
 	_tilemap = tilemap
 	position = _tilemap.get_trolley_starting_world_position()
@@ -28,15 +39,15 @@ func reset(tilemap: MyTileMap) -> void:
 
 
 func _ready() -> void:
+	EventBus.connect("trolley_crashed", self, "_handle_trolley_crash")
+	EventBus.connect("trolley_killed_someone", self, "_handle_trolley_crash")
 	pass
 
 
 func _process(delta: float) -> void:
 	assert(_is_resetted)
-	if _is_crashed:
-		return
 	_time_in_cell += delta
-	if _time_in_cell > SECONDS_PER_CELL:
+	if not _is_crashed and _time_in_cell > SECONDS_PER_CELL:
 		_time_in_cell -= SECONDS_PER_CELL
 		# OK for curves to consider them as diagonals
 		var direction = _to_position - _from_position
@@ -45,6 +56,7 @@ func _process(delta: float) -> void:
 		var from_pos_in_old_tile = _from_position - direction*0.1
 		if _tilemap.is_out_of_bounds(pos_in_new_tile):
 			EventBus.emit_signal("trolley_crashed")
+			GlobalState.level_lost = true
 			_is_crashed = true
 			return
 		_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile)
@@ -59,3 +71,22 @@ func _process(delta: float) -> void:
 		position = lerp(_from_position, _to_position, _time_in_cell/SECONDS_PER_CELL)
 	
 
+
+
+func _on_Trolley_body_entered(body: Node) -> void:
+	if body is TileMap:
+		EventBus.emit_signal("trolley_killed_someone")
+	pass # Replace with function body.
+
+
+func _handle_trolley_crash() -> void:
+	GlobalState.level_lost = true
+	_is_crashed = true
+	_slowdown_timer.start()
+
+	
+
+
+func _on_SlowDownTimer_timeout() -> void:
+	update_trolley_speed(SECONDS_PER_CELL * 2.0)
+	pass # Replace with function body.

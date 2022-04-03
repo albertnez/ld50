@@ -10,22 +10,18 @@ onready var _trolley_timer_progress_bar = $PlayingUI/TimeUntilTrolley/ProgressBa
 onready var _level_completed = $LevelCompleted
 
 func _ready() -> void:
-	EventBus.connect("trolley_crashed", self, "_on_EventBus_trolley_crashed")
 	EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
 	EventBus.connect("new_level_waiting_for_trolley", self, "_on_EventBus_new_level_waiting_for_trolley")
 	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
-	EventBus.connect("person_crashed", self, "_on_EventBus_person_crashed")
 	EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
+	EventBus.connect("trolley_crashed", self, "_on_game_over", ["The trolley crashed!"])
+	EventBus.connect("person_crashed", self, "_on_game_over", ["You died!"])
+	EventBus.connect("trolley_killed_someone", self, "_on_game_over", ["The trolley killed someone"])
 	pass # Replace with function body.
 
 
-func _on_EventBus_trolley_crashed() -> void:
-	_game_over_reason_label.text = "Game Over: The trolley crashed!"
-	_game_over_control.show()
-
-
-func _on_EventBus_person_crashed() -> void:
-	_game_over_reason_label.text = "Game Over: You died!"
+func _on_game_over(reason: String) -> void:
+	_game_over_reason_label.text = str("Game Over: ", reason)
 	_game_over_control.show()
 
 
