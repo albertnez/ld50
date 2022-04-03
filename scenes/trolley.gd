@@ -52,6 +52,6 @@ func _process(delta: float) -> void:
 
 	# TODO: Implement turning
 	if not _is_turning or _is_turning:
-		position = lerp(_from_position, _to_position, _time_in_cell)
+		position = lerp(_from_position, _to_position, _time_in_cell/SECONDS_PER_CELL)
 	
 
