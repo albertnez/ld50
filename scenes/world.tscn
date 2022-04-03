@@ -14,7 +14,6 @@
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
-_current_level = 9
 
 [node name="ScaledView" type="Node2D" parent="."]
 scale = Vector2( 2, 2 )
