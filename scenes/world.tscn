@@ -16,7 +16,6 @@
 script = ExtResource( 1 )
 
 [node name="ScaledView" type="Node2D" parent="."]
-scale = Vector2( 2, 2 )
 
 [node name="TileMap" parent="ScaledView" instance=ExtResource( 2 )]
 
@@ -28,10 +27,6 @@ SECONDS_PER_CELL = 0.5
 
 [node name="LevelStartTrolleyTimer" type="Timer" parent="."]
 one_shot = true
-
-[node name="GameUI" parent="." instance=ExtResource( 5 )]
-margin_right = 1024.0
-margin_bottom = 600.0
 
 [node name="LevelCompletedTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -55,5 +50,14 @@ stream = ExtResource( 9 )
 
 [node name="ClickPlayer" type="AudioStreamPlayer" parent="AudioController"]
 stream = ExtResource( 11 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+zoom = Vector2( 0.5, 0.5 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameUI" parent="CanvasLayer" instance=ExtResource( 5 )]
 
 [connection signal="timeout" from="LevelStartTrolleyTimer" to="." method="_on_LevelStartTrolleyTimer_timeout"]
