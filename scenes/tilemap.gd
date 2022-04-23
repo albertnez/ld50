@@ -88,17 +88,18 @@ const TILEMAP_FLIP_COORD = {
 }
 
 
-func _get_from_dir(pos: Vector2, from_pos: Vector2) -> Vector2:
+func get_from_dir(pos: Vector2, from_pos: Vector2) -> Vector2:
 	var from_dir = (from_pos - pos).normalized()  # TODO: See that this is unary
 	assert(from_dir in [Vector2.UP, Vector2.LEFT, Vector2.DOWN, Vector2.RIGHT])
 	return from_dir
+
 
 func _has_visited_loop(pos: Vector2, from_dir: Vector2) -> bool:
 	var starting_pos = pos  # Already evaluated as visited
 	var old_pos = pos
 	pos = get_tile_next_pos(pos, from_dir)
 	assert(pos != Vector2.INF)
-	from_dir = _get_from_dir(pos, old_pos)
+	from_dir = get_from_dir(pos, old_pos)
 	while pos != starting_pos:
 		if not is_cell_already_visited(pos, from_dir):
 			return false
@@ -106,7 +107,7 @@ func _has_visited_loop(pos: Vector2, from_dir: Vector2) -> bool:
 		pos = get_tile_next_pos(pos, from_dir)
 		if pos == Vector2.INF:
 			return false
-		from_dir = _get_from_dir(pos, old_pos)
+		from_dir = get_from_dir(pos, old_pos)
 	return true
 	
 
@@ -144,7 +145,7 @@ func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, clear: bool = false) 
 func mark_world_pos_cell_as_visited(world_pos: Vector2, from_world_pos: Vector2) -> void:
 	var pos = world_to_map(world_pos)
 	var from_pos = world_to_map(from_world_pos)
-	var from_dir = _get_from_dir(pos, from_pos)
+	var from_dir = get_from_dir(pos, from_pos)
 	mark_cell_as_visited(pos, from_dir)
 
 

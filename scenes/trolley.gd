@@ -10,8 +10,13 @@ onready var _slowdown_timer := $SlowDownTimer
 var _tilemap: MyTileMap = null
 
 var _time_in_cell := 0.0
+
 var _from_position := Vector2.ZERO
 var _to_position := Vector2.ZERO
+# Normalized direction from where the Train comes from, relative to the current tile.
+# If Train is moving to the right, `_from_dir` will equal to Vector2.LEFT
+var _from_dir := Vector2.INF
+
 var _is_turning: bool = false
 var _is_resetted: bool = false
 var _is_crashed
@@ -31,10 +36,13 @@ func reset(tilemap: MyTileMap) -> void:
 	_time_in_cell = 0.0
 	_tilemap = tilemap
 	position = _tilemap.get_trolley_starting_world_position()
+	# TODO: Make it possible for the initial position to be rotated and transformed.
 	var initial_positions = _tilemap.get_tile_world_endpoints(position)
 	_from_position = initial_positions[0]
 	_to_position = initial_positions[1]
+	_from_dir = tilemap.get_from_dir(_to_position, _from_position)
 	position = _from_position
+	
 	_is_resetted = true
 	_is_crashed = false
 	set_process(true)
@@ -52,6 +60,7 @@ func _process(delta: float) -> void:
 	if SECONDS_PER_CELL < 1000:
 		_time_in_cell += delta
 	if not GlobalState.level_lost and _time_in_cell > SECONDS_PER_CELL:
+		# We move to the next cell.
 		var old_time_in_cell = _time_in_cell
 		_time_in_cell -= SECONDS_PER_CELL
 		# OK for curves to consider them as diagonals
