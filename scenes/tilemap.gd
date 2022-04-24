@@ -37,12 +37,6 @@ const TROLLEY_START_COORD = Vector2(0, 3)
 const MAIN_INDICATOR_TILEMAP_ID = 0
 const INDICATOR_TILEMAP_GREEN_COORD = Vector2(0, 0)
 
-# Some point constants
-const P_MID_LEFT := Vector2(0, HALF_CELL)
-const P_MID_RIGHT := Vector2(CELL_SIZE, HALF_CELL)
-const P_MID_DOWN := Vector2(HALF_CELL, CELL_SIZE)
-const P_MID_UP := Vector2(HALF_CELL, 0)
-
 const TILEMAP_ENDPOINT_DIRS = {
 	Vector2(0, 0):  # Straight horizontal
 		[Vector2.LEFT, Vector2.RIGHT],
@@ -58,25 +52,6 @@ const TILEMAP_ENDPOINT_DIRS = {
 		[
 			[Vector2.LEFT, Vector2.RIGHT],
 			[Vector2.LEFT, Vector2.DOWN],
-		]
-}
-# Here be dragons: In an ideal situation, this would be cleaned up.
-# In a Ludum Dare, I'd rather continue with the tech debt and see where we go.
-const TILEMAP_ENDPOINTS = {
-	Vector2(0, 0):  # Straight horizontal
-		[Vector2(0, HALF_CELL), Vector2(CELL_SIZE, HALF_CELL)],
-	Vector2(1, 0):  # Straight horizontal, can toggle left-down
-		[Vector2(0, HALF_CELL), Vector2(CELL_SIZE, HALF_CELL)],
-	Vector2(2, 0):  # Left-Down, can toggle Left-Right
-		 [Vector2(0, HALF_CELL), Vector2(HALF_CELL, CELL_SIZE)],
-	Vector2(3, 0):  # Left-Down
-		[Vector2(0, HALF_CELL), Vector2(HALF_CELL, CELL_SIZE)],
-	Vector2(0, 1):  # Victim
-		[Vector2(0, HALF_CELL), Vector2(CELL_SIZE, HALF_CELL)],	
-	Vector2(1, 1):  # Left-Right,Left-Down. Special case, has 2 parts
-		[
-			[P_MID_LEFT, P_MID_RIGHT],
-			[P_MID_LEFT, P_MID_DOWN],
 		]
 }
 
@@ -189,15 +164,7 @@ func get_tile_next_pos(pos: Vector2, from_dir: Vector2) -> Vector2:
 	
 	var valid_options = []
 	for option_pair in options:
-		# transform each of the vector
-		# TODO: Dedup with the functions below for transforming points
-		for i in option_pair.size():
-			if is_cell_transposed(pos.x, pos.y):
-				option_pair[i] = Vector2(option_pair[i].y, option_pair[i].x)
-			if is_cell_x_flipped(pos.x, pos.y):
-				option_pair[i].x *= -1
-			if is_cell_y_flipped(pos.x, pos.y):
-				option_pair[i].y *= -1
+		_apply_dirs_transpose_rotation(option_pair, pos)
 		
 		if from_dir == option_pair[0]:
 			valid_options.append(option_pair[1])
@@ -229,7 +196,8 @@ func _get_elem_not_in_pair_or_inf(pair: Array, elem: Vector2) -> Vector2:
 
 
 func _target_dir_to_world_pos(tile_pos: Vector2, target_dir: Vector2):
-	assert(target_dir != Vector2.INF)
+	if target_dir == Vector2.INF:
+		return Vector2.INF
 
 	return (tile_pos * CELL_SIZE 
 		+ Vector2.ONE * HALF_CELL  # Centered in the tile
@@ -261,18 +229,6 @@ func get_next_world_pos(tile_world_pos: Vector2, prev_tile_world_pos: Vector2 = 
 				return Vector2.INF
 			result = dest
 	return _target_dir_to_world_pos(pos, result)
-
-
-# Transforms in-place.
-func _apply_endpoints_transformations(endpoints: Array, cell_pos: Vector2) -> void:
-	for i in endpoints.size():
-		if is_cell_transposed(cell_pos.x, cell_pos.y):
-			endpoints[i] = Vector2(endpoints[i].y, endpoints[i].x)
-		if is_cell_x_flipped(cell_pos.x, cell_pos.y):
-			endpoints[i].x = CELL_SIZE - endpoints[i].x
-		if is_cell_y_flipped(cell_pos.x, cell_pos.y):
-			endpoints[i].y = CELL_SIZE - endpoints[i].y
-		endpoints[i] += cell_pos * CELL_SIZE
 
 
 func is_autotile_coord_toggable(ind: Vector2) -> bool:
