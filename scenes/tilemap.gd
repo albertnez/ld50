@@ -207,30 +207,60 @@ func get_tile_next_pos(pos: Vector2, from_dir: Vector2) -> Vector2:
 	if valid_options.size() != 1:
 		return Vector2.INF
 	return pos + valid_options[0]
-	
 
-# Returns valid destinations
-func get_tile_world_endpoints(tile_world_pos: Vector2, coming_from_world_pos: Vector2 = Vector2.INF) -> Array:
+
+func _apply_dirs_transpose_rotation(dirs: Array, cell_pos: Vector2) -> void:
+	for i in dirs.size():
+		if is_cell_transposed(cell_pos.x, cell_pos.y):
+			dirs[i] = Vector2(dirs[i].y, dirs[i].x)
+		if is_cell_x_flipped(cell_pos.x, cell_pos.y):
+			dirs[i].x *= -1
+		if is_cell_y_flipped(cell_pos.x, cell_pos.y):
+			dirs[i].y *= -1	
+
+
+# Returns either the only value of `pair` that is different than `elem`, or null otherwise.
+func _get_elem_not_in_pair_or_inf(pair: Array, elem: Vector2) -> Vector2:
+	assert(pair.size() == 2)
+	assert(elem != pair[0] or elem != pair[1], "At least one elem should be different than pair")
+	if not elem in pair:
+		return Vector2.INF
+	return pair[0] if elem != pair[0] else pair[1]
+
+
+func _target_dir_to_world_pos(tile_pos: Vector2, target_dir: Vector2):
+	assert(target_dir != Vector2.INF)
+
+	return (tile_pos * CELL_SIZE 
+		+ Vector2.ONE * HALF_CELL  # Centered in the tile
+		+ target_dir * HALF_CELL)
+	
+	
+# Returns the next world_pos for the current `tile_world_pos`.
+# Inf impossible, returns Vector2.INF
+func get_next_world_pos(tile_world_pos: Vector2, prev_tile_world_pos: Vector2 = Vector2.INF) -> Vector2:
 	var pos := world_to_map(tile_world_pos)
-	var tileset_ind = get_cell(pos.x, pos.y)
+	var prev_pos := world_to_map(prev_tile_world_pos)
 	var coord := get_cell_autotile_coord(pos.x, pos.y)
-	var points = TILEMAP_ENDPOINTS[coord].duplicate(true)
+	var points = TILEMAP_ENDPOINT_DIRS[coord].duplicate(true)
+	var from_dir = get_from_dir(pos, prev_pos)
 	
 	if coord != BIFURCATION_COORD:
-		_apply_endpoints_transformations(points, pos)
-		return points
+		_apply_dirs_transpose_rotation(points, pos)
+		return _target_dir_to_world_pos(pos, _get_elem_not_in_pair_or_inf(points, from_dir))
 		
-	# From the 2 pairs, return the one that matches `coming_from_word_pos`.
-	# if both match, it's invalid.
-	var result = []
-	for points_option in points:
-		_apply_endpoints_transformations(points_option, pos)
-		if coming_from_world_pos in points_option:
-			if not result.empty():
-				# 2 possible options, we crash
-				return []
-			result = points_option
-	return result
+	# From the the various dir_pairs, use the one that connects where we come from (`from_dir`).
+	# If there's more than one `dir_pairs` that connect, then we're splitting, and it's invalid.
+	var result := Vector2.INF
+	for dirs_pair in points:
+		_apply_dirs_transpose_rotation(dirs_pair, pos)
+		var dest := _get_elem_not_in_pair_or_inf(dirs_pair, from_dir)
+		if dest != Vector2.INF:
+			if result != Vector2.INF: 
+				 # Two possible ways; we return INF
+				return Vector2.INF
+			result = dest
+	return _target_dir_to_world_pos(pos, result)
 
 
 # Transforms in-place.
@@ -243,6 +273,7 @@ func _apply_endpoints_transformations(endpoints: Array, cell_pos: Vector2) -> vo
 		if is_cell_y_flipped(cell_pos.x, cell_pos.y):
 			endpoints[i].y = CELL_SIZE - endpoints[i].y
 		endpoints[i] += cell_pos * CELL_SIZE
+
 
 func is_autotile_coord_toggable(ind: Vector2) -> bool:
 	return ind in [Vector2(1, 0), Vector2(2, 0)]

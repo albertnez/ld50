@@ -13,8 +13,13 @@ var _time_in_cell := 0.0
 
 var _from_position := Vector2.ZERO
 var _to_position := Vector2.ZERO
-# Normalized direction from where the Train comes from, relative to the current tile.
-# If Train is moving to the right, `_from_dir` will equal to Vector2.LEFT
+"""
+Normalized direction from where the Train comes from, relative to the current tile.
+If the Train is moving to the right, `_from_dir` will equal to Vector2.LEFT
+If the Train is taking a curve, from left to down:
+	* In the curve tile, _from_dir will be Vector2.LEFT
+	* In the next tile,  _from_dir will be Vector2.UP
+"""
 var _from_dir := Vector2.INF
 
 var _is_turning: bool = false
@@ -36,10 +41,12 @@ func reset(tilemap: MyTileMap) -> void:
 	_time_in_cell = 0.0
 	_tilemap = tilemap
 	position = _tilemap.get_trolley_starting_world_position()
+	# Assume coming from left
 	# TODO: Make it possible for the initial position to be rotated and transformed.
-	var initial_positions = _tilemap.get_tile_world_endpoints(position)
-	_from_position = initial_positions[0]
-	_to_position = initial_positions[1]
+	var initial_dir = Vector2.RIGHT
+	var prev_world_pos = position - initial_dir*MyTileMap.CELL_SIZE
+	_to_position = _tilemap.get_next_world_pos(position, prev_world_pos)
+	_from_position = _to_position - initial_dir*MyTileMap.CELL_SIZE
 	_from_dir = tilemap.get_from_dir(_to_position, _from_position)
 	position = _from_position
 	
@@ -73,23 +80,19 @@ func _process(delta: float) -> void:
 			EventBus.emit_signal("trolley_crashed")
 			return
 		_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile)
-		var next_tile_positions = _tilemap.get_tile_world_endpoints(pos_in_new_tile, _to_position)
-		if not _to_position in next_tile_positions:
+		var next_position = _tilemap.get_next_world_pos(pos_in_new_tile, pos_in_old_tile)
+		if next_position == Vector2.INF:
 			# Took rail the wrong way
 			# Undo the time subtraction from earlier:
 			_time_in_cell = old_time_in_cell
 			EventBus.emit_signal("trolley_crashed")
 			return
 		_from_position = _to_position
-		_to_position = next_tile_positions[0]
-		if _to_position == _from_position:
-			_to_position = next_tile_positions[1]
+		_to_position = next_position
 
 	# TODO: Implement turning
 	if not _is_turning or _is_turning:
 		position = lerp(_from_position, _to_position, _time_in_cell/SECONDS_PER_CELL)
-	
-
 
 
 func _on_Trolley_body_entered(body: Node) -> void:
