@@ -62,6 +62,8 @@ func _ready() -> void:
 	pass
 
 
+
+
 func _process(delta: float) -> void:
 	assert(_is_resetted)
 	if SECONDS_PER_CELL < 1000:
@@ -74,6 +76,7 @@ func _process(delta: float) -> void:
 		var direction = _to_position - _from_position
 		var pos_in_new_tile = _to_position + direction*0.1
 		var pos_in_old_tile = _to_position - direction*0.1
+		_from_dir = _tilemap.get_from_dir_with_world_positions(pos_in_new_tile, pos_in_old_tile)
 		var from_pos_in_old_tile = _from_position - direction*0.1
 		if _tilemap.is_out_of_bounds(pos_in_new_tile):
 			# Went out in the emptyness
@@ -92,7 +95,6 @@ func _process(delta: float) -> void:
 		_to_position = next_position
 		var diff := _to_position - _from_position
 		_is_turning = diff.x != 0 and diff.y != 0
-		_from_dir = _tilemap.get_from_dir_with_world_positions(pos_in_new_tile, pos_in_old_tile)
 
 	var time_step : float = _time_in_cell / SECONDS_PER_CELL
 	if not _is_turning:
@@ -125,6 +127,9 @@ func _handle_trolley_crash() -> void:
 	_is_crashed = true
 	_slowdown_timer.start()
 	_on_SlowDownTimer_timeout()
+	if _is_turning:
+		_is_turning = false
+		_from_position = _to_position + _from_dir*MyTileMap.CELL_SIZE
 
 
 func _on_SlowDownTimer_timeout() -> void:
