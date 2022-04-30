@@ -77,6 +77,7 @@ func _process(delta: float) -> void:
 		var from_pos_in_old_tile = _from_position - direction*0.1
 		if _tilemap.is_out_of_bounds(pos_in_new_tile):
 			# Went out in the emptyness
+			_time_in_cell = old_time_in_cell
 			EventBus.emit_signal("trolley_crashed")
 			return
 		_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile)
