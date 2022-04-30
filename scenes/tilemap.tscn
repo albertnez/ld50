@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/tilemap_indicators2.png" type="Texture" id=3]
 [ext_resource path="res://assets/images/tilemap_indicators1.png" type="Texture" id=4]
 [ext_resource path="res://scenes/ui/font_tilemap.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/images/tilemap_action_hover_hint.png" type="Texture" id=6]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap_indicators1.png 0"
@@ -83,5 +84,8 @@ custom_fonts/font = ExtResource( 5 )
 anchor_mode = 0
 current = true
 zoom = Vector2( 0.5, 0.5 )
+
+[node name="ActionHoverIndicator" type="Sprite" parent="."]
+texture = ExtResource( 6 )
 
 [connection signal="timeout" from="TileWobblerTimer" to="." method="_on_TileWobblerTimer_timeout"]

@@ -5,6 +5,7 @@ export (float, 1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 2.0
 
 onready var _indicator_tilemap := $IndicatorTilemap
 onready var _tile_wobbler_timer := $TileWobblerTimer
+onready var _action_hover_indicator := $ActionHoverIndicator
 onready var _current_main_tileset_id := 1
 
 var _trolley_world_position := Vector2.INF
@@ -254,6 +255,12 @@ func is_world_pos_a_toggable_tile(world_pos: Vector2) -> bool:
 	var pos := world_to_map(world_pos)
 	var coord := get_cell_autotile_coord(pos.x, pos.y)
 	return is_autotile_coord_toggable(coord)
+
+
+func set_action_hover_visible(world_pos: Vector2, set_visible: bool) -> void:
+	var pos := world_to_map(world_pos)
+	_action_hover_indicator.position = pos * CELL_SIZE + Vector2.ONE * HALF_CELL
+	_action_hover_indicator.visible = set_visible
 
 
 func _ready() -> void:

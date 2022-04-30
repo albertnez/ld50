@@ -52,12 +52,14 @@ func _process(delta: float) -> void:
 	
 	var player_toggled = false
 	
-	var player_can_toggle = (_tilemap.is_world_pos_a_toggable_tile(_player.position)
+	var player_can_toggle = (
+			_tilemap.is_world_pos_a_toggable_tile(_player.position)
 			and not _player.is_dead()
 			and not GlobalState.level_completed
 			and not GlobalState.level_lost)
 
 	_player.set_toggle_is_visible(player_can_toggle)
+	_tilemap.set_action_hover_visible(_player.position, player_can_toggle)
 	if Input.is_action_just_pressed("ui_accept") and player_can_toggle:
 		_tilemap.toggle_world_pos_cell(_player.position)
 		EventBus.emit_signal("toggle")
