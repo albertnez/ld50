@@ -126,8 +126,6 @@ func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, clear: bool = false) 
 		if _has_visited_loop(pos, from_dir):
 			EventBus.emit_signal("level_completed")
 			return
-		pass
-		
 
 	_visited_cells[pos] = _visited_cell_from_pos(pos, from_dir)
 	_indicator_tilemap.set_cell(pos.x, pos.y, MAIN_INDICATOR_TILEMAP_ID, false, false, false, INDICATOR_TILEMAP_GREEN_COORD)
@@ -274,8 +272,6 @@ func _ready() -> void:
 			assert(_trolley_world_position == Vector2.INF)
 			_trolley_world_position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
 			set_cell(pos.x, pos.y, _current_main_tileset_id)
-
-	pass
 
 
 func _on_TileWobblerTimer_timeout() -> void:

@@ -17,7 +17,6 @@ func _ready() -> void:
 	EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
 	
 	EventBus.emit_signal("level_restart")
-	pass
 
 
 func _trolley_waits_for_player() -> bool:
@@ -47,9 +46,7 @@ func _start_level() -> void:
 		_trolley_timer.start(_tilemap.TROLLEY_WAIT_TIME)
 
 
-
 func _process(delta: float) -> void:
-	
 	var player_toggled = false
 	
 	var player_can_toggle = (

@@ -13,7 +13,6 @@ func is_dead() -> bool:
 
 func _ready() -> void:
 	EventBus.connect("level_restart", self, "_on_Eventbus_level_restart")
-	pass
 
 
 func set_toggle_is_visible(visible: bool) -> void:
@@ -48,7 +47,6 @@ func _on_Player_area_entered(area: Area2D) -> void:
 		_dead = true
 		GlobalState.level_lost = true
 		_animation.play("dead")
-	pass # Replace with function body.
 
 
 func _on_Eventbus_level_restart() -> void:

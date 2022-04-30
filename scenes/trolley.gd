@@ -119,18 +119,14 @@ func _on_Trolley_body_entered(body: Node) -> void:
 			GlobalState.in_true_end = true
 		EventBus.emit_signal("trolley_killed_someone")
 
-	pass # Replace with function body.
-
 
 func _handle_trolley_crash() -> void:
-
 	GlobalState.level_lost = true
 	_is_crashed = true
 	_slowdown_timer.start()
 	_on_SlowDownTimer_timeout()
 
 
-
 func _on_SlowDownTimer_timeout() -> void:
 	update_trolley_speed(SECONDS_PER_CELL * 2.0)
-	pass # Replace with function body.
+

@@ -20,7 +20,6 @@ func _ready() -> void:
 	EventBus.connect("trolley_crashed", self, "_on_game_over", ["The trolley crashed off piste!", false])
 	EventBus.connect("person_crashed", self, "_on_game_over", ["You died!", false])
 	EventBus.connect("trolley_killed_someone", self, "_on_game_over", ["The trolley killed someone", true])
-	pass # Replace with function body.
 
 
 func _on_game_over(msg: String, killed_someone: bool) -> void:
@@ -32,7 +31,6 @@ func _on_game_over(msg: String, killed_someone: bool) -> void:
 		_restart_label.hide()
 		_last_time_gameover.show()
 	_game_over_control.show()
-		
 
 
 func _on_EventBus_level_restart() -> void:

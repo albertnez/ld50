@@ -7,8 +7,10 @@ var in_menu = true
 var level
 var in_true_end = false
 
+
 func is_last_level() -> bool:
 	return level == 11
+
 
 func _ready() -> void:
 	pass
