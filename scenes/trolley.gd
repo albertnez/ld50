@@ -90,10 +90,25 @@ func _process(delta: float) -> void:
 			return
 		_from_position = _to_position
 		_to_position = next_position
+		var diff := _to_position - _from_position
+		_is_turning = diff.x != 0 and diff.y != 0
+		_from_dir = _tilemap.get_from_dir_with_world_positions(pos_in_new_tile, pos_in_old_tile)
 
-	# TODO: Implement turning
-	if not _is_turning or _is_turning:
-		position = lerp(_from_position, _to_position, _time_in_cell/SECONDS_PER_CELL)
+	var time_step : float = _time_in_cell / SECONDS_PER_CELL
+	if not _is_turning:
+		position = lerp(_from_position, _to_position, time_step)
+	else:
+		# To slowly turn:
+		# - The axis in which we were already moving, slows down (ease_in lerp)
+		# - The other axis slowly increases (ease_out lerp)
+		var ease_in := sin(time_step * PI/2.0)
+		var ease_out := 1.0 - cos(time_step * PI/2.0)
+		var horizontal_dir = _from_dir in [Vector2.LEFT, Vector2.RIGHT]
+		var x_step = ease_in if horizontal_dir else ease_out
+		var y_step = ease_out if horizontal_dir else ease_in
+		
+		position.x = lerp(_from_position.x, _to_position.x, x_step)
+		position.y = lerp(_from_position.y, _to_position.y, y_step)
 
 
 func _on_Trolley_body_entered(body: Node) -> void:

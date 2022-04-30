@@ -72,6 +72,12 @@ const TILEMAP_FLIP_COORD = {
 }
 
 
+func get_from_dir_with_world_positions(world_pos: Vector2, world_prev_pos: Vector2) -> Vector2:
+	var pos := world_to_map(world_pos)
+	var prev_pos := world_to_map(world_prev_pos)
+	return get_from_dir(pos, prev_pos)
+
+
 func get_from_dir(pos: Vector2, from_pos: Vector2) -> Vector2:
 	var from_dir = (from_pos - pos).normalized()  # TODO: See that this is unary
 	assert(from_dir in [Vector2.UP, Vector2.LEFT, Vector2.DOWN, Vector2.RIGHT])
