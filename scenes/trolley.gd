@@ -24,7 +24,7 @@ var _from_dir := Vector2.INF
 
 var _is_turning: bool = false
 var _is_resetted: bool = false
-var _is_crashed
+var _is_crashed: bool = false
 
 
 func update_trolley_speed(new_seconds_per_cell: float) -> void:
