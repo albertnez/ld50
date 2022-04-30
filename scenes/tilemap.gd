@@ -52,10 +52,19 @@ const TILEMAP_ENDPOINT_DIRS = {
 		[
 			[Vector2.LEFT, Vector2.RIGHT],
 			[Vector2.LEFT, Vector2.DOWN],
-		]
+		],
+	Vector2(2, 1):  # Trifurcation
+		[
+			[Vector2.LEFT, Vector2.RIGHT],
+			[Vector2.LEFT, Vector2.UP],
+			[Vector2.LEFT, Vector2.DOWN],
+		],
 }
 
-const BIFURCATION_COORD = Vector2(1, 1)
+
+func coord_is_bifurcation(coord: Vector2) -> bool:
+	return coord in [Vector2(1, 1), Vector2(2, 1)]
+
 
 const TILEMAP_FLIP_COORD = {
 	Vector2(1, 0): Vector2(2, 0),
@@ -157,7 +166,7 @@ func get_tile_next_pos(pos: Vector2, from_dir: Vector2) -> Vector2:
 	var tileset_ind = get_cell(pos.x, pos.y)
 	var coord := get_cell_autotile_coord(pos.x, pos.y)
 	var options = []  # List of Array Pairs of directions that you can come from.
-	if coord == BIFURCATION_COORD:
+	if coord_is_bifurcation(coord):
 		options.append_array(TILEMAP_ENDPOINT_DIRS[coord].duplicate(true))
 	else:
 		options.append(TILEMAP_ENDPOINT_DIRS[coord].duplicate(true))
@@ -213,7 +222,7 @@ func get_next_world_pos(tile_world_pos: Vector2, prev_tile_world_pos: Vector2 = 
 	var points = TILEMAP_ENDPOINT_DIRS[coord].duplicate(true)
 	var from_dir = get_from_dir(pos, prev_pos)
 	
-	if coord != BIFURCATION_COORD:
+	if not coord_is_bifurcation(coord):
 		_apply_dirs_transpose_rotation(points, pos)
 		return _target_dir_to_world_pos(pos, _get_elem_not_in_pair_or_inf(points, from_dir))
 		

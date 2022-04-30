@@ -1,6 +1,6 @@
 extends Node2D
 
-export (int, 0, 10) var _current_level := 0
+export (int, 0, 15) var _current_level := 0
 
 var _toggle_triggered_trolley_already := false
 onready var _player := $ScaledView/Player
