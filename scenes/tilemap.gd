@@ -60,6 +60,10 @@ const TILEMAP_ENDPOINT_DIRS = {
 			[Vector2.LEFT, Vector2.UP],
 			[Vector2.LEFT, Vector2.DOWN],
 		],
+	Vector2(1, 2):  # Toggleable corners bifurcation
+		[Vector2.LEFT, Vector2.UP],
+	Vector2(2, 2):  # Toggleable corners bifurcation
+		[Vector2.LEFT, Vector2.DOWN],
 }
 
 
@@ -67,9 +71,12 @@ func coord_is_bifurcation(coord: Vector2) -> bool:
 	return coord in [Vector2(1, 1), Vector2(2, 1)]
 
 
+# Note: For a toggleable tile with 3 states, can be encoded here with a 3-length cycle.
 const TILEMAP_FLIP_COORD = {
 	Vector2(1, 0): Vector2(2, 0),
 	Vector2(2, 0): Vector2(1, 0),
+	Vector2(1, 2): Vector2(2, 2),
+	Vector2(2, 2): Vector2(1, 2),
 }
 
 
@@ -246,7 +253,7 @@ func get_next_world_pos(tile_world_pos: Vector2, prev_tile_world_pos: Vector2 = 
 
 
 func is_autotile_coord_toggable(ind: Vector2) -> bool:
-	return ind in [Vector2(1, 0), Vector2(2, 0)]
+	return ind in TILEMAP_FLIP_COORD.keys()
 
 
 func is_world_pos_a_toggable_tile(world_pos: Vector2) -> bool:
