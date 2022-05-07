@@ -16,25 +16,26 @@ margin_right = 574.0
 margin_bottom = 231.0
 
 [node name="Label" type="Label" parent="Control" index="1"]
-margin_left = 283.0
+margin_left = 313.0
 margin_top = 92.0
-margin_right = 431.0
-margin_bottom = 128.0
+margin_right = 487.0
+margin_bottom = 130.0
 custom_constants/line_spacing = -6
 custom_fonts/font = ExtResource( 2 )
-text = "you can't diverge into two
-paths at the same time"
+text = "you can't take bifurcations
+that split into two paths..."
 
 [node name="Label2" type="Label" parent="Control" index="2"]
-margin_left = 78.0
-margin_top = 234.0
-margin_right = 226.0
-margin_bottom = 270.0
+margin_left = 22.0
+margin_top = 237.0
+margin_right = 225.0
+margin_bottom = 273.0
 custom_constants/line_spacing = -6
 custom_fonts/font = ExtResource( 2 )
-text = "but you can converge
-from two paths"
+text = "...but you can take bifurcations
+that converge into one path"
 align = 2
 
 [node name="TrolleyWarningSprite" parent="." index="5"]
 animation = "default"
+frame = 1
