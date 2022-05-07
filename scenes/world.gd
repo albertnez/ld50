@@ -19,8 +19,6 @@ func _ready() -> void:
 	EventBus.emit_signal("level_restart")
 
 
-func _trolley_waits_for_player() -> bool:
-	return GlobalState.level < 3
 
 
 func _start_level() -> void:
@@ -41,7 +39,7 @@ func _start_level() -> void:
 	_player.position = _tilemap.get_player_starting_world_position()
 	_trolley.set_process(false)
 	_trolley.position = Vector2.INF
-	if not _trolley_waits_for_player():
+	if not GlobalState.trolley_waits_for_player():
 		# On Menu, trolley starts upon player action
 		_trolley_timer.start(_tilemap.TROLLEY_WAIT_TIME)
 
@@ -62,7 +60,7 @@ func _process(delta: float) -> void:
 		EventBus.emit_signal("toggle")
 		player_toggled = true
 
-	if _trolley_waits_for_player():
+	if GlobalState.trolley_waits_for_player():
 		if player_toggled and not _toggle_triggered_trolley_already:
 			EventBus.emit_signal("trolley_created")
 			_toggle_triggered_trolley_already = true

@@ -6,10 +6,14 @@ export (float, 1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 2.0
 onready var _indicator_tilemap := $IndicatorTilemap
 onready var _tile_wobbler_timer := $TileWobblerTimer
 onready var _action_hover_indicator := $ActionHoverIndicator
+onready var _trolley_warning_sprite := $TrolleyWarningSprite
+onready var _trolley_warning_timer := $TrolleyWarningTimer
 onready var _current_main_tileset_id := 1
 
 var _trolley_world_position := Vector2.INF
+var _trolley_warning_position := Vector2.INF
 var _player_starting_world_pos := Vector2.INF
+var _warning_shown := false
 var _visited_cells = {}
 
 class VisitedCell:
@@ -35,6 +39,7 @@ const HALF_CELL = CELL_SIZE * 0.5
 
 const PLAYER_START_COORD = Vector2(0, 2)
 const TROLLEY_START_COORD = Vector2(0, 3)
+const TROLLEY_WARNING_COORD = Vector2(1, 3)
 const MAIN_INDICATOR_TILEMAP_ID = 0
 const INDICATOR_TILEMAP_GREEN_COORD = Vector2(0, 0)
 
@@ -268,17 +273,42 @@ func set_action_hover_visible(world_pos: Vector2, set_visible: bool) -> void:
 	_action_hover_indicator.visible = set_visible
 
 
+const EMPTY_TILE = -1
 func _ready() -> void:
+	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
+	if not GlobalState.trolley_waits_for_player():
+		_start_warning_sign(TROLLEY_WAIT_TIME)
+	
 	for pos in get_used_cells_by_id(_current_main_tileset_id):
 		var coord := get_cell_autotile_coord(pos.x, pos.y)
 		if coord == PLAYER_START_COORD:
 			assert(_player_starting_world_pos == Vector2.INF)
 			_player_starting_world_pos = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
-			set_cell(pos.x, pos.y, -1)
+			set_cell(pos.x, pos.y, EMPTY_TILE)
 		elif coord == TROLLEY_START_COORD:
 			assert(_trolley_world_position == Vector2.INF)
 			_trolley_world_position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
 			set_cell(pos.x, pos.y, _current_main_tileset_id)
+		elif coord == TROLLEY_WARNING_COORD:
+			assert(_trolley_warning_position == Vector2.INF)
+			_trolley_warning_position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
+			_trolley_warning_sprite.position = _trolley_warning_position
+			set_cell(pos.x, pos.y, EMPTY_TILE)
+
+
+func _start_warning_sign(seconds: float) -> void:
+	_trolley_warning_sprite.show()
+	_trolley_warning_timer.start(seconds)
+
+
+func _on_EventBus_trolley_created() -> void:
+	if _warning_shown:
+		return
+	_start_warning_sign(1.0)
+
+
+func _on_TrolleyWarningTimer_timeout() -> void:
+	_trolley_warning_sprite.hide()
 
 
 func _on_TileWobblerTimer_timeout() -> void:
