@@ -17,4 +17,3 @@ text = "delay the trolley forever"
 
 [node name="TrolleyWarningSprite" parent="." index="5"]
 animation = "default"
-frame = 1
