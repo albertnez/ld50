@@ -5,25 +5,25 @@
 
 [node name="TileMap" instance=ExtResource( 1 )]
 cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 2, 3, 0, 0, 4, 0, 0, 5, 536870913, 131072, 6, 0, 0, 7, 0, 65536, 131081, 536870913, 3, 131082, 1610612737, 0, 131083, 1610612737, 0, 131084, 1610612737, 0, 131085, 1, 65536, 196610, -1073741824, 1, 196611, 1073741824, 0, 196612, 1073741824, 0, 196613, -536870912, 3, 196617, -536870911, 0, 327679, 536870913, 196608, 262144, 536870913, 0, 262145, 1610612737, 0, 262146, 1610612737, 0, 262147, 1610612737, 0, 262148, 1610612737, 0, 262149, 1610612737, 0, 262150, 1610612737, 0, 262151, 1610612737, 0, 262152, 1610612737, 0, 262153, 1073741825, 2, 262154, 1610612737, 0, 262155, 1610612737, 0, 262156, 1610612737, 0, 262157, 1, 65536 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 2, 3, 0, 0, 4, 0, 0, 5, 536870913, 131072, 6, 0, 0, 7, 0, 65536, 131081, 536870913, 3, 131082, 1610612737, 0, 131083, 1610612737, 0, 131084, 1610612737, 0, 131085, 1, 65536, 131086, 1610612737, 0, 131087, 1610612737, 0, 196610, -1073741824, 1, 196611, 1073741824, 0, 196612, 1073741824, 0, 196613, -536870912, 3, 196617, -536870911, 0, 327679, 536870913, 196608, 262144, 536870913, 0, 262145, 1610612737, 0, 262146, 1610612737, 0, 262147, 1610612737, 0, 262148, 1610612737, 0, 262149, 1610612737, 0, 262150, 1610612737, 0, 262151, 1610612737, 0, 262152, 1610612737, 0, 262153, 1073741825, 2, 262154, 1610612737, 0, 262155, 1610612737, 0, 262156, 1610612737, 0, 262157, 1, 65536, 262158, 1610612737, 0, 262159, 1610612737, 0 )
 
 [node name="IndicatorTilemap" parent="." index="0"]
 tile_data = PoolIntArray( 262153, -536870912, 1 )
 
 [node name="Label" type="Label" parent="Control" index="0"]
-margin_left = 14.0
-margin_top = 105.0
-margin_right = 251.0
-margin_bottom = 156.0
+margin_left = 58.0
+margin_top = 29.0
+margin_right = 295.0
+margin_bottom = 80.0
 custom_fonts/font = ExtResource( 2 )
-text = "move over the tracks"
+text = "use wasd/arrows to move around"
 
 [node name="Label2" type="Label" parent="Control" index="1"]
-margin_left = 212.0
-margin_top = 164.0
-margin_right = 416.0
-margin_bottom = 188.0
+margin_left = 156.0
+margin_top = 169.0
+margin_right = 449.0
+margin_bottom = 238.0
 custom_fonts/font = ExtResource( 2 )
-text = "toggle the bifurcation to start
-use spacebar/action to activate"
+text = "touch and toggle the bifurcation to start
+use spacebar/action to toggle"
 align = 1
