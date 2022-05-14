@@ -19,8 +19,6 @@ func _ready() -> void:
 	EventBus.emit_signal("level_restart")
 
 
-
-
 func _start_level() -> void:
 	GlobalState.level = _current_level
 	GlobalState.level_completed = false
