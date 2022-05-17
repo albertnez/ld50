@@ -3,16 +3,18 @@ class_name MyTileMap
 
 export (float, 1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 2.0
 
-onready var _indicator_tilemap := $IndicatorTilemap
+onready var _indicator_tilemap : TileMap = $IndicatorTilemap
 onready var _tile_wobbler_timer := $TileWobblerTimer
 onready var _action_hover_indicator := $ActionHoverIndicator
 onready var _trolley_warning_sprite := $TrolleyWarningSprite
 onready var _trolley_warning_timer := $TrolleyWarningTimer
+onready var _level_tile_hint_sprite := $LevelTileHintSprite
 onready var _current_main_tileset_id := 1
 
 var _trolley_world_position := Vector2.INF
 var _trolley_warning_position := Vector2.INF
 var _player_starting_world_pos := Vector2.INF
+var _level_tile_hint_pos := Vector2.INF
 var _warning_shown := false
 var _visited_cells = {}
 
@@ -42,6 +44,7 @@ const TROLLEY_START_COORD = Vector2(0, 3)
 const TROLLEY_WARNING_COORD = Vector2(1, 3)
 const MAIN_INDICATOR_TILEMAP_ID = 0
 const INDICATOR_TILEMAP_GREEN_COORD = Vector2(0, 0)
+const INDICATOR_TILEMAP_HINT_COORD = Vector2(1, 0)
 
 const TILEMAP_ENDPOINT_DIRS = {
 	Vector2(0, 0):  # Straight horizontal
@@ -171,6 +174,8 @@ func toggle_world_pos_cell(world_pos: Vector2) -> void:
 	set_cell(pos.x, pos.y, ind, x_flipped, y_flipped, transposed, TILEMAP_FLIP_COORD[coord])
 	var clear_visited = true
 	mark_cell_as_visited(pos, Vector2.INF, clear_visited)
+	if pos == _level_tile_hint_pos:
+		_level_tile_hint_sprite.hide()
 
 
 func is_out_of_bounds(world_pos: Vector2) -> bool:
@@ -294,6 +299,17 @@ func _ready() -> void:
 			_trolley_warning_position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
 			_trolley_warning_sprite.position = _trolley_warning_position
 			set_cell(pos.x, pos.y, EMPTY_TILE)
+	for pos in _indicator_tilemap.get_used_cells_by_id(MAIN_INDICATOR_TILEMAP_ID):
+		var coord := _indicator_tilemap.get_cell_autotile_coord(pos.x, pos.y)
+		if coord == INDICATOR_TILEMAP_HINT_COORD:
+			assert(_level_tile_hint_pos == Vector2.INF)
+			_level_tile_hint_pos = pos
+			_level_tile_hint_sprite.position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
+			_level_tile_hint_sprite.show()
+			var backwards = true
+			_level_tile_hint_sprite.play("", backwards)
+			var clear_cell = true
+			mark_cell_as_visited(pos, Vector2.INF, clear_cell)
 
 
 func _start_warning_sign(seconds: float) -> void:

@@ -14,3 +14,4 @@ margin_bottom = 66.0
 
 [node name="TrolleyWarningSprite" parent="." index="5"]
 animation = "default"
+frame = 1
