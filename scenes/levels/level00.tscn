@@ -30,10 +30,10 @@ use spacebar/action to toggle"
 align = 1
 
 [node name="ActionHoverIndicator" parent="." index="4"]
-frame = 7
+frame = 9
 
 [node name="TrolleyWarningSprite" parent="." index="5"]
 frame = 0
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 7
+frame = 9

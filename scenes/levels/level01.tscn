@@ -15,5 +15,8 @@ margin_right = 251.0
 margin_bottom = 127.0
 text = "delay the trolley forever"
 
+[node name="TrolleyWarningSprite" parent="." index="5"]
+frame = 0
+
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 2
+frame = 7

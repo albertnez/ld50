@@ -5,6 +5,7 @@ export (float, 10, 3000, 10.0) var SPEED = 140.0
 onready var _can_toggle := $CanToggle
 onready var _animation := $Animation
 var _dead := false
+var _move_bounds := Rect2()
 
 
 func is_dead() -> bool:
@@ -18,6 +19,9 @@ func _ready() -> void:
 func set_toggle_is_visible(visible: bool) -> void:
 	_can_toggle.visible = visible
 
+
+func set_moving_bounds(bounds: Rect2) -> void:
+	_move_bounds = bounds
 
 func _process(delta: float) -> void:
 	if _dead:
@@ -34,7 +38,11 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("ui_right"):
 		dir += Vector2.RIGHT
 	
+	var old_pos = position
 	position += dir.normalized() * SPEED * delta
+	if not _move_bounds.has_point(position):
+		position = old_pos
+
 	if dir == Vector2.ZERO:
 		_animation.play("default")
 	else:

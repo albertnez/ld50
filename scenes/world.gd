@@ -32,8 +32,9 @@ func _start_level() -> void:
 	_tilemap.get_parent().add_child_below_node(_tilemap, new_tilemap)
 	_tilemap.queue_free()
 	_tilemap = new_tilemap
-	
-	
+
+	# TODO: It still gets out.
+	_player.set_moving_bounds(_tilemap.get_level_bounds())
 	_player.position = _tilemap.get_player_starting_world_position()
 	_trolley.set_process(false)
 	_trolley.position = Vector2.INF

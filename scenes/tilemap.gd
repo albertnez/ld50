@@ -9,6 +9,7 @@ onready var _action_hover_indicator := $ActionHoverIndicator
 onready var _trolley_warning_sprite := $TrolleyWarningSprite
 onready var _trolley_warning_timer := $TrolleyWarningTimer
 onready var _level_tile_hint_sprite := $LevelTileHintSprite
+onready var _camera = $Camera2D
 onready var _current_main_tileset_id := 1
 
 var _trolley_world_position := Vector2.INF
@@ -86,6 +87,11 @@ const TILEMAP_FLIP_COORD = {
 	Vector2(1, 2): Vector2(2, 2),
 	Vector2(2, 2): Vector2(1, 2),
 }
+
+
+func get_level_bounds() -> Rect2:
+	# Assumes camera centered on (0, 0).
+	return Rect2(Vector2.ZERO, _camera.get_viewport_rect().size * _camera.zoom)
 
 
 func get_from_dir_with_world_positions(world_pos: Vector2, world_prev_pos: Vector2) -> Vector2:
