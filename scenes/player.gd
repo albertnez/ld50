@@ -38,10 +38,13 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("ui_right"):
 		dir += Vector2.RIGHT
 	
-	var old_pos = position
-	position += dir.normalized() * SPEED * delta
-	if not _move_bounds.has_point(position):
-		position = old_pos
+	dir = dir.normalized() * SPEED * delta
+	var vertical = Vector2(0, dir.y)
+	var horizontal = Vector2(dir.x, 0)
+	if _move_bounds.has_point(position + vertical):
+		position += vertical
+	if _move_bounds.has_point(position + horizontal):
+		position += horizontal
 
 	if dir == Vector2.ZERO:
 		_animation.play("default")
