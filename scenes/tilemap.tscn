@@ -175,6 +175,13 @@ format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 2, 3, 0, 0, 4, 0, 0, 5, 0, 1, 6, 0, 0, 7, 0, 65536, 65538, -1610612736, 0, 65541, 1610612736, 3, 65542, 1610612736, 0, 65543, 0, 65536, 131074, -1610612736, 0, 196610, -1073741824, 1, 196611, 1073741824, 0, 196612, 1073741824, 0, 196613, -536870912, 3, 262146, -2147483648, 1, 262147, 1073741824, 0, 262148, 1073741824, 0, 262149, 1073741824, 3 )
 script = ExtResource( 2 )
 
+[node name="ChessBackground" type="Sprite" parent="."]
+show_behind_parent = true
+texture = ExtResource( 6 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 640, 320 )
+
 [node name="IndicatorTilemap" type="TileMap" parent="."]
 show_behind_parent = true
 tile_set = SubResource( 1 )
@@ -204,7 +211,7 @@ zoom = Vector2( 0.5, 0.5 )
 
 [node name="ActionHoverIndicator" type="AnimatedSprite" parent="."]
 frames = SubResource( 26 )
-frame = 5
+frame = 7
 playing = true
 
 [node name="TrolleyWarningSprite" type="AnimatedSprite" parent="."]
@@ -220,15 +227,8 @@ visible = false
 show_behind_parent = true
 scale = Vector2( 0.91, 0.91 )
 frames = SubResource( 15 )
-frame = 7
+frame = 8
 playing = true
-
-[node name="ChessBackground" type="Sprite" parent="."]
-show_behind_parent = true
-texture = ExtResource( 6 )
-centered = false
-region_enabled = true
-region_rect = Rect2( 0, 0, 640, 320 )
 
 [node name="LineDrawer" parent="." instance=ExtResource( 9 )]
 show_behind_parent = true
