@@ -131,6 +131,8 @@ func _on_Trolley_body_entered(body: Node) -> void:
 func _on_Trolley_area_entered(area: Area2D) -> void:
 	if GlobalState.level_lost:
 		return
+	# Trolley as a group, because using 'Trolley' class check causes dependency cycle in godot3
+	# Also check indices, to avoid triggering twice unnecessarily.
 	if area.is_in_group("Trolley") and area.get_index() < get_index():
 		EventBus.emit_signal("trolley_crash_with_trolley")
 
