@@ -12,14 +12,11 @@ margin_top = 11.0
 margin_right = 328.0
 margin_bottom = 66.0
 
-[node name="Camera2D" parent="." index="3"]
+[node name="Camera2D" parent="." index="4"]
 zoom = Vector2( 0.4, 0.4 )
 
-[node name="ActionHoverIndicator" parent="." index="4"]
-frame = 0
+[node name="ActionHoverIndicator" parent="." index="5"]
+frame = 2
 
-[node name="TrolleyWarningSprite" parent="." index="5"]
-frame = 1
-
-[node name="LevelTileHintSprite" parent="." index="7"]
-frame = 1
+[node name="LevelTileHintSprite" parent="." index="8"]
+frame = 7

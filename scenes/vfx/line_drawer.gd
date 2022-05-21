@@ -7,9 +7,15 @@ export (Color) var LINE_COLOR = Color.red
 export (float, 0.5, 64.0) var LINE_WIDTH = 2.0
 export (float, 0.0, 20.0) var POINT_SHIFT_RADIUS = 10.0
 
+var TIP_POINT : Node2D = null
+
 
 func add_point(point : Vector2) -> void:
 	_points.append(point)
+
+
+func set_tip_point(tip : Node2D) -> void:
+	TIP_POINT = tip
 
 
 func _shifted_point(point : Vector2) -> Vector2:
@@ -28,6 +34,9 @@ func _draw() -> void:
 
 		draw_line(last_point, point, LINE_COLOR, LINE_WIDTH)
 		last_point = point
+	
+	if TIP_POINT and TIP_POINT.position != Vector2.INF and last_point != Vector2.INF:
+		draw_line(last_point, TIP_POINT.position, LINE_COLOR, LINE_WIDTH)
 
 
 func _ready() -> void:

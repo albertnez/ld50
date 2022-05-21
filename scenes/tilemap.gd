@@ -79,6 +79,10 @@ const TILEMAP_ENDPOINT_DIRS = {
 }
 
 
+func set_trolley_for_vfx(trolley : Node2D) -> void:
+	_line_drawer.set_tip_point(trolley)
+
+
 func coord_is_bifurcation(coord: Vector2) -> bool:
 	return coord in [Vector2(1, 1), Vector2(2, 1)]
 

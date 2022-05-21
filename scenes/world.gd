@@ -4,7 +4,7 @@ export (int, 0, 15) var _current_level := 0
 
 var _toggle_triggered_trolley_already := false
 onready var _player := $ScaledView/Player
-onready var _tilemap := $ScaledView/TileMap
+onready var _tilemap : MyTileMap = $ScaledView/TileMap
 onready var _trolley := $ScaledView/Trolley
 onready var _trolley_timer := $LevelStartTrolleyTimer
 onready var _level_completed_timer := $LevelCompletedTimer
@@ -38,6 +38,7 @@ func _start_level() -> void:
 	_player.position = _tilemap.get_player_starting_world_position()
 	_trolley.set_process(false)
 	_trolley.position = Vector2.INF
+	_tilemap.set_trolley_for_vfx(_trolley)
 	if not GlobalState.trolley_waits_for_player():
 		# On Menu, trolley starts upon player action
 		_trolley_timer.start(_tilemap.TROLLEY_WAIT_TIME)
