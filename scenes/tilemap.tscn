@@ -1,10 +1,11 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://scenes/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/tilemap_indicators2.png" type="Texture" id=3]
 [ext_resource path="res://assets/images/tilemap_indicators1.png" type="Texture" id=4]
 [ext_resource path="res://scenes/ui/font_tilemap.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/images/chess_background.png" type="Texture" id=6]
 [ext_resource path="res://assets/images/trolley_warning-sheet.png" type="Texture" id=7]
 [ext_resource path="res://assets/images/level_tile_hint.png" type="Texture" id=8]
 
@@ -202,13 +203,12 @@ zoom = Vector2( 0.5, 0.5 )
 
 [node name="ActionHoverIndicator" type="AnimatedSprite" parent="."]
 frames = SubResource( 26 )
-frame = 1
+frame = 6
 playing = true
 
 [node name="TrolleyWarningSprite" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="TrolleyWarningTimer" type="Timer" parent="."]
@@ -219,8 +219,15 @@ visible = false
 show_behind_parent = true
 scale = Vector2( 0.91, 0.91 )
 frames = SubResource( 15 )
-frame = 5
+frame = 3
 playing = true
+
+[node name="ChessBackground" type="Sprite" parent="."]
+show_behind_parent = true
+texture = ExtResource( 6 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 640, 320 )
 
 [connection signal="timeout" from="TileWobblerTimer" to="." method="_on_TileWobblerTimer_timeout"]
 [connection signal="timeout" from="TrolleyWarningTimer" to="." method="_on_TrolleyWarningTimer_timeout"]
