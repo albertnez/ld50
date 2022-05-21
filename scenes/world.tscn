@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/world.gd" type="Script" id=1]
 [ext_resource path="res://scenes/tilemap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/trolley.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/ui/game_ui.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/audio/walk.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/audio/level_up.wav" type="AudioStream" id=7]
@@ -14,7 +13,7 @@
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
-_current_level = 2
+_current_level = 13
 
 [node name="ScaledView" type="Node2D" parent="."]
 
@@ -22,9 +21,7 @@ _current_level = 2
 
 [node name="Player" parent="ScaledView" instance=ExtResource( 3 )]
 
-[node name="Trolley" parent="ScaledView" instance=ExtResource( 4 )]
-position = Vector2( 12.5, 9.5 )
-SECONDS_PER_CELL = 0.5
+[node name="Trolleys" type="Node2D" parent="ScaledView"]
 
 [node name="LevelStartTrolleyTimer" type="Timer" parent="."]
 one_shot = true

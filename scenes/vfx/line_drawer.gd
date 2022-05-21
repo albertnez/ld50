@@ -1,7 +1,11 @@
 extends Node2D
+class_name LineDrawer
 
 onready var _scene_points := $Points
 var _points := []
+
+# To quickly test with multiple trolleys
+const COLOR_ARRAY = [Color.red, Color.aqua, Color.yellowgreen]
 
 export (Color) var LINE_COLOR = Color.red
 export (float, 0.5, 64.0) var LINE_WIDTH = 2.0

@@ -1,26 +1,34 @@
 extends TileMap
 class_name MyTileMap
 
+const LINE_DRAWER_SCENE := preload("res://scenes/vfx/LineDrawer.tscn")
+const TROLLEY_WARNING_SPRITE_SCENE := preload("res://scenes/vfx/TrolleyWarningSprite.tscn")
 export (float, 1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 2.0
 
 onready var _indicator_tilemap : TileMap = $IndicatorTilemap
 onready var _tile_wobbler_timer := $TileWobblerTimer
 onready var _action_hover_indicator := $ActionHoverIndicator
-onready var _trolley_warning_sprite := $TrolleyWarningSprite
+onready var _trolley_warning_sprites := $TrolleyWarningSprites
 onready var _trolley_warning_timer := $TrolleyWarningTimer
 onready var _level_tile_hint_sprite := $LevelTileHintSprite
 
-onready var _line_drawer := $LineDrawer
+onready var _line_drawers := $LineDrawers
+# onready var _line_drawer := $LineDrawer
 
 onready var _camera = $Camera2D
 onready var _current_main_tileset_id := 1
 
-var _trolley_world_position := Vector2.INF
-var _trolley_warning_position := Vector2.INF
+var _trolley_world_positions := []
+
 var _player_starting_world_pos := Vector2.INF
 var _level_tile_hint_pos := Vector2.INF
 var _warning_shown := false
 var _visited_cells = {}
+
+
+func make_visited_cell_key(pos: Vector2, trolley_id: int) -> int:
+	return hash([pos, trolley_id])
+
 
 class VisitedCell:
 	var _coord: Vector2
@@ -79,8 +87,22 @@ const TILEMAP_ENDPOINT_DIRS = {
 }
 
 
-func set_trolley_for_vfx(trolley : Node2D) -> void:
-	_line_drawer.set_tip_point(trolley)
+func stop_tracking_trolleys_for_vfx() -> void:
+	for line_drawer in _line_drawers.get_children():
+		(line_drawer as LineDrawer).set_tip_point(null)
+
+
+func set_trolleys_for_vfx(trolleys : Array) -> void:
+	for child in _line_drawers.get_children():
+		_line_drawers.remove_child(child)
+	for i in trolleys.size():
+		# Node2D instead of Trolley to avoid cyclic dependency.
+		var trolley : Node2D = trolleys[i]
+		assert(i == trolleys[i]._id)
+		var line_drawer : LineDrawer = LINE_DRAWER_SCENE.instance()
+		line_drawer.set_tip_point(trolley)
+		line_drawer.LINE_COLOR = line_drawer.COLOR_ARRAY[i]
+		_line_drawers.add_child(line_drawer)
 
 
 func coord_is_bifurcation(coord: Vector2) -> bool:
@@ -113,14 +135,14 @@ func get_from_dir(pos: Vector2, from_pos: Vector2) -> Vector2:
 	return from_dir
 
 
-func _has_visited_loop(pos: Vector2, from_dir: Vector2) -> bool:
+func _has_visited_loop(pos: Vector2, from_dir: Vector2, trolley_id: int) -> bool:
 	var starting_pos = pos  # Already evaluated as visited
 	var old_pos = pos
 	pos = get_tile_next_pos(pos, from_dir)
 	assert(pos != Vector2.INF)
 	from_dir = get_from_dir(pos, old_pos)
 	while pos != starting_pos:
-		if not is_cell_already_visited(pos, from_dir):
+		if not is_cell_already_visited(pos, from_dir, trolley_id):
 			return false
 		old_pos = pos
 		pos = get_tile_next_pos(pos, from_dir)
@@ -138,41 +160,51 @@ func _visited_cell_from_pos(pos: Vector2, from_dir: Vector2) -> VisitedCell:
 	return VisitedCell.new(coord, x_flipped, y_flipped, transposed, from_dir)
 
 
-func is_cell_already_visited(pos: Vector2, from_dir: Vector2):
-	return _visited_cells.has(pos) and _visited_cells[pos].hash() == _visited_cell_from_pos(pos, from_dir).hash()
+func is_cell_already_visited(pos: Vector2, from_dir: Vector2, trolley_id: int):
+	var key = make_visited_cell_key(pos, trolley_id)
+	return _visited_cells.has(key) and _visited_cells[key].hash() == _visited_cell_from_pos(pos, from_dir).hash()
 
 
 # We asume this is only called by trolley
-func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, clear: bool = false) -> void:
+func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, trolley_id: int = -1, clear: bool = false) -> void:
 	if clear:
-		_visited_cells.erase(pos)
+		for i in get_num_trolleys():
+			# need to erase for any possible trolley staying here.
+			# TODO: Use a better key for _visited_cells.
+			_visited_cells.erase(make_visited_cell_key(pos, i))
 		_indicator_tilemap.set_cell(pos.x, pos.y, -1)
 		return
 	
-	if not GlobalState.level_lost and not GlobalState.level_completed and is_cell_already_visited(pos, from_dir):
+	if not GlobalState.level_lost and not GlobalState.level_completed and is_cell_already_visited(pos, from_dir, trolley_id):
 
-		if _has_visited_loop(pos, from_dir):
+		if _has_visited_loop(pos, from_dir, trolley_id):
 			EventBus.emit_signal("level_completed")
 			return
 
 	if GlobalState.level_completed:
 		return
 
-	_visited_cells[pos] = _visited_cell_from_pos(pos, from_dir)
-	_indicator_tilemap.set_cell(pos.x, pos.y, MAIN_INDICATOR_TILEMAP_ID, false, false, false, INDICATOR_TILEMAP_GREEN_COORD)
-	_line_drawer.add_point(pos*CELL_SIZE + Vector2.ONE*HALF_CELL)
+	var key = make_visited_cell_key(pos, trolley_id)
+	_visited_cells[key] = _visited_cell_from_pos(pos, from_dir)
+	# TODO: Remove _indicator_tilemap for Trolley loops
+#	_indicator_tilemap.set_cell(pos.x, pos.y, MAIN_INDICATOR_TILEMAP_ID, false, false, false, INDICATOR_TILEMAP_GREEN_COORD)
+	_line_drawers.get_child(trolley_id).add_point(pos*CELL_SIZE + Vector2.ONE*HALF_CELL)
 
 
-func mark_world_pos_cell_as_visited(world_pos: Vector2, from_world_pos: Vector2) -> void:
+func mark_world_pos_cell_as_visited(world_pos: Vector2, from_world_pos: Vector2, trolley_id: int) -> void:
 	var pos = world_to_map(world_pos)
 	var from_pos = world_to_map(from_world_pos)
 	var from_dir = get_from_dir(pos, from_pos)
-	mark_cell_as_visited(pos, from_dir)
+	mark_cell_as_visited(pos, from_dir, trolley_id)
 
 
-func get_trolley_starting_world_position() -> Vector2:
-	assert(_trolley_world_position != Vector2.INF)
-	return _trolley_world_position
+func get_num_trolleys() -> int:
+	return _trolley_world_positions.size()
+
+
+func get_trolley_starting_world_position(id: int) -> Vector2:
+	assert(not _trolley_world_positions.empty())
+	return _trolley_world_positions[id]
 
 
 func get_player_starting_world_position() -> Vector2:
@@ -189,8 +221,9 @@ func toggle_world_pos_cell(world_pos: Vector2) -> void:
 	var y_flipped = is_cell_y_flipped(pos.x, pos.y)
 	var transposed = is_cell_transposed(pos.x, pos.y)
 	set_cell(pos.x, pos.y, ind, x_flipped, y_flipped, transposed, TILEMAP_FLIP_COORD[coord])
-	var clear_visited = true
-	mark_cell_as_visited(pos, Vector2.INF, clear_visited)
+	var clear_visited := true
+	var trolley_id := -1
+	mark_cell_as_visited(pos, Vector2.INF, trolley_id, clear_visited)
 	if pos == _level_tile_hint_pos:
 		_level_tile_hint_sprite.hide()
 
@@ -308,13 +341,12 @@ func _ready() -> void:
 			_player_starting_world_pos = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
 			set_cell(pos.x, pos.y, EMPTY_TILE)
 		elif coord == TROLLEY_START_COORD:
-			assert(_trolley_world_position == Vector2.INF)
-			_trolley_world_position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
+			_trolley_world_positions.append(pos * CELL_SIZE + Vector2.ONE*HALF_CELL)
 			set_cell(pos.x, pos.y, _current_main_tileset_id)
 		elif coord == TROLLEY_WARNING_COORD:
-			assert(_trolley_warning_position == Vector2.INF)
-			_trolley_warning_position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
-			_trolley_warning_sprite.position = _trolley_warning_position
+			var warning_sprite = TROLLEY_WARNING_SPRITE_SCENE.instance()
+			warning_sprite.position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
+			_trolley_warning_sprites.add_child(warning_sprite)
 			set_cell(pos.x, pos.y, EMPTY_TILE)
 	for pos in _indicator_tilemap.get_used_cells_by_id(MAIN_INDICATOR_TILEMAP_ID):
 		var coord := _indicator_tilemap.get_cell_autotile_coord(pos.x, pos.y)
@@ -330,7 +362,7 @@ func _ready() -> void:
 
 
 func _start_warning_sign(seconds: float) -> void:
-	_trolley_warning_sprite.show()
+	_trolley_warning_sprites.show()
 	_trolley_warning_timer.start(seconds)
 
 
@@ -341,7 +373,7 @@ func _on_EventBus_trolley_created() -> void:
 
 
 func _on_TrolleyWarningTimer_timeout() -> void:
-	_trolley_warning_sprite.hide()
+	_trolley_warning_sprites.hide()
 
 
 func _on_TileWobblerTimer_timeout() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://scenes/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap.gd" type="Script" id=2]
@@ -6,9 +6,7 @@
 [ext_resource path="res://assets/images/tilemap_indicators1.png" type="Texture" id=4]
 [ext_resource path="res://scenes/ui/font_tilemap.tres" type="DynamicFont" id=5]
 [ext_resource path="res://assets/images/chess_background.png" type="Texture" id=6]
-[ext_resource path="res://assets/images/trolley_warning-sheet.png" type="Texture" id=7]
 [ext_resource path="res://assets/images/level_tile_hint.png" type="Texture" id=8]
-[ext_resource path="res://scenes/vfx/LineDrawer.tscn" type="PackedScene" id=9]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tilemap_indicators1.png 0"
@@ -100,24 +98,6 @@ animations = [ {
 "loop": true,
 "name": "default",
 "speed": 10.0
-} ]
-
-[sub_resource type="AtlasTexture" id=3]
-flags = 4
-atlas = ExtResource( 7 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=4]
-flags = 4
-atlas = ExtResource( 7 )
-region = Rect2( 32, 0, 32, 32 )
-
-[sub_resource type="SpriteFrames" id=2]
-animations = [ {
-"frames": [ SubResource( 3 ), SubResource( 4 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
 } ]
 
 [sub_resource type="AtlasTexture" id=5]
@@ -213,12 +193,6 @@ frames = SubResource( 26 )
 frame = 9
 playing = true
 
-[node name="TrolleyWarningSprite" type="AnimatedSprite" parent="."]
-visible = false
-frames = SubResource( 2 )
-frame = 1
-playing = true
-
 [node name="TrolleyWarningTimer" type="Timer" parent="."]
 one_shot = true
 
@@ -230,11 +204,11 @@ frames = SubResource( 15 )
 frame = 7
 playing = true
 
-[node name="LineDrawer" parent="." instance=ExtResource( 9 )]
+[node name="LineDrawers" type="Node2D" parent="."]
 show_behind_parent = true
-LINE_COLOR = Color( 0.294118, 0, 0, 1 )
-LINE_WIDTH = 20.0
-POINT_SHIFT_RADIUS = 1.0
+
+[node name="TrolleyWarningSprites" type="Node2D" parent="."]
+visible = false
 
 [connection signal="timeout" from="TileWobblerTimer" to="." method="_on_TileWobblerTimer_timeout"]
 [connection signal="timeout" from="TrolleyWarningTimer" to="." method="_on_TrolleyWarningTimer_timeout"]

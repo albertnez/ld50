@@ -8,6 +8,8 @@ onready var _original_seconds_per_cell = SECONDS_PER_CELL
 onready var _slowdown_timer := $SlowDownTimer
 
 var _tilemap: MyTileMap = null
+# There are N trolleys with ids [0, N-1], assigned by World.
+var _id = 0
 
 var _time_in_cell := 0.0
 
@@ -40,7 +42,7 @@ func reset(tilemap: MyTileMap) -> void:
 	_slowdown_timer.stop()
 	_time_in_cell = 0.0
 	_tilemap = tilemap
-	position = _tilemap.get_trolley_starting_world_position()
+	position = _tilemap.get_trolley_starting_world_position(_id)
 	# Assume coming from left
 	# TODO: Make it possible for the initial position to be rotated and transformed.
 	var initial_dir = Vector2.RIGHT
@@ -83,7 +85,7 @@ func _process(delta: float) -> void:
 			_time_in_cell = old_time_in_cell
 			EventBus.emit_signal("trolley_crashed")
 			return
-		_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile)
+		_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile, _id)
 		var next_position = _tilemap.get_next_world_pos(pos_in_new_tile, pos_in_old_tile)
 		if next_position == Vector2.INF:
 			# Took rail the wrong way
@@ -114,7 +116,7 @@ func _process(delta: float) -> void:
 
 
 func _on_Trolley_body_entered(body: Node) -> void:
-	if body is TileMap and not GlobalState.level_lost:
+	if (body is Trolley or body is TileMap) and not GlobalState.level_lost:
 		if GlobalState.level == 0:
 			GlobalState.level_completed = true
 		if GlobalState.is_last_level():

@@ -5,9 +5,11 @@ export (int, 0, 15) var _current_level := 0
 var _toggle_triggered_trolley_already := false
 onready var _player := $ScaledView/Player
 onready var _tilemap : MyTileMap = $ScaledView/TileMap
-onready var _trolley := $ScaledView/Trolley
+onready var _trolleys := $ScaledView/Trolleys
 onready var _trolley_timer := $LevelStartTrolleyTimer
 onready var _level_completed_timer := $LevelCompletedTimer
+
+const trolley_packed_scene := preload("res://scenes/trolley.tscn")
 
 func _ready() -> void:
 	GlobalState.in_menu = _current_level == 0
@@ -36,9 +38,18 @@ func _start_level() -> void:
 	# TODO: It still gets out.
 	_player.set_moving_bounds(_tilemap.get_level_bounds())
 	_player.position = _tilemap.get_player_starting_world_position()
-	_trolley.set_process(false)
-	_trolley.position = Vector2.INF
-	_tilemap.set_trolley_for_vfx(_trolley)
+	
+	for trolley in _trolleys.get_children():
+		trolley.queue_free()
+		_trolleys.remove_child(trolley)
+
+	for id in _tilemap.get_num_trolleys():
+		var trolley = trolley_packed_scene.instance()
+		trolley._id = id
+		trolley.position = Vector2.INF
+		_trolleys.add_child(trolley)
+		trolley.set_process(false)
+	_tilemap.set_trolleys_for_vfx(_trolleys.get_children())
 	if not GlobalState.trolley_waits_for_player():
 		# On Menu, trolley starts upon player action
 		_trolley_timer.start(_tilemap.TROLLEY_WAIT_TIME)
@@ -84,7 +95,8 @@ func _on_LevelStartTrolleyTimer_timeout() -> void:
 
 
 func _on_EventBus_trolley_created() -> void:
-	_trolley.reset(_tilemap)
+	for trolley in _trolleys.get_children():
+		(trolley as Trolley).reset(_tilemap)
 
 
 func _on_EventBus_level_restart() -> void:
@@ -94,7 +106,7 @@ func _on_EventBus_level_restart() -> void:
 func _on_EventBus_level_completed() -> void:
 	GlobalState.level_completed = true
 	# Stop tracking the trolley for VFX
-	_tilemap.set_trolley_for_vfx(null)
+	_tilemap.stop_tracking_trolleys_for_vfx()
 	
 #	_level_completed_timer.start()
 #	yield(_level_completed_timer, "timeout")
