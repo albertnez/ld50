@@ -93,6 +93,9 @@ func _on_EventBus_level_restart() -> void:
 
 func _on_EventBus_level_completed() -> void:
 	GlobalState.level_completed = true
+	# Stop tracking the trolley for VFX
+	_tilemap.set_trolley_for_vfx(null)
+	
 #	_level_completed_timer.start()
 #	yield(_level_completed_timer, "timeout")
 #	_next_level()
