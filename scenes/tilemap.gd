@@ -9,6 +9,9 @@ onready var _action_hover_indicator := $ActionHoverIndicator
 onready var _trolley_warning_sprite := $TrolleyWarningSprite
 onready var _trolley_warning_timer := $TrolleyWarningTimer
 onready var _level_tile_hint_sprite := $LevelTileHintSprite
+
+onready var _line_drawer := $LineDrawer
+
 onready var _camera = $Camera2D
 onready var _current_main_tileset_id := 1
 
@@ -148,8 +151,12 @@ func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, clear: bool = false) 
 			EventBus.emit_signal("level_completed")
 			return
 
+	if GlobalState.level_completed:
+		return
+
 	_visited_cells[pos] = _visited_cell_from_pos(pos, from_dir)
 	_indicator_tilemap.set_cell(pos.x, pos.y, MAIN_INDICATOR_TILEMAP_ID, false, false, false, INDICATOR_TILEMAP_GREEN_COORD)
+	_line_drawer.add_point(pos*CELL_SIZE + Vector2.ONE*HALF_CELL)
 
 
 func mark_world_pos_cell_as_visited(world_pos: Vector2, from_world_pos: Vector2) -> void:
