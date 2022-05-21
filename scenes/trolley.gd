@@ -60,7 +60,9 @@ func reset(tilemap: MyTileMap) -> void:
 func _ready() -> void:
 	EventBus.connect("trolley_crashed", self, "_handle_trolley_crash")
 	EventBus.connect("trolley_killed_someone", self, "_handle_trolley_crash")
+	EventBus.connect("trolley_crash_with_trolley", self, "_handle_trolley_crash")
 	EventBus.connect("person_crashed", self, "_handle_trolley_crash")
+	add_to_group("Trolley")
 	pass
 
 
@@ -116,12 +118,21 @@ func _process(delta: float) -> void:
 
 
 func _on_Trolley_body_entered(body: Node) -> void:
-	if (body is Trolley or body is TileMap) and not GlobalState.level_lost:
+	if GlobalState.level_lost:
+		return
+	if body is TileMap:
 		if GlobalState.level == 0:
 			GlobalState.level_completed = true
 		if GlobalState.is_last_level():
 			GlobalState.in_true_end = true
 		EventBus.emit_signal("trolley_killed_someone")
+
+
+func _on_Trolley_area_entered(area: Area2D) -> void:
+	if GlobalState.level_lost:
+		return
+	if area.is_in_group("Trolley") and area.get_index() < get_index():
+		EventBus.emit_signal("trolley_crash_with_trolley")
 
 
 func _handle_trolley_crash() -> void:
@@ -136,4 +147,6 @@ func _handle_trolley_crash() -> void:
 
 func _on_SlowDownTimer_timeout() -> void:
 	update_trolley_speed(SECONDS_PER_CELL * 2.0)
+
+
 

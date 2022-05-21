@@ -20,6 +20,7 @@ func _ready() -> void:
 	EventBus.connect("trolley_crashed", self, "_on_game_over", ["The trolley crashed off piste!", false])
 	EventBus.connect("person_crashed", self, "_on_game_over", ["You died!", false])
 	EventBus.connect("trolley_killed_someone", self, "_on_game_over", ["The trolley killed someone", true])
+	EventBus.connect("trolley_crash_with_trolley", self, "_on_game_over", ["The trolleys crashed with each other!", true])
 
 
 func _on_game_over(msg: String, killed_someone: bool) -> void:

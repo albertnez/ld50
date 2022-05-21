@@ -14,6 +14,7 @@ func _ready() -> void:
 	EventBus.connect("person_crashed", $CrashPlayer, "play")
 	EventBus.connect("trolley_crashed", $CrashPlayer, "play")
 	EventBus.connect("trolley_killed_someone", $CrashPlayer, "play")
+	EventBus.connect("trolley_crash_with_trolley", $CrashPlayer, "play")
 	
 	pass # Replace with function body.
 
