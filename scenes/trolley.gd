@@ -66,8 +66,6 @@ func _ready() -> void:
 	pass
 
 
-
-
 func _process(delta: float) -> void:
 	assert(_is_resetted)
 	if SECONDS_PER_CELL < 1000:
@@ -149,6 +147,3 @@ func _handle_trolley_crash() -> void:
 
 func _on_SlowDownTimer_timeout() -> void:
 	update_trolley_speed(SECONDS_PER_CELL * 2.0)
-
-
-

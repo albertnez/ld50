@@ -165,18 +165,17 @@ func is_cell_already_visited(pos: Vector2, from_dir: Vector2, trolley_id: int):
 	return _visited_cells.has(key) and _visited_cells[key].hash() == _visited_cell_from_pos(pos, from_dir).hash()
 
 
-# We asume this is only called by trolley
-func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, trolley_id: int = -1, clear: bool = false) -> void:
-	if clear:
-		for i in get_num_trolleys():
-			# need to erase for any possible trolley staying here.
-			# TODO: Use a better key for _visited_cells.
-			_visited_cells.erase(make_visited_cell_key(pos, i))
-		_indicator_tilemap.set_cell(pos.x, pos.y, -1)
-		return
-	
-	if not GlobalState.level_lost and not GlobalState.level_completed and is_cell_already_visited(pos, from_dir, trolley_id):
+func mark_cell_as_cleared(pos: Vector2) -> void:
+	for i in get_num_trolleys():
+		# need to erase for any possible trolley staying here.
+		# TODO: Use a better key for _visited_cells.
+		_visited_cells.erase(make_visited_cell_key(pos, i))
+	_indicator_tilemap.set_cell(pos.x, pos.y, -1)
 
+
+# We asume this is only called by trolley
+func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, trolley_id: int) -> void:	
+	if not GlobalState.level_lost and not GlobalState.level_completed and is_cell_already_visited(pos, from_dir, trolley_id):
 		if _has_visited_loop(pos, from_dir, trolley_id):
 			EventBus.emit_signal("level_completed")
 			return
@@ -186,8 +185,6 @@ func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, trolley_id: int = -1,
 
 	var key = make_visited_cell_key(pos, trolley_id)
 	_visited_cells[key] = _visited_cell_from_pos(pos, from_dir)
-	# TODO: Remove _indicator_tilemap for Trolley loops
-#	_indicator_tilemap.set_cell(pos.x, pos.y, MAIN_INDICATOR_TILEMAP_ID, false, false, false, INDICATOR_TILEMAP_GREEN_COORD)
 	_line_drawers.get_child(trolley_id).add_point(pos*CELL_SIZE + Vector2.ONE*HALF_CELL)
 
 
@@ -221,9 +218,7 @@ func toggle_world_pos_cell(world_pos: Vector2) -> void:
 	var y_flipped = is_cell_y_flipped(pos.x, pos.y)
 	var transposed = is_cell_transposed(pos.x, pos.y)
 	set_cell(pos.x, pos.y, ind, x_flipped, y_flipped, transposed, TILEMAP_FLIP_COORD[coord])
-	var clear_visited := true
-	var trolley_id := -1
-	mark_cell_as_visited(pos, Vector2.INF, trolley_id, clear_visited)
+	mark_cell_as_cleared(pos)
 	if pos == _level_tile_hint_pos:
 		_level_tile_hint_sprite.hide()
 
@@ -357,8 +352,7 @@ func _ready() -> void:
 			_level_tile_hint_sprite.show()
 			var backwards = true
 			_level_tile_hint_sprite.play("", backwards)
-			var clear_cell = true
-			mark_cell_as_visited(pos, Vector2.INF, clear_cell)
+			mark_cell_as_cleared(pos)
 
 
 func _start_warning_sign(seconds: float) -> void:
