@@ -199,9 +199,15 @@ func mark_world_pos_cell_as_visited(world_pos: Vector2, from_world_pos: Vector2,
 	mark_cell_as_visited(pos, from_dir, trolley_id)
 
 # TODO: consider doing the loop check here as well.
+# These midpoints are important because the value is fetched when partially removing the trail.
 func add_trolley_line_midpoint(world_pos: Vector2, trolley_id: int) -> void:
 	var pos := world_to_map(world_pos)
 	_line_drawers.get_child(trolley_id).add_point(_pos_to_tile_center_world(pos))
+
+
+# These points are not that important, and we add them to make the line smoother
+func add_trolley_line_decorative_point(world_pos: Vector2, trolley_id: int) -> void:
+	_line_drawers.get_child(trolley_id).add_point(world_pos)
 
 
 func get_num_trolleys() -> int:
