@@ -27,6 +27,7 @@ var _from_dir := Vector2.INF
 var _is_turning: bool = false
 var _is_resetted: bool = false
 var _is_crashed: bool = false
+var _reached_tile_midpoint: bool = false
 
 
 func update_trolley_speed(new_seconds_per_cell: float) -> void:
@@ -70,33 +71,40 @@ func _process(delta: float) -> void:
 	assert(_is_resetted)
 	if SECONDS_PER_CELL < 1000:
 		_time_in_cell += delta
-	if not GlobalState.level_lost and _time_in_cell > SECONDS_PER_CELL:
-		# We move to the next cell.
-		var old_time_in_cell = _time_in_cell
-		_time_in_cell -= SECONDS_PER_CELL
-		# OK for curves to consider them as diagonals
-		var direction = _to_position - _from_position
-		var pos_in_new_tile = _to_position + direction*0.1
-		var pos_in_old_tile = _to_position - direction*0.1
-		_from_dir = _tilemap.get_from_dir_with_world_positions(pos_in_new_tile, pos_in_old_tile)
-		var from_pos_in_old_tile = _from_position - direction*0.1
-		if _tilemap.is_out_of_bounds(pos_in_new_tile):
-			# Went out in the emptyness
-			_time_in_cell = old_time_in_cell
-			EventBus.emit_signal("trolley_crashed")
-			return
-		_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile, _id)
-		var next_position = _tilemap.get_next_world_pos(pos_in_new_tile, pos_in_old_tile)
-		if next_position == Vector2.INF:
-			# Took rail the wrong way
-			# Undo the time subtraction from earlier:
-			_time_in_cell = old_time_in_cell
-			EventBus.emit_signal("trolley_crashed")
-			return
-		_from_position = _to_position
-		_to_position = next_position
-		var diff := _to_position - _from_position
-		_is_turning = diff.x != 0 and diff.y != 0
+	if not GlobalState.level_lost:
+		if _time_in_cell > SECONDS_PER_CELL:
+			# We move to the next cell.
+			var old_time_in_cell = _time_in_cell
+			_time_in_cell -= SECONDS_PER_CELL
+			# OK for curves to consider them as diagonals
+			var direction = _to_position - _from_position
+			var pos_in_new_tile = _to_position + direction*0.1
+			var pos_in_old_tile = _to_position - direction*0.1
+			_from_dir = _tilemap.get_from_dir_with_world_positions(pos_in_new_tile, pos_in_old_tile)
+			var from_pos_in_old_tile = _from_position - direction*0.1
+			if _tilemap.is_out_of_bounds(pos_in_new_tile):
+				# Went out in the emptyness
+				_time_in_cell = old_time_in_cell
+				EventBus.emit_signal("trolley_crashed")
+				return
+			_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile, _id)
+			var next_position = _tilemap.get_next_world_pos(pos_in_new_tile, pos_in_old_tile)
+			if next_position == Vector2.INF:
+				# Took rail the wrong way
+				# Undo the time subtraction from earlier:
+				_time_in_cell = old_time_in_cell
+				EventBus.emit_signal("trolley_crashed")
+				return
+			_from_position = _to_position
+			_to_position = next_position
+			var diff := _to_position - _from_position
+			_is_turning = diff.x != 0 and diff.y != 0
+			_reached_tile_midpoint = false
+		elif _time_in_cell*2 > SECONDS_PER_CELL and not _reached_tile_midpoint:
+			_reached_tile_midpoint = true
+			_tilemap.add_trolley_line_midpoint(position, _id)
+			
+	
 
 	var time_step : float = _time_in_cell / SECONDS_PER_CELL
 	if not _is_turning:

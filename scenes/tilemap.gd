@@ -50,6 +50,9 @@ class VisitedCell:
 
 const CELL_SIZE = 32
 const HALF_CELL = CELL_SIZE * 0.5
+func _pos_to_tile_center_world(pos: Vector2) -> Vector2:
+	return pos*CELL_SIZE + Vector2.ONE*HALF_CELL
+
 
 const PLAYER_START_COORD = Vector2(0, 2)
 const TROLLEY_START_COORD = Vector2(0, 3)
@@ -166,10 +169,12 @@ func is_cell_already_visited(pos: Vector2, from_dir: Vector2, trolley_id: int):
 
 
 func mark_cell_as_cleared(pos: Vector2) -> void:
+	# need to erase for any possible trolley staying here.
+	# TODO: Use a better key for _visited_cells.
 	for i in get_num_trolleys():
-		# need to erase for any possible trolley staying here.
-		# TODO: Use a better key for _visited_cells.
 		_visited_cells.erase(make_visited_cell_key(pos, i))
+	for line in _line_drawers.get_children():
+		(line as LineDrawer).remove_points_until(_pos_to_tile_center_world(pos))
 	_indicator_tilemap.set_cell(pos.x, pos.y, -1)
 
 
@@ -185,7 +190,6 @@ func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, trolley_id: int) -> v
 
 	var key = make_visited_cell_key(pos, trolley_id)
 	_visited_cells[key] = _visited_cell_from_pos(pos, from_dir)
-	_line_drawers.get_child(trolley_id).add_point(pos*CELL_SIZE + Vector2.ONE*HALF_CELL)
 
 
 func mark_world_pos_cell_as_visited(world_pos: Vector2, from_world_pos: Vector2, trolley_id: int) -> void:
@@ -193,6 +197,11 @@ func mark_world_pos_cell_as_visited(world_pos: Vector2, from_world_pos: Vector2,
 	var from_pos = world_to_map(from_world_pos)
 	var from_dir = get_from_dir(pos, from_pos)
 	mark_cell_as_visited(pos, from_dir, trolley_id)
+
+# TODO: consider doing the loop check here as well.
+func add_trolley_line_midpoint(world_pos: Vector2, trolley_id: int) -> void:
+	var pos := world_to_map(world_pos)
+	_line_drawers.get_child(trolley_id).add_point(_pos_to_tile_center_world(pos))
 
 
 func get_num_trolleys() -> int:
@@ -274,12 +283,9 @@ func _get_elem_not_in_pair_or_inf(pair: Array, elem: Vector2) -> Vector2:
 func _target_dir_to_world_pos(tile_pos: Vector2, target_dir: Vector2):
 	if target_dir == Vector2.INF:
 		return Vector2.INF
+	return _pos_to_tile_center_world(tile_pos) + target_dir * HALF_CELL
 
-	return (tile_pos * CELL_SIZE 
-		+ Vector2.ONE * HALF_CELL  # Centered in the tile
-		+ target_dir * HALF_CELL)
-	
-	
+
 # Returns the next world_pos for the current `tile_world_pos`.
 # Inf impossible, returns Vector2.INF
 func get_next_world_pos(tile_world_pos: Vector2, prev_tile_world_pos: Vector2 = Vector2.INF) -> Vector2:
@@ -319,7 +325,7 @@ func is_world_pos_a_toggable_tile(world_pos: Vector2) -> bool:
 
 func set_action_hover_visible(world_pos: Vector2, set_visible: bool) -> void:
 	var pos := world_to_map(world_pos)
-	_action_hover_indicator.position = pos * CELL_SIZE + Vector2.ONE * HALF_CELL
+	_action_hover_indicator.position = _pos_to_tile_center_world(pos)
 	_action_hover_indicator.visible = set_visible
 
 
@@ -333,14 +339,14 @@ func _ready() -> void:
 		var coord := get_cell_autotile_coord(pos.x, pos.y)
 		if coord == PLAYER_START_COORD:
 			assert(_player_starting_world_pos == Vector2.INF)
-			_player_starting_world_pos = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
+			_player_starting_world_pos = _pos_to_tile_center_world(pos)
 			set_cell(pos.x, pos.y, EMPTY_TILE)
 		elif coord == TROLLEY_START_COORD:
-			_trolley_world_positions.append(pos * CELL_SIZE + Vector2.ONE*HALF_CELL)
+			_trolley_world_positions.append(_pos_to_tile_center_world(pos))
 			set_cell(pos.x, pos.y, _current_main_tileset_id)
 		elif coord == TROLLEY_WARNING_COORD:
 			var warning_sprite = TROLLEY_WARNING_SPRITE_SCENE.instance()
-			warning_sprite.position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
+			warning_sprite.position = _pos_to_tile_center_world(pos)
 			_trolley_warning_sprites.add_child(warning_sprite)
 			set_cell(pos.x, pos.y, EMPTY_TILE)
 	for pos in _indicator_tilemap.get_used_cells_by_id(MAIN_INDICATOR_TILEMAP_ID):
@@ -348,7 +354,7 @@ func _ready() -> void:
 		if coord == INDICATOR_TILEMAP_HINT_COORD:
 			assert(_level_tile_hint_pos == Vector2.INF)
 			_level_tile_hint_pos = pos
-			_level_tile_hint_sprite.position = pos * CELL_SIZE + Vector2.ONE*HALF_CELL
+			_level_tile_hint_sprite.position = _pos_to_tile_center_world(pos)
 			_level_tile_hint_sprite.show()
 			var backwards = true
 			_level_tile_hint_sprite.play("", backwards)
