@@ -7,13 +7,16 @@ tile_data = PoolIntArray( 4, 536870913, 131072, 7, -1073741823, 0, 65536, 1, 196
 TROLLEY_WAIT_TIME = 3.0
 
 [node name="DefaultLabel" parent="Control" index="0"]
-margin_left = 6.0
-margin_top = 11.0
-margin_right = 328.0
-margin_bottom = 66.0
+margin_left = 128.0
+margin_top = 220.0
+margin_right = 450.0
+margin_bottom = 275.0
 text = "reverse
 
 "
 
-[node name="TrolleyWarningSprite" parent="." index="5"]
-animation = "default"
+[node name="ActionHoverIndicator" parent="." index="5"]
+frame = 8
+
+[node name="LevelTileHintSprite" parent="." index="7"]
+frame = 8
