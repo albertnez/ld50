@@ -16,3 +16,9 @@ custom_fonts/font = ExtResource( 1 )
 text = "sometimes, you can only
 DELAY THE INEVITABLE"
 align = 1
+
+[node name="ActionHoverIndicator" parent="." index="5"]
+frame = 1
+
+[node name="LevelTileHintSprite" parent="." index="7"]
+frame = 1

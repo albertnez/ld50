@@ -18,5 +18,5 @@ zoom = Vector2( 0.4, 0.4 )
 [node name="ActionHoverIndicator" parent="." index="5"]
 frame = 2
 
-[node name="LevelTileHintSprite" parent="." index="8"]
-frame = 7
+[node name="LevelTileHintSprite" parent="." index="7"]
+frame = 3

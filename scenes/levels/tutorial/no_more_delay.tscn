@@ -14,6 +14,11 @@ margin_bottom = 197.0
 text = "Now hurry up, the TROLLEY
 won't wait for you anymore"
 
-[node name="TrolleyWarningSprite" parent="." index="5"]
-animation = "default"
-frame = 1
+[node name="Camera2D" parent="." index="4"]
+current = false
+
+[node name="ActionHoverIndicator" parent="." index="5"]
+frame = 9
+
+[node name="LevelTileHintSprite" parent="." index="7"]
+frame = 3

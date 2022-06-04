@@ -3,7 +3,7 @@ class_name MyTileMap
 
 const LINE_DRAWER_SCENE := preload("res://scenes/vfx/LineDrawer.tscn")
 const TROLLEY_WARNING_SPRITE_SCENE := preload("res://scenes/vfx/TrolleyWarningSprite.tscn")
-export (float, 1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 2.0
+export (float, -1.0, 10.0, 1.0) var TROLLEY_WAIT_TIME = 2.0
 
 onready var _indicator_tilemap : TileMap = $IndicatorTilemap
 onready var _tile_wobbler_timer := $TileWobblerTimer
@@ -335,10 +335,17 @@ func set_action_hover_visible(world_pos: Vector2, set_visible: bool) -> void:
 	_action_hover_indicator.visible = set_visible
 
 
+func trolley_waits_for_player() -> bool:
+	return TROLLEY_WAIT_TIME == -1.0
+
+
 const EMPTY_TILE = -1
 func _ready() -> void:
+	# Not sure what unset the camera.current
+	if not _camera.current:
+		_camera.current = true
 	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
-	if not GlobalState.trolley_waits_for_player():
+	if not trolley_waits_for_player():
 		_start_warning_sign(TROLLEY_WAIT_TIME)
 	
 	for pos in get_used_cells_by_id(_current_main_tileset_id):

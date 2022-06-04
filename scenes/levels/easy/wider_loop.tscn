@@ -12,6 +12,3 @@ margin_right = 328.0
 margin_bottom = 66.0
 text = "
 "
-
-[node name="TrolleyWarningSprite" parent="." index="5"]
-animation = "default"

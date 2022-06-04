@@ -11,6 +11,3 @@ margin_left = 6.0
 margin_top = 11.0
 margin_right = 328.0
 margin_bottom = 66.0
-
-[node name="TrolleyWarningSprite" parent="." index="5"]
-animation = "default"

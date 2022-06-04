@@ -22,14 +22,9 @@ func _ready() -> void:
 
 
 func _start_level() -> void:
-	GlobalState.level = _current_level
-	GlobalState.level_completed = false
-	GlobalState.level_lost = false
 	_toggle_triggered_trolley_already = false
-
-	var level = str(_current_level).pad_zeros(2)
-	var path = str("res://scenes/levels/level", level, ".tscn")
-	var tilemap_scene := load(path)
+	GlobalState.set_new_level(_current_level)
+	var tilemap_scene := GlobalState.get_level_scene()
 	var new_tilemap = tilemap_scene.instance()
 	_tilemap.get_parent().add_child_below_node(_tilemap, new_tilemap)
 	_tilemap.queue_free()
@@ -50,7 +45,7 @@ func _start_level() -> void:
 		_trolleys.add_child(trolley)
 		trolley.set_process(false)
 	_tilemap.set_trolleys_for_vfx(_trolleys.get_children())
-	if not GlobalState.trolley_waits_for_player():
+	if not _tilemap.trolley_waits_for_player():
 		# On Menu, trolley starts upon player action
 		_trolley_timer.start(_tilemap.TROLLEY_WAIT_TIME)
 
@@ -71,10 +66,13 @@ func _process(delta: float) -> void:
 		EventBus.emit_signal("toggle")
 		player_toggled = true
 
-	if GlobalState.trolley_waits_for_player():
-		if player_toggled and not _toggle_triggered_trolley_already:
-			EventBus.emit_signal("trolley_created")
-			_toggle_triggered_trolley_already = true
+	var create_trolley = (
+		_tilemap.trolley_waits_for_player() and
+		player_toggled and 
+		not _toggle_triggered_trolley_already)
+	if create_trolley:
+		EventBus.emit_signal("trolley_created")
+		_toggle_triggered_trolley_already = true
 	
 	if GlobalState.in_true_end:
 		return
