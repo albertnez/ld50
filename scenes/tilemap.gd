@@ -77,6 +77,11 @@ const TILEMAP_ENDPOINT_DIRS = {
 			[Vector2.LEFT, Vector2.RIGHT],
 			[Vector2.LEFT, Vector2.DOWN],
 		],
+	Vector2(3, 1):  # Y-shaped, Left-Up, Left-Down.
+		[
+			[Vector2.LEFT, Vector2.UP],
+			[Vector2.LEFT, Vector2.DOWN],
+		],
 	Vector2(2, 1):  # Trifurcation
 		[
 			[Vector2.LEFT, Vector2.RIGHT],
@@ -109,7 +114,8 @@ func set_trolleys_for_vfx(trolleys : Array) -> void:
 
 
 func coord_is_bifurcation(coord: Vector2) -> bool:
-	return coord in [Vector2(1, 1), Vector2(2, 1)]
+	# Array of arrays
+	return TILEMAP_ENDPOINT_DIRS[coord][0] is Array
 
 
 # Note: For a toggleable tile with 3 states, can be encoded here with a 3-length cycle.
