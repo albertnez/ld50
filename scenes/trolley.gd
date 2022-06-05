@@ -59,10 +59,10 @@ func reset(tilemap: MyTileMap) -> void:
 
 
 func _ready() -> void:
-	EventBus.connect("trolley_crashed", self, "_handle_trolley_crash")
-	EventBus.connect("trolley_killed_someone", self, "_handle_trolley_crash")
-	EventBus.connect("trolley_crash_with_trolley", self, "_handle_trolley_crash")
-	EventBus.connect("person_crashed", self, "_handle_trolley_crash")
+	EventBus.connect("trolley_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.STRAIGHT_LINE])
+	EventBus.connect("trolley_killed_someone", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
+	EventBus.connect("trolley_crash_with_trolley", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
+	EventBus.connect("person_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
 	add_to_group("Trolley")
 	pass
 
@@ -145,12 +145,19 @@ func _on_Trolley_area_entered(area: Area2D) -> void:
 		EventBus.emit_signal("trolley_crash_with_trolley")
 
 
-func _handle_trolley_crash() -> void:
+enum TrolleyMoveStrategy {
+	FOLLOW_TRACK,
+	STRAIGHT_LINE,
+	RANDOM_DIR,
+}
+	
+func _handle_trolley_crash(trolley_move_strategy: int) -> void:
+	assert(TrolleyMoveStrategy.values().has(trolley_move_strategy))
 	GlobalState.level_lost = true
 	_is_crashed = true
 	_slowdown_timer.start()
 	_on_SlowDownTimer_timeout()
-	if _is_turning:
+	if trolley_move_strategy == TrolleyMoveStrategy.STRAIGHT_LINE and _is_turning:
 		_is_turning = false
 		_from_position = _to_position + _from_dir*MyTileMap.CELL_SIZE
 
