@@ -19,16 +19,19 @@ onready var _camera = $Camera2D
 onready var _current_main_tileset_id := 1
 
 
-class TrolleyStartingSetup:
+class TrolleySetup:
 	var world_pos: Vector2
+	var pos: Vector2
 	var dir: Vector2
 	
-	func _init(world_pos: Vector2, dir: Vector2):
+	func _init(world_pos: Vector2, pos: Vector2, dir: Vector2):
 		self.world_pos = world_pos
+		self.pos = pos
 		self.dir = dir
 
-# Array of TrolleyStartingSetup
+# Array of TrolleySetup
 var _trolley_strarting_setup := []
+var _trolley_last_setup := []
 
 var _player_starting_world_pos := Vector2.INF
 var _level_tile_hint_pos := Vector2.INF
@@ -158,6 +161,11 @@ func get_from_dir(pos: Vector2, from_pos: Vector2) -> Vector2:
 	return from_dir
 
 
+func _has_visited_loop_for_trolley(trolley_id: int) -> bool:
+	var setup : TrolleySetup = _trolley_last_setup[trolley_id]
+	return _has_visited_loop(setup.pos, setup.dir, trolley_id)
+	
+
 func _has_visited_loop(pos: Vector2, from_dir: Vector2, trolley_id: int) -> bool:
 	var starting_pos = pos  # Already evaluated as visited
 	var old_pos = pos
@@ -202,7 +210,9 @@ func mark_cell_as_cleared(pos: Vector2) -> void:
 func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, trolley_id: int) -> void:	
 	if not GlobalState.level_lost and not GlobalState.level_completed and is_cell_already_visited(pos, from_dir, trolley_id):
 		if _has_visited_loop(pos, from_dir, trolley_id):
-			EventBus.emit_signal("level_completed")
+			GlobalState.set_trolley_has_loop(trolley_id, true)
+			if GlobalState.all_trolleys_have_loop(get_num_trolleys()):
+				EventBus.emit_signal("level_completed")
 			return
 
 	if GlobalState.level_completed:
@@ -210,6 +220,7 @@ func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, trolley_id: int) -> v
 
 	var key = make_visited_cell_key(pos, trolley_id)
 	_visited_cells[key] = _visited_cell_from_pos(pos, from_dir)
+	_trolley_last_setup[trolley_id] = TrolleySetup.new(_pos_to_tile_center_world(pos), pos, from_dir)
 
 
 func mark_world_pos_cell_as_visited(world_pos: Vector2, from_world_pos: Vector2, trolley_id: int) -> void:
@@ -234,7 +245,7 @@ func get_num_trolleys() -> int:
 	return _trolley_strarting_setup.size()
 
 
-func get_trolley_starting_world_position(id: int) -> TrolleyStartingSetup:
+func get_trolley_starting_world_position(id: int) -> TrolleySetup:
 	assert(not _trolley_strarting_setup.empty())
 	return _trolley_strarting_setup[id]
 
@@ -256,6 +267,9 @@ func toggle_world_pos_cell(world_pos: Vector2) -> void:
 	mark_cell_as_cleared(pos)
 	if pos == _level_tile_hint_pos:
 		_level_tile_hint_sprite.hide()
+	# Recalculate loops, since toggle breaks them
+	for id in get_num_trolleys():
+		GlobalState.set_trolley_has_loop(id, _has_visited_loop_for_trolley(id))
 
 
 func is_out_of_bounds(world_pos: Vector2) -> bool:
@@ -382,11 +396,13 @@ func _ready() -> void:
 				dir.x *= -1
 			if is_cell_y_flipped(pos.x, pos.y):
 				dir.y *= -1	
-			var trolley_setup := TrolleyStartingSetup.new(
+			var trolley_setup := TrolleySetup.new(
 				_pos_to_tile_center_world(pos),
+				pos,
 				dir
 			)
 			_trolley_strarting_setup.append(trolley_setup)
+			_trolley_last_setup.append(trolley_setup)
 			# We can't clear the cell, because its transformation is used to calculate the
 			# next position for the trolley to navigate
 			# set_cell(pos.x, pos.y, _current_main_tileset_id)

@@ -39,11 +39,27 @@ const LEVEL_LIST := [
 	preload("res://scenes/levels/level12.tscn"),
 ]
 
+const NUM_MAX_TROLLEYS = 8
+var _trolley_has_loop : Array
+
+
+func set_trolley_has_loop(id: int, has_loop: bool) -> void:
+	_trolley_has_loop[id] = has_loop
+
+
+func all_trolleys_have_loop(num_trolleys: int) -> bool:
+	for id in num_trolleys:
+		if not _trolley_has_loop[id]:
+			return false
+	return true
+
 
 func set_new_level(new_level: int) -> void:
 	level = new_level
 	level_completed = false
 	level_lost = false
+	for id in NUM_MAX_TROLLEYS:
+		_trolley_has_loop[id] = false
 
 
 func get_level_scene() -> PackedScene:
@@ -55,4 +71,4 @@ func is_last_level() -> bool:
 
 
 func _ready() -> void:
-	pass
+	_trolley_has_loop.resize(NUM_MAX_TROLLEYS)
