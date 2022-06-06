@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/trolley.png-100dd5406a97c9f4db6b63da1661a866.stex"
+path="res://.import/trolley_white.png-9e27eae3262f0e6fa06341cf1ebe96cb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/trolley.png"
-dest_files=[ "res://.import/trolley.png-100dd5406a97c9f4db6b63da1661a866.stex" ]
+source_file="res://assets/images/trolley_white.png"
+dest_files=[ "res://.import/trolley_white.png-9e27eae3262f0e6fa06341cf1ebe96cb.stex" ]
 
 [params]
 

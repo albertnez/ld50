@@ -121,7 +121,9 @@ func set_trolleys_for_vfx(trolleys : Array) -> void:
 		assert(i == trolleys[i]._id)
 		var line_drawer : LineDrawer = LINE_DRAWER_SCENE.instance()
 		line_drawer.set_tip_point(trolley)
-		line_drawer.LINE_COLOR = line_drawer.COLOR_ARRAY[i]
+		var color : Color = GlobalState.TROLLEY_COLOR_LIST[i]
+		line_drawer.LINE_COLOR = color
+		trolley.modulate = color
 		_line_drawers.add_child(line_drawer)
 
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/images/trolley.png" type="Texture" id=1]
+[ext_resource path="res://assets/images/trolley_white.png" type="Texture" id=1]
 [ext_resource path="res://scenes/trolley.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=3]
@@ -23,10 +23,12 @@ animations = [ {
 extents = Vector2( 10.5, 6.5 )
 
 [node name="Trolley" type="Area2D"]
+modulate = Color( 0.933333, 0.52549, 0.584314, 1 )
 script = ExtResource( 2 )
 
 [node name="Trolley" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

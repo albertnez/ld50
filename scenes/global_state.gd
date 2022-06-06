@@ -7,6 +7,11 @@ var in_menu = true
 var level = 0
 var in_true_end = false
 
+const TROLLEY_COLOR_LIST := [
+	Color("ee8695"),  # Palette Red.
+	Color.aquamarine,
+]
+
 const LEVEL_LIST := [
 	# Introduction
 	#0
