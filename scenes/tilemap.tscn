@@ -190,7 +190,7 @@ zoom = Vector2( 0.5, 0.5 )
 
 [node name="ActionHoverIndicator" type="AnimatedSprite" parent="."]
 frames = SubResource( 26 )
-frame = 1
+frame = 7
 playing = true
 
 [node name="TrolleyWarningTimer" type="Timer" parent="."]
@@ -201,7 +201,7 @@ visible = false
 show_behind_parent = true
 scale = Vector2( 0.91, 0.91 )
 frames = SubResource( 15 )
-frame = 9
+frame = 7
 playing = true
 
 [node name="LineDrawers" type="Node2D" parent="."]

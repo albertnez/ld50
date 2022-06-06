@@ -3,9 +3,10 @@
 [ext_resource path="res://scenes/vfx/line_drawer.gd" type="Script" id=1]
 
 [node name="LineDrawer" type="Node2D"]
+self_modulate = Color( 1, 1, 1, 0.501961 )
 script = ExtResource( 1 )
 LINE_WIDTH = 5.0
-POINT_SHIFT_RADIUS = 2.0
+POINT_SHIFT_RADIUS = 1.0
 
 [node name="Points" type="Node2D" parent="."]
 

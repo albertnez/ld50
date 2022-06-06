@@ -37,7 +37,6 @@ const LEVEL_LIST := [
 	preload("res://scenes/levels/level10.tscn"),
 	preload("res://scenes/levels/level11.tscn"),
 	preload("res://scenes/levels/level12.tscn"),
-	preload("res://scenes/levels/level13.tscn"),
 ]
 
 

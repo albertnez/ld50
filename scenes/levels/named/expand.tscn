@@ -16,7 +16,7 @@ text = "
 "
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 3
+frame = 6
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 2
+frame = 0
