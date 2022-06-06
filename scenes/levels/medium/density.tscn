@@ -15,4 +15,7 @@ text = "density
 "
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 8
+frame = 9
+
+[node name="LevelTileHintSprite" parent="." index="7"]
+frame = 2
