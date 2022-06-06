@@ -43,10 +43,9 @@ func reset(tilemap: MyTileMap) -> void:
 	_slowdown_timer.stop()
 	_time_in_cell = 0.0
 	_tilemap = tilemap
-	position = _tilemap.get_trolley_starting_world_position(_id)
-	# Assume coming from left
-	# TODO: Make it possible for the initial position to be rotated and transformed.
-	var initial_dir = Vector2.RIGHT
+	var initial_setup := _tilemap.get_trolley_starting_world_position(_id)
+	position = initial_setup.world_pos
+	var initial_dir = initial_setup.dir
 	var prev_world_pos = position - initial_dir*MyTileMap.CELL_SIZE
 	_to_position = _tilemap.get_next_world_pos(position, prev_world_pos)
 	_from_position = _to_position - initial_dir*MyTileMap.CELL_SIZE

@@ -9,6 +9,7 @@ var in_true_end = false
 
 const LEVEL_LIST := [
 	# Introduction
+	#0
 	preload("res://scenes/levels/tutorial/move_and_toggle.tscn"),
 	preload("res://scenes/levels/tutorial/first_loop.tscn"),
 	preload("res://scenes/levels/tutorial/bifurcation_direction.tscn"),
@@ -16,13 +17,18 @@ const LEVEL_LIST := [
 
 	# Easy
 	preload("res://scenes/levels/easy/first_offpiste.tscn"),
+	#5
 	preload("res://scenes/levels/easy/wider_loop.tscn"),
 	preload("res://scenes/levels/easy/first_reverse.tscn"),
 	preload("res://scenes/levels/easy/wider_reverse.tscn"),
 	
+	# Medium
+	preload("res://scenes/levels/medium/two_train_delay_one.tscn"),
+	
 	# Others
 	preload("res://scenes/levels/level08.tscn"),
-	preload("res://scenes/levels/level09.tscn"),
+	#10
+	preload("res://scenes/levels/medium/density.tscn"),
 	preload("res://scenes/levels/level10.tscn"),
 	preload("res://scenes/levels/level11.tscn"),
 	preload("res://scenes/levels/level12.tscn"),

@@ -18,7 +18,17 @@ onready var _line_drawers := $LineDrawers
 onready var _camera = $Camera2D
 onready var _current_main_tileset_id := 1
 
-var _trolley_world_positions := []
+
+class TrolleyStartingSetup:
+	var world_pos: Vector2
+	var dir: Vector2
+	
+	func _init(world_pos: Vector2, dir: Vector2):
+		self.world_pos = world_pos
+		self.dir = dir
+
+# Array of TrolleyStartingSetup
+var _trolley_strarting_setup := []
 
 var _player_starting_world_pos := Vector2.INF
 var _level_tile_hint_pos := Vector2.INF
@@ -62,6 +72,8 @@ const INDICATOR_TILEMAP_GREEN_COORD = Vector2(0, 0)
 const INDICATOR_TILEMAP_HINT_COORD = Vector2(1, 0)
 
 const TILEMAP_ENDPOINT_DIRS = {
+	Vector2(0, 3):  # Straight horizontal, Trolley spawn
+		[Vector2.LEFT, Vector2.RIGHT],
 	Vector2(0, 0):  # Straight horizontal
 		[Vector2.LEFT, Vector2.RIGHT],
 	Vector2(1, 0):  # Straight horizontal, can toggle left-down
@@ -217,12 +229,12 @@ func add_trolley_line_decorative_point(world_pos: Vector2, trolley_id: int) -> v
 
 
 func get_num_trolleys() -> int:
-	return _trolley_world_positions.size()
+	return _trolley_strarting_setup.size()
 
 
-func get_trolley_starting_world_position(id: int) -> Vector2:
-	assert(not _trolley_world_positions.empty())
-	return _trolley_world_positions[id]
+func get_trolley_starting_world_position(id: int) -> TrolleyStartingSetup:
+	assert(not _trolley_strarting_setup.empty())
+	return _trolley_strarting_setup[id]
 
 
 func get_player_starting_world_position() -> Vector2:
@@ -361,8 +373,21 @@ func _ready() -> void:
 			_player_starting_world_pos = _pos_to_tile_center_world(pos)
 			set_cell(pos.x, pos.y, EMPTY_TILE)
 		elif coord == TROLLEY_START_COORD:
-			_trolley_world_positions.append(_pos_to_tile_center_world(pos))
-			set_cell(pos.x, pos.y, _current_main_tileset_id)
+			var dir := Vector2.RIGHT
+			if is_cell_transposed(pos.x, pos.y):
+				dir = Vector2(dir.y, dir.x)
+			if is_cell_x_flipped(pos.x, pos.y):
+				dir.x *= -1
+			if is_cell_y_flipped(pos.x, pos.y):
+				dir.y *= -1	
+			var trolley_setup := TrolleyStartingSetup.new(
+				_pos_to_tile_center_world(pos),
+				dir
+			)
+			_trolley_strarting_setup.append(trolley_setup)
+			# We can't clear the cell, because its transformation is used to calculate the
+			# next position for the trolley to navigate
+			# set_cell(pos.x, pos.y, _current_main_tileset_id)
 		elif coord == TROLLEY_WARNING_COORD:
 			var warning_sprite = TROLLEY_WARNING_SPRITE_SCENE.instance()
 			warning_sprite.position = _pos_to_tile_center_world(pos)
