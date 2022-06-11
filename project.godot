@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node2D",
+"class": "GameWorld",
+"language": "GDScript",
+"path": "res://scenes/world.gd"
+}, {
+"base": "Node2D",
 "class": "LineDrawer",
 "language": "GDScript",
 "path": "res://scenes/vfx/line_drawer.gd"
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://scenes/trolley.gd"
 } ]
 _global_script_class_icons={
+"GameWorld": "",
 "LineDrawer": "",
 "MyTileMap": "",
 "Player": "",

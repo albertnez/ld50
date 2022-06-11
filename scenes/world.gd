@@ -1,4 +1,5 @@
 extends Node2D
+class_name GameWorld
 
 export (int, 0, 15) var _current_level := 0
 
