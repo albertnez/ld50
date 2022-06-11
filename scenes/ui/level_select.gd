@@ -18,6 +18,10 @@ func _ready() -> void:
 		ind += 1
 
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().change_scene_to(load("res://scenes/main_menu_handler.tscn"))
+
 func _on_LevelButton_pressed(level: int) -> void:
 	var world_scene : GameWorld = load("res://scenes/world.tscn").instance()
 	world_scene._current_level = level

@@ -3,7 +3,7 @@ extends Node
 
 var level_completed = false
 var level_lost = false
-var in_menu = true
+var in_main_menu = false
 var level = 0
 var in_true_end = false
 
@@ -11,6 +11,8 @@ const TROLLEY_COLOR_LIST := [
 	Color("ee8695"),  # Palette Red.
 	Color.aquamarine,
 ]
+
+const MENU_LEVEL := preload("res://scenes/levels/menu/menu_level.tscn")
 
 const LEVEL_LIST := [
 	# Introduction
@@ -54,7 +56,8 @@ func all_trolleys_have_loop(num_trolleys: int) -> bool:
 	return true
 
 
-func set_new_level(new_level: int) -> void:
+func set_new_level(new_level: int, new_in_main_menu: bool) -> void:
+	in_main_menu = new_in_main_menu
 	level = new_level
 	level_completed = false
 	level_lost = false
@@ -63,6 +66,8 @@ func set_new_level(new_level: int) -> void:
 
 
 func get_level_scene() -> PackedScene:
+	if in_main_menu:
+		return MENU_LEVEL
 	return LEVEL_LIST[level]
 
 

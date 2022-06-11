@@ -45,7 +45,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ld50"
-run/main_scene="res://scenes/world.tscn"
+run/main_scene="res://scenes/main_menu_handler.tscn"
 config/icon="res://icon.png"
 
 [autoload]

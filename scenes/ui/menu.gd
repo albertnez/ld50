@@ -1,9 +1,10 @@
 extends Control
 
+onready var _new_game_button := get_node("%NewGameButton")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	_new_game_button.grab_focus()
 
 
 func _on_NewGameButton_pressed() -> void:

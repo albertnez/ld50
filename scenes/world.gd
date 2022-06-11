@@ -2,6 +2,7 @@ extends Node2D
 class_name GameWorld
 
 export (int, 0, 15) var _current_level := 0
+export (bool) var _menu_demo_mode := false
 
 var _toggle_triggered_trolley_already := false
 onready var _player := $ScaledView/Player
@@ -13,7 +14,6 @@ onready var _level_completed_timer := $LevelCompletedTimer
 const trolley_packed_scene := preload("res://scenes/trolley.tscn")
 
 func _ready() -> void:
-	GlobalState.in_menu = _current_level == 0
 	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
 	EventBus.connect("person_crashed", self, "_on_EventBus_person_crashed")
 	EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
@@ -24,7 +24,7 @@ func _ready() -> void:
 
 func _start_level() -> void:
 	_toggle_triggered_trolley_already = false
-	GlobalState.set_new_level(_current_level)
+	GlobalState.set_new_level(_current_level, _menu_demo_mode)
 	var tilemap_scene := GlobalState.get_level_scene()
 	var new_tilemap = tilemap_scene.instance()
 	_tilemap.get_parent().add_child_below_node(_tilemap, new_tilemap)
@@ -52,6 +52,11 @@ func _start_level() -> void:
 
 
 func _process(delta: float) -> void:
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().change_scene_to(load("res://scenes/ui/level_select.tscn"))
+		return
+		
 	var player_toggled = false
 	
 	var player_can_toggle = (
@@ -114,5 +119,4 @@ func _on_EventBus_level_completed() -> void:
 
 func _next_level():
 	_current_level += 1
-	GlobalState.in_menu = false
 	EventBus.emit_signal("level_restart")
