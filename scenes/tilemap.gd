@@ -32,6 +32,7 @@ class TrolleySetup:
 # Array of TrolleySetup
 var _trolley_strarting_setup := []
 var _trolley_last_setup := []
+var _drawing_trolley_vfx := true
 
 var _player_starting_world_pos := Vector2.INF
 var _level_tile_hint_pos := Vector2.INF
@@ -113,6 +114,7 @@ const TILEMAP_ENDPOINT_DIRS = {
 func stop_tracking_trolleys_for_vfx() -> void:
 	for line_drawer in _line_drawers.get_children():
 		(line_drawer as LineDrawer).set_tip_point(null)
+	_drawing_trolley_vfx = false
 
 
 func set_trolleys_for_vfx(trolleys : Array) -> void:
@@ -207,7 +209,11 @@ func mark_cell_as_cleared(pos: Vector2) -> void:
 
 
 # We asume this is only called by trolley
-func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, trolley_id: int) -> void:	
+func mark_cell_as_visited(pos: Vector2, from_dir: Vector2, trolley_id: int) -> void:
+	# Wer're not interested in keeping track of traces in the main menu.	
+	if GlobalState.in_main_menu:
+		return
+
 	if not GlobalState.level_lost and not GlobalState.level_completed and is_cell_already_visited(pos, from_dir, trolley_id):
 		if _has_visited_loop(pos, from_dir, trolley_id):
 			GlobalState.set_trolley_has_loop(trolley_id, true)
@@ -229,16 +235,23 @@ func mark_world_pos_cell_as_visited(world_pos: Vector2, from_world_pos: Vector2,
 	var from_dir = get_from_dir(pos, from_pos)
 	mark_cell_as_visited(pos, from_dir, trolley_id)
 
+
 # TODO: consider doing the loop check here as well.
 # These midpoints are important because the value is fetched when partially removing the trail.
 func add_trolley_line_midpoint(world_pos: Vector2, trolley_id: int) -> void:
-	var pos := world_to_map(world_pos)
-	_line_drawers.get_child(trolley_id).add_point(_pos_to_tile_center_world(pos))
+	var mid_point := _pos_to_tile_center_world(world_to_map(world_pos))
+	add_trolley_line_decorative_point(mid_point, trolley_id)
 
 
 # These points are not that important, and we add them to make the line smoother
 func add_trolley_line_decorative_point(world_pos: Vector2, trolley_id: int) -> void:
-	_line_drawers.get_child(trolley_id).add_point(world_pos)
+	if not _drawing_trolley_vfx:
+		return
+
+	var line_drawer : LineDrawer = _line_drawers.get_child(trolley_id)
+	if GlobalState.in_main_menu and line_drawer.has_point(world_pos):
+		stop_tracking_trolleys_for_vfx()
+	line_drawer.add_point(world_pos)
 
 
 func get_num_trolleys() -> int:

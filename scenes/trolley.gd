@@ -100,7 +100,7 @@ func _process(delta: float) -> void:
 			_is_turning = diff.x != 0 and diff.y != 0
 			_reached_tile_midpoint = false
 			if not GlobalState.level_completed:
-				_tilemap.add_trolley_line_decorative_point(position, _id)
+				_tilemap.add_trolley_line_decorative_point(_from_position, _id)
 		elif _time_in_cell*2 > SECONDS_PER_CELL and not _reached_tile_midpoint:
 			_reached_tile_midpoint = true
 			if not GlobalState.level_completed:

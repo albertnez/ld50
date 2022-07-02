@@ -14,12 +14,16 @@ export (float, 0.0, 20.0) var POINT_SHIFT_RADIUS = 10.0
 var TIP_POINT : Node2D = null
 
 
-# Removes all points stored from beginning until the given point, included.
+# Removes all points stored from beginning until the first occurrence of the given point, included.
 func remove_points_until(point: Vector2) -> void:
 	var index = _points.find(point)
 	if index == -1:
 		return
 	_points = _points.slice(index+1, _points.size()-1)
+
+
+func has_point(point : Vector2) -> bool:
+	return _points.find(point) != -1
 
 
 func add_point(point : Vector2) -> void:
