@@ -14,6 +14,15 @@ const TROLLEY_COLOR_LIST := [
 
 const MENU_LEVEL := preload("res://scenes/levels/menu/menu_level.tscn")
 
+
+class Level:
+	var packed_scene : PackedScene
+	var description : String
+	
+	func _init(scene: PackedScene, desc: String) -> void:
+		packed_scene = scene
+		description = desc
+	
 const LEVEL_LIST := [
 	# Introduction
 	#0
