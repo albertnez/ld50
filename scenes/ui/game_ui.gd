@@ -38,6 +38,7 @@ func _on_EventBus_level_restart() -> void:
 	_game_over_control.hide()
 	_level_completed.hide()
 	_level_label.text = str("Level ", GlobalState.level)
+	_playing_ui.visible = not GlobalState.in_main_menu
 
 
 func _on_EventBus_new_level_waiting_for_trolley(seconds: float) -> void:
