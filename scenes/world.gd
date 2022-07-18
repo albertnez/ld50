@@ -51,12 +51,14 @@ func _start_level() -> void:
 		_trolley_timer.start(_tilemap.TROLLEY_WAIT_TIME)
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().set_input_as_handled()
+		get_tree().change_scene_to(load("res://scenes/main_menu_handler.tscn"))
+		return	
+
+
 func _process(delta: float) -> void:
-	
-	if Input.is_action_just_pressed("ui_cancel"):
-		get_tree().change_scene_to(load("res://scenes/ui/level_select.tscn"))
-		return
-		
 	var player_toggled = false
 	
 	var player_can_toggle = (

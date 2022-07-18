@@ -3,6 +3,7 @@ extends Control
 export (int, 10, 100, 10) var LEVEL_BUTTON_SIZE = 2
 
 const BUTTON_HOVER_GETS_FOCUSED = preload("res://scenes/ui/button_hover_gets_focused.gd")
+
 onready var _grid_container := get_node("%LevelGridContainer")
 onready var _descritpion_label := get_node("LevelDescriptionLabel")
 
@@ -30,17 +31,15 @@ func _ready() -> void:
 		button.rect_min_size = target_size
 
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
-		get_tree().change_scene_to(load("res://scenes/main_menu_handler.tscn"))
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().set_input_as_handled()
+		EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_MENU, 0)
 
 
 func _on_LevelButton_pressed(level: int) -> void:
-	var world_scene : GameWorld = load("res://scenes/world.tscn").instance()
-	world_scene._current_level = level
-	var new_pack := PackedScene.new()
-	new_pack.pack(world_scene)
-	get_tree().change_scene_to(new_pack)
+	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_GAME, level)
+
 
 func _on_LevelButton_focus_entered(level: int) -> void:
 	# We asume the scene file name will be our description.

@@ -7,11 +7,18 @@ func _ready() -> void:
 	_new_game_button.grab_focus()
 
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().set_input_as_handled()
+		return
+
+
 func _on_NewGameButton_pressed() -> void:
-	var packed_world := load("res://scenes/world.tscn")
-	get_tree().change_scene_to(packed_world)
+	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_GAME, 0)
+	return
+
 
 
 func _on_SelectLevelButton_pressed() -> void:
-	var level_selection := load( "res://scenes/ui/level_select.tscn")
-	get_tree().change_scene_to(level_selection)
+	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.LEVEL_SELECT, 0)
+

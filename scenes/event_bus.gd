@@ -1,5 +1,14 @@
 extends Node
 
+# Menu stuff.
+enum TargetMenuScene {
+	LEVEL_SELECT,
+	MAIN_MENU,
+	MAIN_GAME,
+}
+signal change_menu_scene(target_menu_scene, starting_level)
+
+# Other stuff.
 signal trolley_crashed()
 signal trolley_killed_someone()
 signal trolley_crash_with_trolley()
