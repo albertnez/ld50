@@ -12,6 +12,7 @@ LEVEL_BUTTON_SIZE = 40
 
 [node name="SelectLevelLabel" type="Label" parent="."]
 anchor_right = 1.0
+margin_top = 40.0
 margin_bottom = 30.0
 theme = ExtResource( 2 )
 text = "Select Level"
