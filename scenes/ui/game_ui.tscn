@@ -108,7 +108,7 @@ anchor_bottom = 1.0
 [node name="BackgroundLightDimmer" type="ColorRect" parent="LevelCompleted"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.25098 )
+color = Color( 0, 0, 0, 0.67451 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LevelCompleted"]
 anchor_left = 0.5
