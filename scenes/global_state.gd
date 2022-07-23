@@ -6,6 +6,7 @@ var level_lost = false
 var in_main_menu = false
 var level = 0
 var in_true_end = false
+var fast_forward := false
 
 const TROLLEY_COLOR_LIST := [
 	Color("ee8695"),  # Palette Red.
@@ -70,6 +71,7 @@ func set_new_level(new_level: int, new_in_main_menu: bool) -> void:
 	level = new_level
 	level_completed = false
 	level_lost = false
+	fast_forward = false
 	for id in NUM_MAX_TROLLEYS:
 		_trolley_has_loop[id] = false
 

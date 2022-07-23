@@ -18,6 +18,7 @@ signal trolley_created()
 signal person_crashed()
 signal toggle()
 signal level_completed()
+signal trolley_speed_changed(is_fast_forward)
 
 
 func _ready() -> void:

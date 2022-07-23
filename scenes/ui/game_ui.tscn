@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/ui/game_ui.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/font_splash.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/ui/font_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/ui/font_med.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/icons/forward-solid.svg" type="Texture" id=5]
+[ext_resource path="res://assets/theme/new_theme.tres" type="Theme" id=6]
 
 [node name="GameUI" type="Control"]
 anchor_right = 1.0
@@ -11,7 +13,6 @@ anchor_bottom = 1.0
 script = ExtResource( 1 )
 
 [node name="PlayingUI" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -27,27 +28,20 @@ margin_bottom = -3.0
 custom_fonts/font = ExtResource( 3 )
 text = "Level: 0"
 
-[node name="TimeUntilTrolley" type="VBoxContainer" parent="PlayingUI"]
-visible = false
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -60.0
-margin_right = 60.0
-margin_bottom = 40.0
-
-[node name="Label" type="Label" parent="PlayingUI/TimeUntilTrolley"]
-margin_right = 120.0
-margin_bottom = 14.0
-text = "Time until Trolley"
-
-[node name="ProgressBar" type="ProgressBar" parent="PlayingUI/TimeUntilTrolley"]
-margin_top = 18.0
-margin_right = 120.0
-margin_bottom = 20.0
-value = 100.0
-percent_visible = false
+[node name="FastForwardButton" type="Button" parent="PlayingUI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -52.0
+margin_bottom = 52.0
+focus_mode = 0
+theme = ExtResource( 6 )
+toggle_mode = true
+icon = ExtResource( 5 )
+icon_align = 1
+expand_icon = true
 
 [node name="GameOver" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -102,6 +96,7 @@ Press ENTER/START to RESTART"
 align = 1
 
 [node name="LevelCompleted" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -132,3 +127,5 @@ custom_fonts/font = ExtResource( 4 )
 text = "
 Press ENTER/START to go to the NEXT LEVEL"
 align = 1
+
+[connection signal="toggled" from="PlayingUI/FastForwardButton" to="." method="_on_FastForwardButton_toggled"]

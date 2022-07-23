@@ -3,6 +3,7 @@ class_name Trolley
 
 export (float, 10, 100, 5) var SPEED = 32
 export (float, 0.1, 5.0, 0.1) var SECONDS_PER_CELL = 1.0
+export (float, 1.0, 3.0, 0.1) var FAST_SPEED_MODIFIER = 1.8
 
 onready var _original_seconds_per_cell = SECONDS_PER_CELL
 onready var _slowdown_timer := $SlowDownTimer
@@ -62,6 +63,7 @@ func _ready() -> void:
 	EventBus.connect("trolley_killed_someone", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
 	EventBus.connect("trolley_crash_with_trolley", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
 	EventBus.connect("person_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
+
 	add_to_group("Trolley")
 	pass
 
@@ -69,7 +71,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	assert(_is_resetted)
 	if SECONDS_PER_CELL < 1000:
-		_time_in_cell += delta
+		var dt := delta
+		if GlobalState.fast_forward:
+			dt *= FAST_SPEED_MODIFIER
+		_time_in_cell += dt
 	if not GlobalState.level_lost:
 		if _time_in_cell > SECONDS_PER_CELL:
 			# We move to the next cell.
