@@ -1,14 +1,14 @@
 extends Control
 
-onready var _game_over_control = $GameOver
-onready var _game_over_reason_label = $GameOver/VBoxContainer/ReasonLabel
-onready var _playing_ui = $PlayingUI
-onready var _level_completed = $LevelCompleted
-onready var _level_label = $PlayingUI/LevelLabel
-onready var _first_time_gameover = $GameOver/VBoxContainer/FirstTimeGameOver
-onready var _last_time_gameover = $GameOver/VBoxContainer/LastTimeGameOver
-onready var _restart_label = $GameOver/VBoxContainer/RestartLabel
-onready var _fast_forward_button = $PlayingUI/FastForwardButton
+onready var _game_over_control = $MarginContainer/GameOver
+onready var _game_over_reason_label = $MarginContainer/GameOver/VBoxContainer/ReasonLabel
+onready var _playing_ui = $MarginContainer/PlayingUI
+onready var _level_completed = $MarginContainer/LevelCompleted
+onready var _level_label = $MarginContainer/PlayingUI/LevelLabel
+onready var _first_time_gameover = $MarginContainer/GameOver/VBoxContainer/FirstTimeGameOver
+onready var _last_time_gameover = $MarginContainer/GameOver/VBoxContainer/LastTimeGameOver
+onready var _restart_label = $MarginContainer/GameOver/VBoxContainer/RestartLabel
+onready var _fast_forward_button = $MarginContainer/PlayingUI/FastForwardButton
 
 
 func _ready() -> void:
