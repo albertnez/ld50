@@ -13,7 +13,7 @@ func is_dead() -> bool:
 
 
 func _ready() -> void:
-	EventBus.connect("level_restart", self, "_on_Eventbus_level_restart")
+	var _unused = EventBus.connect("level_restart", self, "_on_Eventbus_level_restart")
 
 
 func set_toggle_is_visible(visible: bool) -> void:

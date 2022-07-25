@@ -52,4 +52,4 @@ stream = ExtResource( 11 )
 
 [node name="GameUI" parent="CanvasLayer" instance=ExtResource( 5 )]
 
-[connection signal="timeout" from="LevelStartTrolleyTimer" to="." method="_on_LevelStartTrolleyTimer_timeout"]
+[connection signal="timeout" from="LevelStartTrolleyTimer" to="." method="_on_Any_trolley_created_later"]

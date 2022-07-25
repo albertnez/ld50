@@ -12,14 +12,14 @@ onready var _fast_forward_button = $MarginContainer/PlayingUI/FastForwardButton
 
 
 func _ready() -> void:
-	EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
-	EventBus.connect("new_level_waiting_for_trolley", self, "_on_EventBus_new_level_waiting_for_trolley")
-	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
-	EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
-	EventBus.connect("trolley_crashed", self, "_on_game_over", ["The trolley crashed off piste!", false])
-	EventBus.connect("person_crashed", self, "_on_game_over", ["You died!", false])
-	EventBus.connect("trolley_killed_someone", self, "_on_game_over", ["The trolley killed someone", true])
-	EventBus.connect("trolley_crash_with_trolley", self, "_on_game_over", ["The trolleys crashed with each other!", true])
+	var _u = null  # Unused
+	_u = EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
+	_u = EventBus.connect("new_level_waiting_for_trolley", self, "_on_EventBus_new_level_waiting_for_trolley")
+	_u = EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
+	_u = EventBus.connect("trolley_crashed", self, "_on_game_over", ["The trolley crashed off piste!", false])
+	_u = EventBus.connect("person_crashed", self, "_on_game_over", ["You died!", false])
+	_u = EventBus.connect("trolley_killed_someone", self, "_on_game_over", ["The trolley killed someone", true])
+	_u = EventBus.connect("trolley_crash_with_trolley", self, "_on_game_over", ["The trolleys crashed with each other!", true])
 
 
 func _on_game_over(msg: String, killed_someone: bool) -> void:
@@ -46,7 +46,7 @@ func _on_EventBus_level_completed() -> void:
 	_level_completed.show()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("fast_forward"):
 		_fast_forward_button.pressed = not _fast_forward_button.pressed
 

@@ -14,10 +14,11 @@ onready var _level_completed_timer := $LevelCompletedTimer
 const trolley_packed_scene := preload("res://scenes/trolley.tscn")
 
 func _ready() -> void:
-	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
-	EventBus.connect("person_crashed", self, "_on_EventBus_person_crashed")
-	EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
-	EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
+	var _s = null
+	_s = EventBus.connect("trolley_created_later", _trolley_timer, "start", [1.0])
+	_s = EventBus.connect("person_crashed", self, "_on_EventBus_person_crashed")
+	_s = EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
+	_s = EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
 	
 	EventBus.emit_signal("level_restart")
 
@@ -46,7 +47,7 @@ func _start_level() -> void:
 		_trolleys.add_child(trolley)
 		trolley.set_process(false)
 	_tilemap.set_trolleys_for_vfx(_trolleys.get_children())
-	if not _tilemap.trolley_waits_for_player():
+	if not _tilemap.trolley_waits_for_player() and not GlobalState.in_main_menu:
 		# On Menu, trolley starts upon player action
 		_trolley_timer.start(_tilemap.TROLLEY_WAIT_TIME)
 
@@ -54,11 +55,12 @@ func _start_level() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().set_input_as_handled()
-		get_tree().change_scene_to(load("res://scenes/main_menu_handler.tscn"))
+		if get_tree().change_scene_to(load("res://scenes/main_menu_handler.tscn")) != OK:
+			print("Error going from game to menu")
 		return	
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var player_toggled = false
 	
 	var player_can_toggle = (
@@ -79,7 +81,7 @@ func _process(delta: float) -> void:
 		player_toggled and 
 		not _toggle_triggered_trolley_already)
 	if create_trolley:
-		EventBus.emit_signal("trolley_created")
+		EventBus.emit_signal("trolley_created_later")
 		_toggle_triggered_trolley_already = true
 	
 	if GlobalState.in_true_end:
@@ -94,15 +96,6 @@ func _process(delta: float) -> void:
 			_next_level()
 		else:
 			EventBus.emit_signal("level_restart")
-
-
-func _on_LevelStartTrolleyTimer_timeout() -> void:
-	EventBus.emit_signal("trolley_created")
-
-
-func _on_EventBus_trolley_created() -> void:
-	for trolley in _trolleys.get_children():
-		(trolley as Trolley).reset(_tilemap)
 
 
 func _on_EventBus_level_restart() -> void:
@@ -122,3 +115,8 @@ func _on_EventBus_level_completed() -> void:
 func _next_level():
 	_current_level += 1
 	EventBus.emit_signal("level_restart")
+
+
+func _on_Any_trolley_created_later() -> void:
+	for trolley in _trolleys.get_children():
+		(trolley as Trolley).reset(_tilemap)

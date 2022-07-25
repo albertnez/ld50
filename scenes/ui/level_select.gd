@@ -13,12 +13,12 @@ func _ready() -> void:
 	var ind = 0
 	var target_size := Vector2(LEVEL_BUTTON_SIZE, LEVEL_BUTTON_SIZE)
 	for level_item in GlobalState.LEVEL_LIST:
-		var level := level_item as Resource
 		var button := Button.new()
 		button.text = str(ind).pad_zeros(2)
 		button.set_script(BUTTON_HOVER_GETS_FOCUSED)
-		button.connect("pressed", self, "_on_LevelButton_pressed", [ind])
-		button.connect("focus_entered", self, "_on_LevelButton_focus_entered", [ind])
+		var _u = null  # Unused connect return value
+		_u = button.connect("pressed", self, "_on_LevelButton_pressed", [ind])
+		_u = button.connect("focus_entered", self, "_on_LevelButton_focus_entered", [ind])
 		_grid_container.add_child(button)
 		if ind == 0:
 			button.grab_focus()

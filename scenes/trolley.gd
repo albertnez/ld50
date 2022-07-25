@@ -1,7 +1,7 @@
 extends Area2D
 class_name Trolley
 
-export (float, 10, 100, 5) var SPEED = 32
+export (float, 10.0, 100.0, 5.0) var SPEED = 32.0
 export (float, 0.1, 5.0, 0.1) var SECONDS_PER_CELL = 1.0
 export (float, 1.0, 3.0, 0.1) var FAST_SPEED_MODIFIER = 1.8
 
@@ -59,10 +59,11 @@ func reset(tilemap: MyTileMap) -> void:
 
 
 func _ready() -> void:
-	EventBus.connect("trolley_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.STRAIGHT_LINE])
-	EventBus.connect("trolley_killed_someone", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
-	EventBus.connect("trolley_crash_with_trolley", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
-	EventBus.connect("person_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
+	var _s = null
+	_s = EventBus.connect("trolley_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.STRAIGHT_LINE])
+	_s = EventBus.connect("trolley_killed_someone", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
+	_s = EventBus.connect("trolley_crash_with_trolley", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
+	_s = EventBus.connect("person_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
 
 	add_to_group("Trolley")
 	pass

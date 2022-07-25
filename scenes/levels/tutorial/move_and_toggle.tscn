@@ -32,7 +32,7 @@ spacebar/action while standing on top"
 align = 1
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 2
+frame = 4
 
 [node name="LevelTileHintSprite" parent="." index="7"]
 frame = 5

@@ -24,10 +24,10 @@ class TrolleySetup:
 	var pos: Vector2
 	var dir: Vector2
 	
-	func _init(world_pos: Vector2, pos: Vector2, dir: Vector2):
-		self.world_pos = world_pos
-		self.pos = pos
-		self.dir = dir
+	func _init(new_world_pos: Vector2, new_pos: Vector2, new_dir: Vector2):
+		world_pos = new_world_pos
+		pos = new_pos
+		dir = new_dir
 
 # Array of TrolleySetup
 var _trolley_strarting_setup := []
@@ -186,10 +186,10 @@ func _has_visited_loop(pos: Vector2, from_dir: Vector2, trolley_id: int) -> bool
 	
 
 func _visited_cell_from_pos(pos: Vector2, from_dir: Vector2) -> VisitedCell:
-	var coord = get_cell_autotile_coord(pos.x, pos.y)
-	var x_flipped = is_cell_x_flipped(pos.x, pos.y)
-	var y_flipped = is_cell_y_flipped(pos.x, pos.y)
-	var transposed = is_cell_transposed(pos.x, pos.y)
+	var coord = get_cell_autotile_coord(int(pos.x), int(pos.y))
+	var x_flipped = is_cell_x_flipped(int(pos.x), int(pos.y))
+	var y_flipped = is_cell_y_flipped(int(pos.x), int(pos.y))
+	var transposed = is_cell_transposed(int(pos.x), int(pos.y))
 	return VisitedCell.new(coord, x_flipped, y_flipped, transposed, from_dir)
 
 
@@ -205,7 +205,7 @@ func mark_cell_as_cleared(pos: Vector2) -> void:
 		_visited_cells.erase(make_visited_cell_key(pos, i))
 	for line in _line_drawers.get_children():
 		(line as LineDrawer).remove_points_until(_pos_to_tile_center_world(pos))
-	_indicator_tilemap.set_cell(pos.x, pos.y, -1)
+	_indicator_tilemap.set_cell(int(pos.x), int(pos.y), -1)
 
 
 # We asume this is only called by trolley
@@ -287,13 +287,12 @@ func toggle_world_pos_cell(world_pos: Vector2) -> void:
 
 func is_out_of_bounds(world_pos: Vector2) -> bool:
 	var pos := world_to_map(world_pos)
-	return get_cell(pos.x, pos.y) == -1
+	return get_cell(int(pos.x), int(pos.y)) == -1
 
 
 # Returns the next place to go, or INF if bogus
 func get_tile_next_pos(pos: Vector2, from_dir: Vector2) -> Vector2:
-	var tileset_ind = get_cell(pos.x, pos.y)
-	var coord := get_cell_autotile_coord(pos.x, pos.y)
+	var coord := get_cell_autotile_coord(int(pos.x), int(pos.y))
 	var options = []  # List of Array Pairs of directions that you can come from.
 	if coord_is_bifurcation(coord):
 		options.append_array(TILEMAP_ENDPOINT_DIRS[coord].duplicate(true))
@@ -316,11 +315,11 @@ func get_tile_next_pos(pos: Vector2, from_dir: Vector2) -> Vector2:
 
 func _apply_dirs_transpose_rotation(dirs: Array, cell_pos: Vector2) -> void:
 	for i in dirs.size():
-		if is_cell_transposed(cell_pos.x, cell_pos.y):
+		if is_cell_transposed(int(cell_pos.x), int(cell_pos.y)):
 			dirs[i] = Vector2(dirs[i].y, dirs[i].x)
-		if is_cell_x_flipped(cell_pos.x, cell_pos.y):
+		if is_cell_x_flipped(int(cell_pos.x), int(cell_pos.y)):
 			dirs[i].x *= -1
-		if is_cell_y_flipped(cell_pos.x, cell_pos.y):
+		if is_cell_y_flipped(int(cell_pos.x), int(cell_pos.y)):
 			dirs[i].y *= -1	
 
 
@@ -344,7 +343,7 @@ func _target_dir_to_world_pos(tile_pos: Vector2, target_dir: Vector2):
 func get_next_world_pos(tile_world_pos: Vector2, prev_tile_world_pos: Vector2 = Vector2.INF) -> Vector2:
 	var pos := world_to_map(tile_world_pos)
 	var prev_pos := world_to_map(prev_tile_world_pos)
-	var coord := get_cell_autotile_coord(pos.x, pos.y)
+	var coord := get_cell_autotile_coord(int(pos.x), int(pos.y))
 	var points = TILEMAP_ENDPOINT_DIRS[coord].duplicate(true)
 	var from_dir = get_from_dir(pos, prev_pos)
 	
@@ -372,7 +371,7 @@ func is_autotile_coord_toggable(ind: Vector2) -> bool:
 
 func is_world_pos_a_toggable_tile(world_pos: Vector2) -> bool:
 	var pos := world_to_map(world_pos)
-	var coord := get_cell_autotile_coord(pos.x, pos.y)
+	var coord := get_cell_autotile_coord(int(pos.x), int(pos.y))
 	return is_autotile_coord_toggable(coord)
 
 
@@ -391,7 +390,7 @@ func _ready() -> void:
 	# Not sure what unset the camera.current
 	if not _camera.current:
 		_camera.current = true
-	EventBus.connect("trolley_created", self, "_on_EventBus_trolley_created")
+	var _unused = EventBus.connect("trolley_created_later", self, "_on_EventBus_trolley_created_later")
 	if not trolley_waits_for_player():
 		_start_warning_sign(TROLLEY_WAIT_TIME)
 	
@@ -441,7 +440,7 @@ func _start_warning_sign(seconds: float) -> void:
 	_trolley_warning_timer.start(seconds)
 
 
-func _on_EventBus_trolley_created() -> void:
+func _on_EventBus_trolley_created_later() -> void:
 	if _warning_shown:
 		return
 	_start_warning_sign(1.0)

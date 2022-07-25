@@ -53,6 +53,10 @@ config/icon="res://icon.png"
 EventBus="*res://scenes/event_bus.gd"
 GlobalState="*res://scenes/global_state.gd"
 
+[debug]
+
+gdscript/warnings/unused_signal=false
+
 [display]
 
 window/stretch/mode="viewport"
