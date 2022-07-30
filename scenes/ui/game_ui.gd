@@ -45,7 +45,6 @@ func _on_EventBus_level_restart() -> void:
 	_playing_ui.visible = not GlobalState.in_main_menu
 
 
-
 func _on_EventBus_level_completed() -> void:
 	_level_completed.show()
 
@@ -55,7 +54,6 @@ func _process(_delta: float) -> void:
 		_fast_forward_button.pressed = not _fast_forward_button.pressed
 	if Input.is_action_just_pressed("mute"):
 		_mute_button.pressed = not _mute_button.pressed
-
 
 
 func _on_FastForwardButton_toggled(button_pressed: bool) -> void:
