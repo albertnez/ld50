@@ -3,6 +3,7 @@ class_name LineDrawer
 
 onready var _scene_points := $Points
 var _points := []
+var _point_transformations := []
 
 # To quickly test with multiple trolleys
 const COLOR_ARRAY = [Color.red, Color.aqua, Color.yellowgreen]
@@ -20,6 +21,7 @@ func remove_points_until(point: Vector2) -> void:
 	if index == -1:
 		return
 	_points = _points.slice(index+1, _points.size()-1)
+	_regenerate_point_transformations()
 
 
 func has_point(point : Vector2) -> bool:
@@ -28,13 +30,14 @@ func has_point(point : Vector2) -> bool:
 
 func add_point(point : Vector2) -> void:
 	_points.append(point)
-
+	# TODO: Consider adding only one point there.
+	_regenerate_point_transformations()
 
 func set_tip_point(tip : Node2D) -> void:
 	TIP_POINT = tip
 
 
-func _shifted_point(point : Vector2) -> Vector2:
+func _transform_point(point : Vector2) -> Vector2:
 	var rot_shift = rand_range(0, 2*PI)
 	return point + Vector2.ONE.rotated(rot_shift)*POINT_SHIFT_RADIUS
 
@@ -42,8 +45,8 @@ func _shifted_point(point : Vector2) -> Vector2:
 func _draw() -> void:
 	var last_point := Vector2.INF
 
-	for point in _points:
-		point = _shifted_point(point)
+	for idx in _points.size():
+		var point : Vector2 = _points[idx] + _point_transformations[idx]
 		if last_point == Vector2.INF:
 			last_point = point
 			continue
@@ -66,3 +69,11 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	update()
+
+
+func _regenerate_point_transformations() -> void:
+	_point_transformations.clear()
+	for point in _points.size() + 1:
+		var rotation = rand_range(0, 2*PI)
+		_point_transformations.append(Vector2.ONE.rotated(rotation)*POINT_SHIFT_RADIUS)
+		

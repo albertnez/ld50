@@ -23,3 +23,9 @@ position = Vector2( 196, 159 )
 
 [node name="Node2D5" type="Node2D" parent="Points"]
 position = Vector2( 151, 276 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_regenerate_shifted_points"]
