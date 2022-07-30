@@ -21,7 +21,6 @@ func remove_points_until(point: Vector2) -> void:
 	if index == -1:
 		return
 	_points = _points.slice(index+1, _points.size()-1)
-	_regenerate_point_transformations()
 
 
 func has_point(point : Vector2) -> bool:
@@ -30,8 +29,8 @@ func has_point(point : Vector2) -> bool:
 
 func add_point(point : Vector2) -> void:
 	_points.append(point)
-	# TODO: Consider adding only one point there.
-	_regenerate_point_transformations()
+	_add_point_transformation()
+
 
 func set_tip_point(tip : Node2D) -> void:
 	TIP_POINT = tip
@@ -44,9 +43,10 @@ func _transform_point(point : Vector2) -> Vector2:
 
 func _draw() -> void:
 	var last_point := Vector2.INF
+	var size = _points.size()
 
-	for idx in _points.size():
-		var point : Vector2 = _points[idx] + _point_transformations[idx]
+	for idx in size:
+		var point : Vector2 = _points[idx] + _point_transformations[idx%size]
 		if last_point == Vector2.INF:
 			last_point = point
 			continue
@@ -73,7 +73,11 @@ func _process(_delta: float) -> void:
 
 func _regenerate_point_transformations() -> void:
 	_point_transformations.clear()
+	# +1 for the tip point.
 	for point in _points.size() + 1:
-		var rotation = rand_range(0, 2*PI)
-		_point_transformations.append(Vector2.ONE.rotated(rotation)*POINT_SHIFT_RADIUS)
-		
+		_add_point_transformation()
+
+
+func _add_point_transformation() -> void:
+	var rotation = rand_range(0, 2*PI)
+	_point_transformations.append(Vector2.ONE.rotated(rotation)*POINT_SHIFT_RADIUS)
