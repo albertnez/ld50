@@ -20,6 +20,8 @@ func _ready() -> void:
 	_s = EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
 	_s = EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
 	
+	_current_level = GlobalState.level_selected_in_menu
+	
 	EventBus.emit_signal("level_restart")
 
 

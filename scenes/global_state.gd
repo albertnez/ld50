@@ -1,5 +1,6 @@
 extends Node
 
+var level_selected_in_menu = 0
 
 var level_completed = false
 var level_lost = false

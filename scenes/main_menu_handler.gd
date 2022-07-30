@@ -13,11 +13,8 @@ func _ready() -> void:
 func _on_EventBus_change_menu_scene(target_scene: int, starting_level: int) -> void:
 	match target_scene:
 		EventBus.TargetMenuScene.MAIN_GAME:
-			var world_scene : GameWorld = load("res://scenes/world.tscn").instance()
-			world_scene._current_level = starting_level
-			var new_pack := PackedScene.new()
-			if new_pack.pack(world_scene) != OK:
-				print("Error unpacking world_scene")
+			GlobalState.level_selected_in_menu = starting_level
+			var new_pack : PackedScene = load("res://scenes/world.tscn")
 			if get_tree().change_scene_to(new_pack) != OK:
 				print("Error changing scene to world_scene")
 		EventBus.TargetMenuScene.LEVEL_SELECT:
