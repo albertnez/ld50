@@ -21,14 +21,14 @@ alignment = 1
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 236.0
+margin_top = 228.0
 margin_right = 194.0
-margin_bottom = 265.0
+margin_bottom = 261.0
 text = "New Game"
 script = ExtResource( 3 )
 
 [node name="SelectLevelButton" type="Button" parent="VBoxContainer"]
-margin_top = 269.0
+margin_top = 265.0
 margin_right = 194.0
 margin_bottom = 298.0
 text = "Select Level"
@@ -37,14 +37,14 @@ script = ExtResource( 3 )
 [node name="OptionsButton" type="Button" parent="VBoxContainer"]
 margin_top = 302.0
 margin_right = 194.0
-margin_bottom = 331.0
+margin_bottom = 335.0
 text = "Options"
 script = ExtResource( 3 )
 
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
-margin_top = 335.0
+margin_top = 339.0
 margin_right = 194.0
-margin_bottom = 364.0
+margin_bottom = 372.0
 text = "Exit"
 script = ExtResource( 3 )
 

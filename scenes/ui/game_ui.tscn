@@ -161,4 +161,4 @@ Press ENTER/START to go to the NEXT LEVEL"
 align = 1
 
 [connection signal="toggled" from="MarginContainer/PlayingUI/FastForwardButton" to="." method="_on_FastForwardButton_toggled"]
-[connection signal="toggled" from="MarginContainer/PlayingUI/MuteButton" to="." method="_on_FastForwardButton_toggled"]
+[connection signal="toggled" from="MarginContainer/PlayingUI/MuteButton" to="." method="_on_MuteButton_toggled"]

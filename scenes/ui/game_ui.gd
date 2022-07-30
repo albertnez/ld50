@@ -8,7 +8,9 @@ onready var _level_label = $MarginContainer/PlayingUI/LevelLabel
 onready var _first_time_gameover = $MarginContainer/GameOver/VBoxContainer/FirstTimeGameOver
 onready var _last_time_gameover = $MarginContainer/GameOver/VBoxContainer/LastTimeGameOver
 onready var _restart_label = $MarginContainer/GameOver/VBoxContainer/RestartLabel
+
 onready var _fast_forward_button = get_node("%FastForwardButton")
+onready var _mute_button = $"%MuteButton"
 
 
 func _ready() -> void:
@@ -20,6 +22,8 @@ func _ready() -> void:
 	_u = EventBus.connect("person_crashed", self, "_on_game_over", ["You died!", false])
 	_u = EventBus.connect("trolley_killed_someone", self, "_on_game_over", ["The trolley killed someone", true])
 	_u = EventBus.connect("trolley_crash_with_trolley", self, "_on_game_over", ["The trolleys crashed with each other!", true])
+
+	_mute_button.pressed = GlobalState.mute
 
 
 func _on_game_over(msg: String, killed_someone: bool) -> void:
@@ -49,8 +53,16 @@ func _on_EventBus_level_completed() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("fast_forward"):
 		_fast_forward_button.pressed = not _fast_forward_button.pressed
+	if Input.is_action_just_pressed("mute"):
+		_mute_button.pressed = not _mute_button.pressed
+
 
 
 func _on_FastForwardButton_toggled(button_pressed: bool) -> void:
 	GlobalState.fast_forward = button_pressed
+	pass # Replace with function body.
+
+
+func _on_MuteButton_toggled(button_pressed: bool) -> void:
+	GlobalState.set_mute(button_pressed)
 	pass # Replace with function body.

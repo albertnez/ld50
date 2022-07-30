@@ -7,7 +7,9 @@ var level_lost = false
 var in_main_menu = false
 var level = 0
 var in_true_end = false
+
 var fast_forward := false
+var mute := false
 
 const TROLLEY_COLOR_LIST := [
 	Color("ee8695"),  # Palette Red.
@@ -54,6 +56,12 @@ const LEVEL_LIST := [
 
 const NUM_MAX_TROLLEYS = 8
 var _trolley_has_loop : Array
+
+
+func set_mute(new_mute: bool) -> void:
+	mute = new_mute
+	var master_sound := AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_mute(master_sound, new_mute)
 
 
 func set_trolley_has_loop(id: int, has_loop: bool) -> void:
