@@ -1,9 +1,8 @@
-[gd_resource type="Theme" load_steps=8 format=2]
+[gd_resource type="Theme" load_steps=7 format=2]
 
 [ext_resource path="res://assets/fonts/SF Atarian System.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/theme/button_focus_style.tres" type="StyleBox" id=2]
 [ext_resource path="res://assets/theme/button_main_style.tres" type="StyleBox" id=3]
-[ext_resource path="res://assets/theme/button_hover_style.tres" type="StyleBox" id=4]
 [ext_resource path="res://scenes/ui/font_med.tres" type="DynamicFont" id=5]
 [ext_resource path="res://assets/theme/button_pressed.tres" type="StyleBox" id=6]
 
@@ -21,7 +20,7 @@ Button/constants/hseparation = 2
 Button/fonts/font = SubResource( 2 )
 Button/styles/disabled = null
 Button/styles/focus = ExtResource( 2 )
-Button/styles/hover = ExtResource( 4 )
+Button/styles/hover = ExtResource( 3 )
 Button/styles/normal = ExtResource( 3 )
 Button/styles/pressed = ExtResource( 6 )
 Label/fonts/font = ExtResource( 5 )

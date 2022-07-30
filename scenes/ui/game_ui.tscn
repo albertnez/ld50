@@ -39,8 +39,8 @@ text = "Level: 0"
 [node name="FastForwardButton" type="Button" parent="MarginContainer/PlayingUI"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -52.0
-margin_bottom = 52.0
+margin_left = -37.0
+margin_bottom = 37.0
 focus_mode = 0
 theme = ExtResource( 6 )
 toggle_mode = true
@@ -142,15 +142,5 @@ custom_fonts/font = ExtResource( 4 )
 text = "
 Press ENTER/START to go to the NEXT LEVEL"
 align = 1
-
-[node name="TestButton" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -57.5
-margin_top = -20.0
-margin_right = 57.5
-text = "MyToggleButton"
 
 [connection signal="toggled" from="MarginContainer/PlayingUI/FastForwardButton" to="." method="_on_FastForwardButton_toggled"]

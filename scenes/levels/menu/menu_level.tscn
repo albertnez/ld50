@@ -16,7 +16,7 @@ margin_bottom = 66.0
 current = false
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 0
+frame = 1
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 4
+frame = 1
