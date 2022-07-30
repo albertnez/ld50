@@ -8,7 +8,7 @@ onready var _level_label = $MarginContainer/PlayingUI/LevelLabel
 onready var _first_time_gameover = $MarginContainer/GameOver/VBoxContainer/FirstTimeGameOver
 onready var _last_time_gameover = $MarginContainer/GameOver/VBoxContainer/LastTimeGameOver
 onready var _restart_label = $MarginContainer/GameOver/VBoxContainer/RestartLabel
-onready var _fast_forward_button = $MarginContainer/PlayingUI/FastForwardButton
+onready var _fast_forward_button = get_node("%FastForwardButton")
 
 
 func _ready() -> void:

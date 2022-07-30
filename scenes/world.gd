@@ -16,7 +16,6 @@ const trolley_packed_scene := preload("res://scenes/trolley.tscn")
 func _ready() -> void:
 	var _s = null
 	_s = EventBus.connect("trolley_created_later", _trolley_timer, "start", [1.0])
-	_s = EventBus.connect("person_crashed", self, "_on_EventBus_person_crashed")
 	_s = EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
 	_s = EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
 	
