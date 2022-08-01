@@ -33,6 +33,7 @@ func _ready() -> void:
 		var button := child as Button
 		button.rect_min_size = target_size
 
+	# warning-ignore:return_value_discarded
 	_back_button.connect("focus_entered", self, "_on_LevelButton_focus_entered", [-1])
 
 func _input(event: InputEvent) -> void:

@@ -1,12 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ui/game_ui.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/font_splash.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/ui/font_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/ui/font_med.tres" type="DynamicFont" id=4]
-[ext_resource path="res://assets/icons/fast_forward.svg" type="Texture" id=5]
-[ext_resource path="res://assets/theme/new_theme.tres" type="Theme" id=6]
-[ext_resource path="res://assets/icons/volume_off.svg" type="Texture" id=7]
 
 [node name="GameUI" type="Control"]
 anchor_right = 1.0
@@ -36,35 +33,6 @@ margin_right = 61.0
 margin_bottom = -3.0
 custom_fonts/font = ExtResource( 3 )
 text = "Level: 0"
-
-[node name="FastForwardButton" type="Button" parent="MarginContainer/PlayingUI"]
-unique_name_in_owner = true
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -85.0
-margin_right = -48.0
-margin_bottom = 37.0
-focus_mode = 0
-theme = ExtResource( 6 )
-toggle_mode = true
-enabled_focus_mode = 0
-icon = ExtResource( 5 )
-icon_align = 1
-expand_icon = true
-
-[node name="MuteButton" type="Button" parent="MarginContainer/PlayingUI"]
-unique_name_in_owner = true
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -37.0
-margin_bottom = 37.0
-focus_mode = 0
-theme = ExtResource( 6 )
-toggle_mode = true
-enabled_focus_mode = 0
-icon = ExtResource( 7 )
-icon_align = 1
-expand_icon = true
 
 [node name="GameOver" type="Control" parent="MarginContainer"]
 margin_right = 1004.0
@@ -159,6 +127,3 @@ custom_fonts/font = ExtResource( 4 )
 text = "
 Press ENTER/START to go to the NEXT LEVEL"
 align = 1
-
-[connection signal="toggled" from="MarginContainer/PlayingUI/FastForwardButton" to="." method="_on_FastForwardButton_toggled"]
-[connection signal="toggled" from="MarginContainer/PlayingUI/MuteButton" to="." method="_on_MuteButton_toggled"]

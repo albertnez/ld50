@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/world.gd" type="Script" id=1]
 [ext_resource path="res://scenes/tilemap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ui/buttons_always_shown.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/ui/game_ui.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/audio/walk.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/audio/level_up.wav" type="AudioStream" id=7]
@@ -51,5 +52,7 @@ stream = ExtResource( 11 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GameUI" parent="CanvasLayer" instance=ExtResource( 5 )]
+
+[node name="ButtonsAlwaysShown" parent="CanvasLayer" instance=ExtResource( 4 )]
 
 [connection signal="timeout" from="LevelStartTrolleyTimer" to="." method="_on_Any_trolley_created_later"]

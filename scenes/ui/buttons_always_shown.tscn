@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/theme/new_theme.tres" type="Theme" id=1]
+[ext_resource path="res://assets/icons/volume_off.svg" type="Texture" id=2]
+[ext_resource path="res://assets/icons/fast_forward.svg" type="Texture" id=3]
+[ext_resource path="res://scenes/ui/buttons_always_shown.gd" type="Script" id=4]
+
+[node name="ButtonsAlwaysShown" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 4 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 600.0
+mouse_filter = 2
+custom_constants/separation = 10
+alignment = 2
+
+[node name="FastForwardButton" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 920.0
+margin_right = 957.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 37, 37 )
+focus_mode = 0
+mouse_filter = 1
+size_flags_vertical = 0
+theme = ExtResource( 1 )
+toggle_mode = true
+enabled_focus_mode = 0
+icon = ExtResource( 3 )
+icon_align = 1
+expand_icon = true
+
+[node name="MuteButton" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 967.0
+margin_right = 1004.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 37, 37 )
+focus_mode = 0
+mouse_filter = 1
+size_flags_vertical = 0
+theme = ExtResource( 1 )
+toggle_mode = true
+enabled_focus_mode = 0
+icon = ExtResource( 2 )
+icon_align = 1
+expand_icon = true
+
+[connection signal="toggled" from="MarginContainer/HBoxContainer/FastForwardButton" to="." method="_on_FastForwardButton_toggled"]
+[connection signal="toggled" from="MarginContainer/HBoxContainer/MuteButton" to="." method="_on_MuteButton_toggled"]
