@@ -1,6 +1,7 @@
 extends Control
 
 onready var _new_game_button := get_node("%NewGameButton")
+onready var _exit_button := $"%ExitButton"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,3 +23,7 @@ func _on_NewGameButton_pressed() -> void:
 func _on_SelectLevelButton_pressed() -> void:
 	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.LEVEL_SELECT, 0)
 
+
+
+func _on_ExitButton_pressed() -> void:
+	get_tree().quit()
