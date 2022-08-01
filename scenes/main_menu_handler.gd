@@ -8,6 +8,8 @@ const MAIN_MENU_SCENE = preload("res://scenes/ui/menu.tscn")
 
 func _ready() -> void:
 	var _unused = EventBus.connect("change_menu_scene", self, "_on_EventBus_change_menu_scene")
+	# We instance the trolley in the main menu.
+	EventBus.emit_signal("trolley_created_later")
 
 
 func _on_EventBus_change_menu_scene(target_scene: int, starting_level: int) -> void:
