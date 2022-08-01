@@ -1,6 +1,6 @@
 extends Node
 
-# TODO: This should be serialized.
+var save_file = "user://savedata"
 var latest_level_unlocked = 0
 
 var level_selected_in_menu = 0
@@ -66,6 +66,24 @@ const NUM_MAX_TROLLEYS = 8
 var _trolley_has_loop : Array
 
 
+func _save_data():
+	var file := File.new()
+	var status := file.open(save_file, File.WRITE)
+	if status != OK:
+		print("Error opening file for write with error: ", status)
+		return
+	file.store_8(latest_level_unlocked)
+	file.close()
+
+func _load_data():
+	var file := File.new()
+	var status := file.open(save_file, File.READ)
+	if status != OK:
+		print("Error loading data with error: ", status)
+		return
+	latest_level_unlocked = file.get_8()
+
+
 func set_mute(new_mute: bool) -> void:
 	mute = new_mute
 	var master_sound := AudioServer.get_bus_index("Master")
@@ -85,7 +103,9 @@ func all_trolleys_have_loop(num_trolleys: int) -> bool:
 
 func set_new_level(new_level: int, new_in_main_menu: bool) -> void:
 	in_main_menu = new_in_main_menu
-	latest_level_unlocked = max(latest_level_unlocked, new_level)
+	if new_level > latest_level_unlocked:
+		latest_level_unlocked = new_level
+		_save_data()
 	level = new_level
 	level_completed = false
 	level_lost = false
@@ -103,6 +123,9 @@ func get_level_scene() -> PackedScene:
 func is_last_level() -> bool:
 	return level == LEVEL_LIST.size()-1
 
+
+func _init() -> void:
+	_load_data()
 
 func _ready() -> void:
 	_trolley_has_loop.resize(NUM_MAX_TROLLEYS)
