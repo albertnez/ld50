@@ -14,6 +14,8 @@ func _ready() -> void:
 	var target_size := Vector2(LEVEL_BUTTON_SIZE, LEVEL_BUTTON_SIZE)
 	for level_item in GlobalState.LEVEL_LIST:
 		var button := Button.new()
+		if ind > GlobalState.latest_level_unlocked:
+			button.disabled = true
 		button.text = str(ind).pad_zeros(2)
 		button.set_script(BUTTON_HOVER_GETS_FOCUSED)
 		var _u = null  # Unused connect return value
@@ -44,6 +46,8 @@ func _on_LevelButton_pressed(level: int) -> void:
 func _on_LevelButton_focus_entered(level: int) -> void:
 	# We asume the scene file name will be our description.
 	var scene_path : String = GlobalState.LEVEL_LIST[level].resource_path
-	var description = scene_path.get_file().trim_suffix(".tscn").replace("_", " ")
-	
-	_descritpion_label.text = str("Level ", level, ":\n", description)
+	var description = "[LOCKED]"
+	if level <= GlobalState.latest_level_unlocked:
+		description = scene_path.get_file().trim_suffix(".tscn").replace("_", " ")
+	var text := str("Level ", level, "\n", description)
+	_descritpion_label.text = text

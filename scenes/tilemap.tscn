@@ -159,7 +159,7 @@ show_behind_parent = true
 texture = ExtResource( 6 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 0, 0, 640, 320 )
+region_rect = Rect2( 0, 0, 800, 480 )
 
 [node name="IndicatorTilemap" type="TileMap" parent="."]
 show_behind_parent = true
@@ -190,6 +190,7 @@ zoom = Vector2( 0.5, 0.5 )
 
 [node name="ActionHoverIndicator" type="AnimatedSprite" parent="."]
 frames = SubResource( 26 )
+frame = 8
 playing = true
 
 [node name="TrolleyWarningTimer" type="Timer" parent="."]
@@ -200,7 +201,7 @@ visible = false
 show_behind_parent = true
 scale = Vector2( 0.91, 0.91 )
 frames = SubResource( 15 )
-frame = 6
+frame = 4
 playing = true
 
 [node name="LineDrawers" type="Node2D" parent="."]

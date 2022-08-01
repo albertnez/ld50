@@ -14,7 +14,7 @@ margin_bottom = 293.0
 text = "find a loop"
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 3
+frame = 2
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 9
+frame = 0

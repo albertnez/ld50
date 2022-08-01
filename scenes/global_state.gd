@@ -1,5 +1,8 @@
 extends Node
 
+# TODO: This should be serialized.
+var latest_level_unlocked = 0
+
 var level_selected_in_menu = 0
 
 var level_completed = false
@@ -49,8 +52,13 @@ const LEVEL_LIST := [
 	preload("res://scenes/levels/level08.tscn"),
 	#10
 	preload("res://scenes/levels/medium/density.tscn"),
-	preload("res://scenes/levels/level10.tscn"),
-	preload("res://scenes/levels/level11.tscn"),
+	# Hard
+	preload("res://scenes/levels/hard/expand.tscn"),
+	preload("res://scenes/levels/hard/find_a_loop.tscn"),
+	preload("res://scenes/levels/ending/the_end.tscn"),
+]
+
+const UNUSED_LEVELS = [
 	preload("res://scenes/levels/level12.tscn"),
 ]
 
@@ -77,6 +85,7 @@ func all_trolleys_have_loop(num_trolleys: int) -> bool:
 
 func set_new_level(new_level: int, new_in_main_menu: bool) -> void:
 	in_main_menu = new_in_main_menu
+	latest_level_unlocked = max(latest_level_unlocked, new_level)
 	level = new_level
 	level_completed = false
 	level_lost = false
@@ -92,7 +101,7 @@ func get_level_scene() -> PackedScene:
 
 
 func is_last_level() -> bool:
-	return level == LEVEL_LIST.size()
+	return level == LEVEL_LIST.size()-1
 
 
 func _ready() -> void:
