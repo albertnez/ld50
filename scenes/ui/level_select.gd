@@ -6,6 +6,7 @@ const BUTTON_HOVER_GETS_FOCUSED = preload("res://scenes/ui/button_hover_gets_foc
 
 onready var _grid_container := get_node("%LevelGridContainer")
 onready var _descritpion_label := get_node("LevelDescriptionLabel")
+onready var _back_button := $"%BackButton"
 
 
 # Called when the node enters the scene tree for the first time.
@@ -32,6 +33,7 @@ func _ready() -> void:
 		var button := child as Button
 		button.rect_min_size = target_size
 
+	_back_button.connect("focus_entered", self, "_on_LevelButton_focus_entered", [-1])
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
@@ -39,11 +41,18 @@ func _input(event: InputEvent) -> void:
 		EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_MENU, 0)
 
 
+func _on_BackButton_pressed() -> void:
+	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_MENU, 0)
+
+
 func _on_LevelButton_pressed(level: int) -> void:
 	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_GAME, level)
 
 
 func _on_LevelButton_focus_entered(level: int) -> void:
+	if level == -1:
+		_descritpion_label.text = ""
+		return
 	# We asume the scene file name will be our description.
 	var scene_path : String = GlobalState.LEVEL_LIST[level].resource_path
 	var description = "[LOCKED]"
