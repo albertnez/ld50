@@ -7,6 +7,8 @@ enum TargetMenuScene {
 	MAIN_GAME,
 }
 signal change_menu_scene(target_menu_scene, starting_level)
+# Pause stuff
+signal resume_game()
 
 # Other stuff.
 signal trolley_crashed()

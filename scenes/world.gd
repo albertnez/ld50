@@ -11,6 +11,8 @@ onready var _trolleys := $ScaledView/Trolleys
 onready var _trolley_timer := $LevelStartTrolleyTimer
 onready var _level_completed_timer := $LevelCompletedTimer
 
+onready var _pause_menu := $"%Pause"
+
 const trolley_packed_scene := preload("res://scenes/trolley.tscn")
 
 func _ready() -> void:
@@ -18,6 +20,11 @@ func _ready() -> void:
 	_s = EventBus.connect("trolley_created_later", _trolley_timer, "start", [1.0])
 	_s = EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
 	_s = EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
+	
+	_s = EventBus.connect("resume_game", self, "_toggle_pause", [false])
+	_s = EventBus.connect("level_restart", self, "_toggle_pause", [false])
+	if not GlobalState.in_main_menu:
+		_s = EventBus.connect("change_menu_scene", self, "_goto_main_menu")
 	
 	_current_level = GlobalState.level_selected_in_menu
 	
@@ -56,9 +63,19 @@ func _start_level() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().set_input_as_handled()
-		if get_tree().change_scene_to(load("res://scenes/main_menu_handler.tscn")) != OK:
-			print("Error going from game to menu")
-		return	
+		_toggle_pause(true)
+
+
+func _toggle_pause(paused: bool) -> void:
+	get_tree().paused = paused
+	_pause_menu.visible = paused
+
+
+func _goto_main_menu(target_scene: int, _unused_target_level: int) -> void:
+	GlobalState.jumping_from_game_to_menu(target_scene)
+	if get_tree().change_scene_to(load("res://scenes/main_menu_handler.tscn")) != OK:
+		print("Error going from game to menu")
+	return		
 
 
 func _process(_delta: float) -> void:

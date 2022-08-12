@@ -19,10 +19,8 @@ func _on_NewGameButton_pressed() -> void:
 	return
 
 
-
 func _on_SelectLevelButton_pressed() -> void:
 	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.LEVEL_SELECT, 0)
-
 
 
 func _on_ExitButton_pressed() -> void:

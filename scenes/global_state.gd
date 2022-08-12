@@ -7,7 +7,8 @@ var level_selected_in_menu = 0
 
 var level_completed = false
 var level_lost = false
-var in_main_menu = false
+var in_main_menu = true
+var menu_scene = EventBus.TargetMenuScene.MAIN_MENU
 var level = 0
 var in_true_end = false
 
@@ -122,6 +123,11 @@ func get_level_scene() -> PackedScene:
 
 func is_last_level() -> bool:
 	return level == LEVEL_LIST.size()-1
+
+
+func jumping_from_game_to_menu(target_menu_scene: int):
+	in_main_menu = true
+	menu_scene = target_menu_scene
 
 
 func _init() -> void:
