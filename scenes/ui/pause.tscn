@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/ui/button_hover_gets_focused.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/pause.gd" type="Script" id=2]
 [ext_resource path="res://assets/theme/new_theme.tres" type="Theme" id=3]
+[ext_resource path="res://scenes/ui/ConfirmationButton.gd" type="Script" id=4]
+[ext_resource path="res://scenes/ui/ParentButtonHoverGetsFocused.gd" type="Script" id=5]
 
 [node name="Pause" type="Control"]
 anchor_right = 1.0
@@ -47,7 +49,10 @@ margin_top = 302.0
 margin_right = 220.0
 margin_bottom = 335.0
 text = "Exit to level selection"
-script = ExtResource( 1 )
+script = ExtResource( 4 )
+
+[node name="ParentbuttonHoverGetsFocused" type="Node" parent="VBoxContainer/QuitToLevelSelectionButton"]
+script = ExtResource( 5 )
 
 [node name="QuitToMainMenuButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
@@ -55,7 +60,10 @@ margin_top = 339.0
 margin_right = 220.0
 margin_bottom = 372.0
 text = "Exit to main menu"
-script = ExtResource( 1 )
+script = ExtResource( 4 )
+
+[node name="ParentbuttonHoverGetsFocused" type="Node" parent="VBoxContainer/QuitToMainMenuButton"]
+script = ExtResource( 5 )
 
 [node name="TitleLabel" type="Label" parent="."]
 anchor_right = 1.0
@@ -67,5 +75,5 @@ align = 1
 [connection signal="visibility_changed" from="." to="." method="_on_Pause_visibility_changed"]
 [connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/QuitToLevelSelectionButton" to="." method="_on_QuitToLevelSelectionButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/QuitToMainMenuButton" to="." method="_on_QuitToMainMenuButton_pressed"]
+[connection signal="confirmed" from="VBoxContainer/QuitToLevelSelectionButton" to="." method="_on_QuitToLevelSelectionButton_confirmed"]
+[connection signal="confirmed" from="VBoxContainer/QuitToMainMenuButton" to="." method="_on_QuitToMainMenuButton_confirmed"]

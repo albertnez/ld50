@@ -2,8 +2,8 @@ extends Control
 
 onready var _resume_button := $"%ResumeButton"
 
+const CONFIRM_TEST = "Are you sure?"
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_resume_button.grab_focus()
 
@@ -24,11 +24,11 @@ func _on_RestartButton_pressed() -> void:
 	EventBus.emit_signal("level_restart")
 
 
-func _on_QuitToLevelSelectionButton_pressed() -> void:
+func _on_QuitToLevelSelectionButton_confirmed() -> void:
 	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.LEVEL_SELECT, -1)
 
 
-func _on_QuitToMainMenuButton_pressed() -> void:
+func _on_QuitToMainMenuButton_confirmed() -> void:
 	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_MENU, -1)
 
 
