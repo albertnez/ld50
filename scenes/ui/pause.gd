@@ -2,8 +2,6 @@ extends Control
 
 onready var _resume_button := $"%ResumeButton"
 
-const CONFIRM_TEST = "Are you sure?"
-
 func _ready() -> void:
 	_resume_button.grab_focus()
 

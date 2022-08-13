@@ -3,7 +3,8 @@ extends Control
 onready var _game_over_control = $MarginContainer/GameOver
 onready var _game_over_reason_label = $MarginContainer/GameOver/VBoxContainer/ReasonLabel
 onready var _playing_ui = $MarginContainer/PlayingUI
-onready var _level_completed = $MarginContainer/LevelCompleted
+
+onready var _level_completed_menu = $"%GameCompletedMenu"
 onready var _level_label = $MarginContainer/PlayingUI/LevelLabel
 onready var _first_time_gameover = $MarginContainer/GameOver/VBoxContainer/FirstTimeGameOver
 onready var _last_time_gameover = $MarginContainer/GameOver/VBoxContainer/LastTimeGameOver
@@ -34,11 +35,11 @@ func _on_game_over(msg: String, killed_someone: bool) -> void:
 
 func _on_EventBus_level_restart() -> void:
 	_game_over_control.hide()
-	_level_completed.hide()
+	_level_completed_menu.hide()
 	var level = GlobalState.level
 	_level_label.text = str("Level ", level, ": ", GlobalState.get_level_name(level))
 	_playing_ui.visible = not GlobalState.in_main_menu
 
 
 func _on_EventBus_level_completed() -> void:
-	_level_completed.show()
+	_level_completed_menu.show()

@@ -23,6 +23,7 @@ func _ready() -> void:
 	
 	_s = EventBus.connect("resume_game", self, "_toggle_pause", [false])
 	_s = EventBus.connect("level_restart", self, "_toggle_pause", [false])
+	_s = EventBus.connect("go_to_next_level", self, "_next_level")
 	if not GlobalState.in_main_menu:
 		_s = EventBus.connect("change_menu_scene", self, "_goto_main_menu")
 	
@@ -63,6 +64,7 @@ func _start_level() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().set_input_as_handled()
+		# TODO: Don't do this on the GameCmpleteMenu
 		_toggle_pause(true)
 
 
@@ -105,10 +107,7 @@ func _process(_delta: float) -> void:
 	if GlobalState.in_true_end:
 		return
 
-	if GlobalState.level_completed and Input.is_action_just_pressed("restart"):
-		_next_level()
-		return
-	
+	# TODO: Move these to a menu	
 	if GlobalState.level_lost and Input.is_action_just_pressed("restart"):
 		if GlobalState.level == 0 and GlobalState.level_completed:
 			_next_level()
