@@ -54,10 +54,8 @@ func _on_LevelButton_focus_entered(level: int) -> void:
 	if level == -1:
 		_descritpion_label.text = ""
 		return
-	# We asume the scene file name will be our description.
-	var scene_path : String = GlobalState.LEVEL_LIST[level].resource_path
 	var description = "[LOCKED]"
 	if level <= GlobalState.latest_level_unlocked:
-		description = scene_path.get_file().trim_suffix(".tscn").replace("_", " ")
+		description = GlobalState.get_level_name(level)
 	var text := str("Level ", level, "\n", description)
 	_descritpion_label.text = text

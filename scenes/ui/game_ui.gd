@@ -35,7 +35,8 @@ func _on_game_over(msg: String, killed_someone: bool) -> void:
 func _on_EventBus_level_restart() -> void:
 	_game_over_control.hide()
 	_level_completed.hide()
-	_level_label.text = str("Level ", GlobalState.level)
+	var level = GlobalState.level
+	_level_label.text = str("Level ", level, ": ", GlobalState.get_level_name(level))
 	_playing_ui.visible = not GlobalState.in_main_menu
 
 

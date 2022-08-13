@@ -121,6 +121,12 @@ func get_level_scene() -> PackedScene:
 	return LEVEL_LIST[level]
 
 
+func get_level_name(level_idx: int) -> String:
+	# We asume the scene file name will be our description.
+	var scene_path : String = LEVEL_LIST[level_idx].resource_path
+	return scene_path.get_file().trim_suffix(".tscn").replace("_", " ")
+
+
 func is_last_level() -> bool:
 	return level == LEVEL_LIST.size()-1
 
