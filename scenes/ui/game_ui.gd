@@ -1,14 +1,9 @@
 extends Control
 
-onready var _game_over_control = $MarginContainer/GameOver
-onready var _game_over_reason_label = $MarginContainer/GameOver/VBoxContainer/ReasonLabel
 onready var _playing_ui = $MarginContainer/PlayingUI
 
-onready var _level_completed_menu = $"%GameTerminatedMenu"
+onready var _level_terminated_menu := $"%GameTerminatedMenu"
 onready var _level_label = $MarginContainer/PlayingUI/LevelLabel
-onready var _first_time_gameover = $MarginContainer/GameOver/VBoxContainer/FirstTimeGameOver
-onready var _last_time_gameover = $MarginContainer/GameOver/VBoxContainer/LastTimeGameOver
-onready var _restart_label = $MarginContainer/GameOver/VBoxContainer/RestartLabel
 
 
 func _ready() -> void:
@@ -23,23 +18,27 @@ func _ready() -> void:
 
 
 func _on_game_over(msg: String, killed_someone: bool) -> void:
-	_game_over_reason_label.text = str("Game Over: ", msg)
-	_first_time_gameover.visible = killed_someone and GlobalState.level == 0
-	_restart_label.visible = not (killed_someone and GlobalState.level == 0)
-	if GlobalState.in_true_end:
-		_game_over_reason_label.text = "Game Over: the end"
-		_restart_label.hide()
-		_last_time_gameover.show()
-	_game_over_control.show()
+	""" Handles 3 situations of 'Game Over':
+		- First level (tutorial), the trolley inevitably kills person on tracks.
+		- Last level (true end), the trolley inevitably kills person on tracks.
+		- Normal 'Game Over'
+	"""
+	# TODO: Wire this.
+	if killed_someone and GlobalState.level == 0:
+		_level_terminated_menu.show_first_level_completed()
+	elif GlobalState.in_true_end:
+		_level_terminated_menu.show_full_game_completed()
+	else:
+		_level_terminated_menu.show_game_over(msg)
+	return
 
 
 func _on_EventBus_level_restart() -> void:
-	_game_over_control.hide()
-	_level_completed_menu.hide()
+	_level_terminated_menu.hide()
 	var level = GlobalState.level
 	_level_label.text = str("Level ", level, ": ", GlobalState.get_level_name(level))
 	_playing_ui.visible = not GlobalState.in_main_menu
 
 
 func _on_EventBus_level_completed() -> void:
-	_level_completed_menu.show()
+	_level_terminated_menu.show_normal_level_completed()

@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/ui/game_ui.gd" type="Script" id=1]
-[ext_resource path="res://scenes/ui/font_splash.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/ui/font_small.tres" type="DynamicFont" id=3]
-[ext_resource path="res://scenes/ui/font_med.tres" type="DynamicFont" id=4]
 [ext_resource path="res://scenes/ui/game_terminated_menu.tscn" type="PackedScene" id=5]
 
 [node name="GameUI" type="Control"]
@@ -34,64 +32,6 @@ margin_right = 61.0
 margin_bottom = -3.0
 custom_fonts/font = ExtResource( 3 )
 text = "Level: 0"
-
-[node name="GameOver" type="Control" parent="MarginContainer"]
-margin_right = 1004.0
-margin_bottom = 580.0
-
-[node name="BackgroundDimmer" type="ColorRect" parent="MarginContainer/GameOver"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-color = Color( 0, 0, 0, 0.67451 )
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GameOver"]
-anchor_right = 1.0
-margin_bottom = 76.0
-
-[node name="ReasonLabel" type="Label" parent="MarginContainer/GameOver/VBoxContainer"]
-margin_right = 1004.0
-margin_bottom = 48.0
-custom_fonts/font = ExtResource( 2 )
-text = "Game Over: THE END"
-align = 1
-valign = 1
-
-[node name="FirstTimeGameOver" type="Label" parent="MarginContainer/GameOver/VBoxContainer"]
-visible = false
-margin_top = 52.0
-margin_right = 1024.0
-margin_bottom = 181.0
-custom_fonts/font = ExtResource( 4 )
-text = "But there was no way to solve the TROLLEY DILEMMA,
-you can only DELAY THE INEVITABLE...
-
-Press ENTER/START to go to the NEXT LEVEL"
-align = 1
-
-[node name="LastTimeGameOver" type="Label" parent="MarginContainer/GameOver/VBoxContainer"]
-visible = false
-margin_top = 52.0
-margin_right = 1024.0
-margin_bottom = 253.0
-custom_fonts/font = ExtResource( 2 )
-text = "
-
-TROLLEY'S DELAYMA
-by albertnez"
-align = 1
-
-[node name="RestartLabel" type="Label" parent="MarginContainer/GameOver/VBoxContainer"]
-margin_top = 52.0
-margin_right = 1004.0
-margin_bottom = 115.0
-custom_fonts/font = ExtResource( 4 )
-text = "
-Press ENTER/START to RESTART"
-align = 1
 
 [node name="GameTerminatedMenu" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true

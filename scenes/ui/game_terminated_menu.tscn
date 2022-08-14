@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/theme/new_theme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/ui/font_splash.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/ui/ParentButtonHoverGetsFocused.gd" type="Script" id=3]
 [ext_resource path="res://scenes/ui/game_terminated_menu.gd" type="Script" id=4]
 [ext_resource path="res://scenes/ui/ConfirmationButton.gd" type="Script" id=5]
+[ext_resource path="res://scenes/ui/font_med.tres" type="DynamicFont" id=6]
 
 [node name="GameTerminatedMenu" type="Control"]
 anchor_right = 1.0
@@ -29,19 +30,29 @@ alignment = 1
 
 [node name="NextLevelButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 246.0
+margin_top = 228.0
 margin_right = 220.0
-margin_bottom = 279.0
+margin_bottom = 261.0
 text = "Next Level"
 
 [node name="ParentbuttonHoverGetsFocused" type="Node" parent="VBoxContainer/NextLevelButton"]
 script = ExtResource( 3 )
 
+[node name="RestartLevelButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+margin_top = 265.0
+margin_right = 220.0
+margin_bottom = 298.0
+text = "Restart Level"
+
+[node name="ParentbuttonHoverGetsFocused" type="Node" parent="VBoxContainer/RestartLevelButton"]
+script = ExtResource( 3 )
+
 [node name="QuitToLevelSelectionButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 283.0
+margin_top = 302.0
 margin_right = 220.0
-margin_bottom = 316.0
+margin_bottom = 335.0
 text = "Exit to level selection"
 script = ExtResource( 5 )
 
@@ -50,24 +61,75 @@ script = ExtResource( 3 )
 
 [node name="QuitToMainMenuButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 320.0
+margin_top = 339.0
 margin_right = 220.0
-margin_bottom = 353.0
+margin_bottom = 372.0
 text = "Exit to main menu"
 script = ExtResource( 5 )
 
 [node name="ParentbuttonHoverGetsFocused" type="Node" parent="VBoxContainer/QuitToMainMenuButton"]
 script = ExtResource( 3 )
 
-[node name="TitleLabel" type="Label" parent="."]
+[node name="LevelCompletedLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
 anchor_right = 1.0
 margin_top = 40.0
 margin_bottom = 14.0
 custom_fonts/font = ExtResource( 2 )
-text = "Level Completed"
+text = "Level Completed!"
 align = 1
 
-[connection signal="visibility_changed" from="." to="." method="_on_GameTerminatedMenu_visibility_changed"]
+[node name="FullGameCompleted" type="Control" parent="."]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TitleLabel" type="Label" parent="FullGameCompleted"]
+anchor_right = 1.0
+margin_top = 21.0
+margin_bottom = 150.0
+custom_fonts/font = ExtResource( 2 )
+text = "congratulations, you've completed all levels!
+
+TROLLEY's DELAYMA
+by albertnez
+"
+align = 1
+
+[node name="FirstLevelCompleted" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchor_right = 1.0
+margin_top = 40.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 2 )
+text = "Oh noes, the trolley crashed...
+But there was no way to solve the TROLLEY DILEMMA,
+you can only DELAY THE INEVITABLE..."
+align = 1
+
+[node name="GameOverLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchor_right = 1.0
+margin_top = 40.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 2 )
+text = "Game Over!"
+align = 1
+
+[node name="GameOverReasonLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchor_right = 1.0
+margin_top = 103.0
+margin_bottom = 151.0
+custom_fonts/font = ExtResource( 6 )
+text = "game over description"
+align = 1
+
 [connection signal="pressed" from="VBoxContainer/NextLevelButton" to="." method="_on_NextLevelButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/RestartLevelButton" to="." method="_on_RestartLevelButton_pressed"]
 [connection signal="confirmed" from="VBoxContainer/QuitToLevelSelectionButton" to="." method="_on_QuitToLevelSelectionButton_confirmed"]
 [connection signal="confirmed" from="VBoxContainer/QuitToMainMenuButton" to="." method="_on_QuitToMainMenuButton_confirmed"]

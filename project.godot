@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/ui/ConfirmationButton.gd"
 }, {
+"base": "Control",
+"class": "GameTerminatedMenu",
+"language": "GDScript",
+"path": "res://scenes/ui/game_terminated_menu.gd"
+}, {
 "base": "Node2D",
 "class": "GameWorld",
 "language": "GDScript",
@@ -46,6 +51,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "ConfirmationButton": "",
+"GameTerminatedMenu": "",
 "GameWorld": "",
 "LineDrawer": "",
 "MyTileMap": "",
