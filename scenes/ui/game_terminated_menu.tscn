@@ -69,3 +69,5 @@ align = 1
 
 [connection signal="visibility_changed" from="." to="." method="_on_GameTerminatedMenu_visibility_changed"]
 [connection signal="pressed" from="VBoxContainer/NextLevelButton" to="." method="_on_NextLevelButton_pressed"]
+[connection signal="confirmed" from="VBoxContainer/QuitToLevelSelectionButton" to="." method="_on_QuitToLevelSelectionButton_confirmed"]
+[connection signal="confirmed" from="VBoxContainer/QuitToMainMenuButton" to="." method="_on_QuitToMainMenuButton_confirmed"]
