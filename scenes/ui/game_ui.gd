@@ -4,7 +4,7 @@ onready var _game_over_control = $MarginContainer/GameOver
 onready var _game_over_reason_label = $MarginContainer/GameOver/VBoxContainer/ReasonLabel
 onready var _playing_ui = $MarginContainer/PlayingUI
 
-onready var _level_completed_menu = $"%GameCompletedMenu"
+onready var _level_completed_menu = $"%GameTerminatedMenu"
 onready var _level_label = $MarginContainer/PlayingUI/LevelLabel
 onready var _first_time_gameover = $MarginContainer/GameOver/VBoxContainer/FirstTimeGameOver
 onready var _last_time_gameover = $MarginContainer/GameOver/VBoxContainer/LastTimeGameOver

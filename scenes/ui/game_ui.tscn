@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/ui/font_splash.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/ui/font_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/ui/font_med.tres" type="DynamicFont" id=4]
-[ext_resource path="res://scenes/ui/GameCompletedMenu.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/ui/game_terminated_menu.tscn" type="PackedScene" id=5]
 
 [node name="GameUI" type="Control"]
 anchor_right = 1.0
@@ -93,6 +93,6 @@ text = "
 Press ENTER/START to RESTART"
 align = 1
 
-[node name="GameCompletedMenu" parent="." instance=ExtResource( 5 )]
+[node name="GameTerminatedMenu" parent="." instance=ExtResource( 5 )]
 unique_name_in_owner = true
 visible = false

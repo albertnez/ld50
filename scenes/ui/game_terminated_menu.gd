@@ -2,7 +2,7 @@ extends Control
 
 onready var _next_level_button := $"%NextLevelButton"
 
-func _on_GameCompletedMenu_visibility_changed() -> void:
+func _on_GameTerminatedMenu_visibility_changed() -> void:
 	if visible:
 		_next_level_button.grab_focus()
 
