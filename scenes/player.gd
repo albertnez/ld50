@@ -24,7 +24,7 @@ func set_moving_bounds(bounds: Rect2) -> void:
 	_move_bounds = bounds
 
 func _process(delta: float) -> void:
-	if _dead:
+	if _dead or not GlobalState.is_playing():
 		return
 
 	var dir := Vector2.ZERO

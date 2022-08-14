@@ -62,9 +62,8 @@ func _start_level() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("ui_cancel") and GlobalState.is_playing():
 		get_tree().set_input_as_handled()
-		# TODO: Don't do this on the GameCmpleteMenu
 		_toggle_pause(true)
 
 

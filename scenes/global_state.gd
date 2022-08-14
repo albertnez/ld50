@@ -102,6 +102,12 @@ func all_trolleys_have_loop(num_trolleys: int) -> bool:
 	return true
 
 
+func is_playing() -> bool:
+	return not (in_main_menu or
+				level_completed or
+				level_lost)
+
+
 func set_new_level(new_level: int, new_in_main_menu: bool) -> void:
 	in_main_menu = new_in_main_menu
 	if new_level > latest_level_unlocked:
