@@ -47,10 +47,10 @@ const LEVEL_LIST := [
 	preload("res://scenes/levels/easy/wider_reverse.tscn"),
 	
 	# Medium
+	preload("res://scenes/levels/medium/reverse_with_detour.tscn"),
 	preload("res://scenes/levels/medium/two_train_delay_one.tscn"),
 	
 	# Others
-	preload("res://scenes/levels/level08.tscn"),
 	#10
 	preload("res://scenes/levels/medium/density.tscn"),
 	# Hard
