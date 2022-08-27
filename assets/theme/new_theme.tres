@@ -1,14 +1,18 @@
-[gd_resource type="Theme" load_steps=7 format=2]
+[gd_resource type="Theme" load_steps=9 format=2]
 
 [ext_resource path="res://assets/fonts/SF Atarian System.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/theme/button_focus_style.tres" type="StyleBox" id=2]
 [ext_resource path="res://assets/theme/button_main_style.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/fonts/Roboto-Light.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://scenes/ui/font_med.tres" type="DynamicFont" id=5]
 [ext_resource path="res://assets/theme/button_pressed.tres" type="StyleBox" id=6]
 
 [sub_resource type="DynamicFont" id=2]
 size = 28
 font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 4 )
 
 [resource]
 Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
@@ -25,3 +29,6 @@ Button/styles/normal = ExtResource( 3 )
 Button/styles/pressed = ExtResource( 6 )
 Label/fonts/font = ExtResource( 5 )
 Label/styles/normal = null
+TooltipLabel/constants/shadow_offset_x = 0
+TooltipLabel/constants/shadow_offset_y = 0
+TooltipLabel/fonts/font = SubResource( 3 )
