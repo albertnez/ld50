@@ -51,6 +51,7 @@ stream = ExtResource( 9 )
 stream = ExtResource( 11 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
 
 [node name="GameUI" parent="CanvasLayer" instance=ExtResource( 5 )]
 

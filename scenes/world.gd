@@ -12,6 +12,7 @@ onready var _trolley_timer := $LevelStartTrolleyTimer
 onready var _level_completed_timer := $LevelCompletedTimer
 
 onready var _pause_menu := $"%Pause"
+onready var _canvas_layer := $"%CanvasLayer"
 
 const trolley_packed_scene := preload("res://scenes/trolley.tscn")
 
@@ -26,6 +27,8 @@ func _ready() -> void:
 	_s = EventBus.connect("go_to_next_level", self, "_next_level")
 	if not GlobalState.in_main_menu:
 		_s = EventBus.connect("change_menu_scene", self, "_goto_main_menu")
+	
+	_canvas_layer.visible = not GlobalState.in_main_menu
 	
 	_current_level = GlobalState.level_selected_in_menu
 	

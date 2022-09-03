@@ -25,3 +25,12 @@ func _on_SelectLevelButton_pressed() -> void:
 
 func _on_ExitButton_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_Menu_mouse_entered_TEST() -> void:
+	pass # Replace with function body.
+
+
+func _on_VBoxContainer_mouse_entered_TEST() -> void:
+	print("inside")
+	pass # Replace with function body.
