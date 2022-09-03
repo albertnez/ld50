@@ -67,8 +67,6 @@ custom_fonts/font = ExtResource( 4 )
 text = "Trolley's Delayma"
 align = 1
 
-[connection signal="mouse_entered" from="." to="." method="_on_Menu_mouse_entered_TEST"]
-[connection signal="mouse_entered" from="VBoxContainer" to="." method="_on_VBoxContainer_mouse_entered_TEST"]
 [connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_NewGameButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/SelectLevelButton" to="." method="_on_SelectLevelButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
