@@ -18,6 +18,7 @@ var mute := false
 const TROLLEY_COLOR_LIST := [
 	Color("ee8695"),  # Palette Red.
 	Color.aquamarine,
+	Color.burlywood,
 ]
 
 const MENU_LEVEL := preload("res://scenes/levels/menu/menu_level.tscn")
@@ -32,6 +33,8 @@ class Level:
 		description = desc
 	
 const LEVEL_LIST := [
+	#Temp
+	preload("res://scenes/levels/hard/three_trains.tscn"),
 	# Introduction
 	#0
 	preload("res://scenes/levels/tutorial/move_and_toggle.tscn"),

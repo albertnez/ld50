@@ -75,6 +75,7 @@ const MAIN_INDICATOR_TILEMAP_ID = 0
 const INDICATOR_TILEMAP_GREEN_COORD = Vector2(0, 0)
 const INDICATOR_TILEMAP_HINT_COORD = Vector2(1, 0)
 
+# Vector2(X, Y)
 const TILEMAP_ENDPOINT_DIRS = {
 	Vector2(0, 3):  # Straight horizontal, Trolley spawn
 		[Vector2.LEFT, Vector2.RIGHT],
@@ -108,6 +109,8 @@ const TILEMAP_ENDPOINT_DIRS = {
 		[Vector2.LEFT, Vector2.UP],
 	Vector2(2, 2):  # Toggleable corners bifurcation
 		[Vector2.LEFT, Vector2.DOWN],
+	Vector2(2, 3):  # Cross
+		[Vector2.UP, Vector2.DOWN],
 }
 
 
@@ -121,7 +124,7 @@ func set_trolleys_for_vfx(trolleys : Array) -> void:
 	for child in _line_drawers.get_children():
 		_line_drawers.remove_child(child)
 	for i in trolleys.size():
-		# Node2D instead of Trolley to avoid cyclic dependency.
+		# Node2D instead of Trolley to avoid cyclic dependency.cribed-aga
 		var trolley : Node2D = trolleys[i]
 		assert(i == trolleys[i]._id)
 		var line_drawer : LineDrawer = LINE_DRAWER_SCENE.instance()
@@ -138,11 +141,16 @@ func coord_is_bifurcation(coord: Vector2) -> bool:
 
 
 # Note: For a toggleable tile with 3 states, can be encoded here with a 3-length cycle.
+# Vector2(X, Y)
 const TILEMAP_FLIP_COORD = {
 	Vector2(1, 0): Vector2(2, 0),
 	Vector2(2, 0): Vector2(1, 0),
 	Vector2(1, 2): Vector2(2, 2),
 	Vector2(2, 2): Vector2(1, 2),
+}
+
+const TILEMAP_ROTATEABLE_COORD = {
+	Vector2(2, 3): true,
 }
 
 
@@ -276,7 +284,10 @@ func toggle_world_pos_cell(world_pos: Vector2) -> void:
 	var x_flipped = is_cell_x_flipped(pos.x, pos.y)
 	var y_flipped = is_cell_y_flipped(pos.x, pos.y)
 	var transposed = is_cell_transposed(pos.x, pos.y)
-	set_cell(pos.x, pos.y, ind, x_flipped, y_flipped, transposed, TILEMAP_FLIP_COORD[coord])
+	if coord in TILEMAP_ROTATEABLE_COORD:
+		set_cell(pos.x, pos.y, ind, x_flipped, y_flipped, not transposed, coord)
+	else:
+		set_cell(pos.x, pos.y, ind, x_flipped, y_flipped, transposed, TILEMAP_FLIP_COORD[coord])
 	mark_cell_as_cleared(pos)
 	if pos == _level_tile_hint_pos:
 		_level_tile_hint_sprite.hide()
@@ -366,7 +377,7 @@ func get_next_world_pos(tile_world_pos: Vector2, prev_tile_world_pos: Vector2 = 
 
 
 func is_autotile_coord_toggable(ind: Vector2) -> bool:
-	return ind in TILEMAP_FLIP_COORD.keys()
+	return (ind in TILEMAP_FLIP_COORD.keys() or ind in TILEMAP_ROTATEABLE_COORD)
 
 
 func is_world_pos_a_toggable_tile(world_pos: Vector2) -> bool:
