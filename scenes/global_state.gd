@@ -34,6 +34,7 @@ class Level:
 	
 const LEVEL_LIST := [
 	#Temp
+	preload("res://scenes/levels/hard/through_the_loop.tscn"),
 	preload("res://scenes/levels/hard/three_trains.tscn"),
 	# Introduction
 	#0

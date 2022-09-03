@@ -180,6 +180,10 @@ func _has_visited_loop(pos: Vector2, from_dir: Vector2, trolley_id: int) -> bool
 	var starting_pos = pos  # Already evaluated as visited
 	var old_pos = pos
 	pos = get_tile_next_pos(pos, from_dir)
+	if pos == Vector2.INF:
+		# This is the situation where we changed the piece where the train was
+		# getting out of. Return false.
+		return false
 	assert(pos != Vector2.INF)
 	from_dir = get_from_dir(pos, old_pos)
 	while pos != starting_pos:
