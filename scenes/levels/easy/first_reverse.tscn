@@ -15,8 +15,5 @@ text = "reverse
 
 "
 
-[node name="ActionHoverIndicator" parent="." index="5"]
-frame = 4
-
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 0
+frame = 2

@@ -16,4 +16,4 @@ margin_bottom = 66.0
 zoom = Vector2( 0.4, 0.4 )
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 1
+frame = 9

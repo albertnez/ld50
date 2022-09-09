@@ -19,6 +19,12 @@ const TROLLEY_COLOR_LIST := [
 	Color("ee8695"),  # Palette Red.
 	Color.aquamarine,
 	Color.burlywood,
+	Color.orange,
+	Color.white,
+	Color.rosybrown,
+	Color.green,
+	Color.purple,
+	Color.chartreuse,
 ]
 
 const MENU_LEVEL := preload("res://scenes/levels/menu/menu_level.tscn")
@@ -52,12 +58,14 @@ const LEVEL_LIST := [
 	preload("res://scenes/levels/hard/through_the_loop.tscn"),
 	preload("res://scenes/levels/hard/three_trains.tscn"),
 	# 15
+	preload("res://scenes/levels/hard/three_train_braid.tscn"),
 	preload("res://scenes/levels/hard/find_a_loop.tscn"),
+	preload("res://scenes/levels/hard/the_right_size.tscn"),
 	preload("res://scenes/levels/ending/the_end.tscn"),
 ]
 
 
-const NUM_MAX_TROLLEYS = 8
+const NUM_MAX_TROLLEYS = 9
 var _trolley_has_loop : Array
 
 
