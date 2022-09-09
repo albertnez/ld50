@@ -56,9 +56,6 @@ const LEVEL_LIST := [
 	preload("res://scenes/levels/ending/the_end.tscn"),
 ]
 
-const UNUSED_LEVELS = [
-	preload("res://scenes/levels/level12.tscn"),
-]
 
 const NUM_MAX_TROLLEYS = 8
 var _trolley_has_loop : Array
