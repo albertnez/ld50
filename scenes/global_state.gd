@@ -34,7 +34,6 @@ class Level:
 	
 const LEVEL_LIST := [
 	#Temp
-	preload("res://scenes/levels/hard/through_the_loop.tscn"),
 	preload("res://scenes/levels/hard/three_trains.tscn"),
 	# Introduction
 	#0
@@ -51,14 +50,15 @@ const LEVEL_LIST := [
 	preload("res://scenes/levels/easy/wider_reverse.tscn"),
 	
 	# Medium
+	preload("res://scenes/levels/medium/expand.tscn"),
 	preload("res://scenes/levels/medium/reverse_with_detour.tscn"),
 	preload("res://scenes/levels/medium/two_train_delay_one.tscn"),
+	preload("res://scenes/levels/hard/through_the_loop.tscn"),
 	
 	# Others
 	#10
-	preload("res://scenes/levels/medium/density.tscn"),
+	preload("res://scenes/levels/hard/density.tscn"),
 	# Hard
-	preload("res://scenes/levels/hard/expand.tscn"),
 	preload("res://scenes/levels/hard/find_a_loop.tscn"),
 	preload("res://scenes/levels/ending/the_end.tscn"),
 ]
