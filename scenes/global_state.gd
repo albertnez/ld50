@@ -33,31 +33,25 @@ class Level:
 		description = desc
 	
 const LEVEL_LIST := [
-	# Introduction
-	#0
+	# 0
 	preload("res://scenes/levels/tutorial/move_and_toggle.tscn"),
 	preload("res://scenes/levels/tutorial/first_loop.tscn"),
 	preload("res://scenes/levels/tutorial/bifurcation_direction.tscn"),
 	preload("res://scenes/levels/tutorial/no_more_delay.tscn"),
-
-	# Easy
 	preload("res://scenes/levels/easy/first_offpiste.tscn"),
-	#5
+	# 5
 	preload("res://scenes/levels/easy/wider_loop.tscn"),
 	preload("res://scenes/levels/easy/first_reverse.tscn"),
 	preload("res://scenes/levels/easy/wider_reverse.tscn"),
-	
-	# Medium
 	preload("res://scenes/levels/medium/expand.tscn"),
 	preload("res://scenes/levels/medium/reverse_with_detour.tscn"),
-	#10
+	# 10
 	preload("res://scenes/levels/medium/two_train_delay_one.tscn"),
 	preload("res://scenes/levels/hard/through_the_loop.tscn"),
-	
 	preload("res://scenes/levels/hard/density.tscn"),
-	# Hard
 	preload("res://scenes/levels/hard/three_trains.tscn"),
 	preload("res://scenes/levels/hard/find_a_loop.tscn"),
+	# 15
 	preload("res://scenes/levels/ending/the_end.tscn"),
 ]
 
