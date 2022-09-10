@@ -47,17 +47,18 @@ const LEVEL_LIST := [
 	preload("res://scenes/levels/easy/first_offpiste.tscn"),
 	# 5
 	preload("res://scenes/levels/easy/wider_loop.tscn"),
+	preload("res://scenes/levels/easy/going_across.tscn"),
 	preload("res://scenes/levels/easy/first_reverse.tscn"),
 	preload("res://scenes/levels/easy/wider_reverse.tscn"),
 	preload("res://scenes/levels/medium/expand.tscn"),
-	preload("res://scenes/levels/medium/reverse_with_detour.tscn"),
 	# 10
+	preload("res://scenes/levels/medium/reverse_with_detour.tscn"),
 	preload("res://scenes/levels/medium/two_train_delay_one.tscn"),
 	preload("res://scenes/levels/medium/braid.tscn"),
 	preload("res://scenes/levels/hard/density.tscn"),
 	preload("res://scenes/levels/hard/through_the_loop.tscn"),
-	preload("res://scenes/levels/hard/three_trains.tscn"),
 	# 15
+	preload("res://scenes/levels/hard/three_trains.tscn"),
 	preload("res://scenes/levels/hard/three_train_braid.tscn"),
 	preload("res://scenes/levels/hard/find_a_loop.tscn"),
 	preload("res://scenes/levels/hard/the_right_size.tscn"),
