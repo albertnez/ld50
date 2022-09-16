@@ -15,7 +15,8 @@ tile_data = PoolIntArray( 393225, -536870912, 1 )
 margin_left = 43.0
 margin_top = 108.0
 margin_right = 250.0
-margin_bottom = 159.0
+margin_bottom = 153.0
+custom_constants/line_spacing = -4
 custom_fonts/font = ExtResource( 1 )
 text = "use wasd or the arrow keys
 to move your character around"
@@ -26,6 +27,7 @@ margin_left = 160.0
 margin_top = 223.0
 margin_right = 453.0
 margin_bottom = 292.0
+custom_constants/line_spacing = -4
 custom_fonts/font = ExtResource( 1 )
 text = "bifurcations can be toggled with
 spacebar/action while standing on top"
@@ -45,4 +47,4 @@ align = 2
 frame = 3
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 4
+frame = 0

@@ -41,7 +41,7 @@ align = 2
 current = false
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 3
+frame = 0
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 5
+frame = 4
