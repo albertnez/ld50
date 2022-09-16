@@ -31,8 +31,18 @@ text = "bifurcations can be toggled with
 spacebar/action while standing on top"
 align = 1
 
+[node name="AdditionalLabel" parent="Control" index="3"]
+visible = true
+margin_left = 241.0
+margin_top = 27.0
+margin_right = 508.0
+margin_bottom = 65.0
+text = "speedup trolley with [F] / gamepad's LB
+mute with [M] / gamepad's RB"
+align = 2
+
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 4
+frame = 3
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 5
+frame = 4

@@ -183,6 +183,20 @@ margin_bottom = 14.0
 custom_constants/line_spacing = -4
 custom_fonts/font = ExtResource( 5 )
 
+[node name="AdditionalLabel" type="Label" parent="Control"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_constants/line_spacing = -4
+custom_fonts/font = ExtResource( 5 )
+
+[node name="AdditionalLabel2" type="Label" parent="Control"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_constants/line_spacing = -4
+custom_fonts/font = ExtResource( 5 )
+
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
@@ -190,7 +204,7 @@ zoom = Vector2( 0.5, 0.5 )
 
 [node name="ActionHoverIndicator" type="AnimatedSprite" parent="."]
 frames = SubResource( 26 )
-frame = 5
+frame = 6
 playing = true
 
 [node name="TrolleyWarningTimer" type="Timer" parent="."]
@@ -202,7 +216,7 @@ self_modulate = Color( 1, 1, 1, 0.462745 )
 show_behind_parent = true
 scale = Vector2( 0.91, 0.91 )
 frames = SubResource( 15 )
-frame = 9
+frame = 2
 playing = true
 
 [node name="LineDrawers" type="Node2D" parent="."]

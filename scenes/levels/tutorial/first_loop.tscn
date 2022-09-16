@@ -16,11 +16,17 @@ margin_right = 251.0
 margin_bottom = 127.0
 text = "delay the trolley forever"
 
+[node name="AdditionalLabel" parent="Control" index="1"]
+margin_left = 288.0
+margin_top = 29.0
+margin_right = 494.0
+margin_bottom = 50.0
+
 [node name="Camera2D" parent="." index="4"]
 current = false
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 5
+frame = 2
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 5
+frame = 0
