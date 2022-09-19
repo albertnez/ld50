@@ -109,13 +109,6 @@ func _process(_delta: float) -> void:
 	if GlobalState.in_true_end:
 		return
 
-	# TODO: Move these to a menu	
-	if GlobalState.level_lost and Input.is_action_just_pressed("restart"):
-		if GlobalState.level == 0 and GlobalState.level_completed:
-			_next_level()
-		else:
-			EventBus.emit_signal("level_restart")
-
 
 func _on_EventBus_level_restart() -> void:
 	_start_level()
