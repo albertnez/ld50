@@ -2,7 +2,6 @@ extends Area2D
 class_name Player
 
 export (float, 10, 3000, 10.0) var SPEED = 140.0
-onready var _can_toggle := $CanToggle
 onready var _animation := $Animation
 var _dead := false
 var _move_bounds := Rect2()
@@ -14,10 +13,6 @@ func is_dead() -> bool:
 
 func _ready() -> void:
 	var _unused = EventBus.connect("level_restart", self, "_on_Eventbus_level_restart")
-
-
-func set_toggle_is_visible(visible: bool) -> void:
-	_can_toggle.visible = visible
 
 
 func set_moving_bounds(bounds: Rect2) -> void:
