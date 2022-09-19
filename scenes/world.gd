@@ -85,18 +85,25 @@ func _goto_main_menu(target_scene: int, _unused_target_level: int) -> void:
 func _process(_delta: float) -> void:
 	var player_toggled = false
 	
-	var player_can_toggle = (
-			_tilemap.is_world_pos_a_toggable_tile(_player.position)
-			and not _player.is_dead()
-			and not GlobalState.level_completed
-			and not GlobalState.level_lost)
-
-	_tilemap.set_action_hover_visible(_player.position, player_can_toggle)
+	# We pick the closest tile that can be chosen within _player.TOGGLE_REACH distance.
+	var toggle_world_pos := Vector2.INF
+	var dist = INF
+	if not _player.is_dead() and not GlobalState.level_completed and not GlobalState.level_lost:
+		for dx in [-1, 0, 1]:
+			for dy in [-1, 0, 1]:
+				var check_pos := _tilemap.align_world_pos_to_tile_center(_player.position + Vector2(dx, dy)*MyTileMap.CELL_SIZE)
+				var new_dist = check_pos.distance_squared_to(_player.position)
+				if _tilemap.is_world_pos_a_toggable_tile(check_pos) and new_dist < dist:
+					dist = new_dist
+					toggle_world_pos = check_pos
+	
+	var player_can_toggle = dist <= (_player.TOGGLE_REACH*_player.TOGGLE_REACH)
+	_tilemap.set_action_hover_visible(toggle_world_pos, player_can_toggle)
 	if Input.is_action_just_pressed("ui_accept") and player_can_toggle:
-		_tilemap.toggle_world_pos_cell(_player.position)
+		_tilemap.toggle_world_pos_cell(toggle_world_pos)
 		EventBus.emit_signal("toggle")
 		player_toggled = true
-
+	
 	var create_trolley = (
 		_tilemap.trolley_waits_for_player() and
 		player_toggled and 

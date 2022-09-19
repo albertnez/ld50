@@ -2,6 +2,7 @@ extends Area2D
 class_name Player
 
 export (float, 10, 3000, 10.0) var SPEED = 140.0
+export (float, 0, 32, 1.0) var TOGGLE_REACH = 16.0
 onready var _animation := $Animation
 var _dead := false
 var _move_bounds := Rect2()

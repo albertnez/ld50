@@ -66,7 +66,8 @@ const CELL_SIZE = 32
 const HALF_CELL = CELL_SIZE * 0.5
 func _pos_to_tile_center_world(pos: Vector2) -> Vector2:
 	return pos*CELL_SIZE + Vector2.ONE*HALF_CELL
-
+func align_world_pos_to_tile_center(world_pos: Vector2) -> Vector2:
+	return _pos_to_tile_center_world(world_to_map(world_pos))
 
 const PLAYER_START_COORD = Vector2(0, 2)
 const TROLLEY_START_COORD = Vector2(0, 3)
