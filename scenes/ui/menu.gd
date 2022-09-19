@@ -5,6 +5,8 @@ onready var _exit_button := $"%ExitButton"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if GlobalState.latest_level_unlocked > 0:
+		_new_game_button.text = "Continue"
 	_new_game_button.grab_focus()
 
 
