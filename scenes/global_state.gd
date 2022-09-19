@@ -113,15 +113,20 @@ func is_playing() -> bool:
 
 func set_new_level(new_level: int, new_in_main_menu: bool) -> void:
 	in_main_menu = new_in_main_menu
-	if new_level > latest_level_unlocked:
-		latest_level_unlocked = new_level
-		_save_data()
 	level = new_level
 	level_completed = false
 	level_lost = false
 	fast_forward = false
 	for id in NUM_MAX_TROLLEYS:
 		_trolley_has_loop[id] = false
+
+
+# Needed because otherwise game is only saved once moved to the new level.
+func set_level_completed() -> void:
+	level_completed = true
+	if level+1 > latest_level_unlocked and not is_last_level():
+		latest_level_unlocked = level+1
+		_save_data()
 
 
 func get_level_scene() -> PackedScene:

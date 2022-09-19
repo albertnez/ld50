@@ -135,7 +135,7 @@ func _on_Trolley_body_entered(body: Node) -> void:
 		return
 	if body is TileMap:
 		if GlobalState.level == 0:
-			GlobalState.level_completed = true
+			GlobalState.set_level_completed()
 		if GlobalState.is_last_level():
 			GlobalState.in_true_end = true
 		EventBus.emit_signal("trolley_killed_someone")
