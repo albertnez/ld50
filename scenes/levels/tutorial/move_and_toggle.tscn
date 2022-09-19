@@ -45,7 +45,7 @@ mute with [M] or gamepad's RB"
 align = 2
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 1
+frame = 8
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 1
+frame = 6
