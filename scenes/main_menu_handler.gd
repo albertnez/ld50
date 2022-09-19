@@ -2,6 +2,7 @@ extends Node2D
 
 onready var _root_for_menu := $CanvasLayer
 onready var _current_menu_node := $CanvasLayer/Menu
+onready var _canvas_layer_node := $"%CanvasLayer"
 
 const LEVEL_SELECT_SCENE = preload("res://scenes/ui/level_select.tscn")
 const MAIN_MENU_SCENE = preload("res://scenes/ui/menu.tscn")
@@ -26,8 +27,10 @@ func _on_EventBus_change_menu_scene(target_scene: int, starting_level: int) -> v
 		EventBus.TargetMenuScene.LEVEL_SELECT:
 			_current_menu_node.queue_free()
 			_current_menu_node = LEVEL_SELECT_SCENE.instance()
-			_root_for_menu.add_child(_current_menu_node)
+			# These nodes need to be above Overlay buttons, or they won't be clickable.
+			_root_for_menu.add_child_below_node(_canvas_layer_node.get_child(0), _current_menu_node)
 		EventBus.TargetMenuScene.MAIN_MENU:
 			_current_menu_node.queue_free()
 			_current_menu_node = MAIN_MENU_SCENE.instance()
-			_root_for_menu.add_child(_current_menu_node)
+			# These nodes need to be above Overlay buttons, or they won't be clickable.
+			_root_for_menu.add_child_below_node(_canvas_layer_node.get_child(0), _current_menu_node)
