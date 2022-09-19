@@ -17,7 +17,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_NewGameButton_pressed() -> void:
-	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_GAME, 0)
+	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_GAME, GlobalState.latest_level_unlocked)
 	return
 
 
