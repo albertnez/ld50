@@ -18,7 +18,7 @@ margin_right = 250.0
 margin_bottom = 153.0
 custom_constants/line_spacing = -4
 custom_fonts/font = ExtResource( 1 )
-text = "use wasd or the arrow keys
+text = "use WASD, JOYSTICK or D-pad
 to move your character around"
 align = 1
 
@@ -30,21 +30,22 @@ margin_bottom = 292.0
 custom_constants/line_spacing = -4
 custom_fonts/font = ExtResource( 1 )
 text = "bifurcations can be toggled with
-spacebar/action while standing on top"
+SPACEBAR or Button A,
+ while standing on top of them"
 align = 1
 
 [node name="AdditionalLabel" parent="Control" index="3"]
 visible = true
-margin_left = 241.0
+margin_left = 234.0
 margin_top = 27.0
-margin_right = 508.0
+margin_right = 509.0
 margin_bottom = 65.0
-text = "speedup trolley with [F] / gamepad's LB
-mute with [M] / gamepad's RB"
+text = "speedup trolley with [F] or Gamepad's LB
+mute with [M] or gamepad's RB"
 align = 2
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 8
+frame = 9
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 0
+frame = 5
