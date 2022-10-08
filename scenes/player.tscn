@@ -54,7 +54,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 12.5, 11.5 )
+extents = Vector2( 11, 9.5 )
 
 [node name="Player" type="Area2D"]
 script = ExtResource( 1 )
@@ -66,7 +66,7 @@ frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -1.5, -2.5 )
+position = Vector2( 0, -0.5 )
 shape = SubResource( 1 )
 
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
