@@ -27,6 +27,7 @@ modulate = Color( 0.933333, 0.52549, 0.584314, 1 )
 script = ExtResource( 2 )
 
 [node name="Trolley" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -6 )
 frames = SubResource( 2 )
 frame = 1
 playing = true
