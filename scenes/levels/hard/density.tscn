@@ -18,4 +18,4 @@ text = "density
 frame = 3
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 9
+frame = 1

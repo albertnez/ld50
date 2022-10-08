@@ -19,4 +19,7 @@ text = "
 zoom = Vector2( 0.7, 0.7 )
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 8
+frame = 3
+
+[node name="LevelTileHintSprite" parent="." index="7"]
+frame = 1
