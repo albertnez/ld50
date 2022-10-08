@@ -15,8 +15,5 @@ margin_bottom = 66.0
 [node name="Camera2D" parent="." index="4"]
 current = false
 
-[node name="ActionHoverIndicator" parent="." index="5"]
-frame = 9
-
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 4
+frame = 5
