@@ -17,12 +17,13 @@ var mute := false
 
 const TROLLEY_COLOR_LIST := [
 	Color("ee8695"),  # Palette Red.
-	Color.aquamarine,
+	Color.lawngreen,
+	Color.aqua,
 	Color.burlywood,
 	Color.orange,
 	Color.white,
+	#Color.aquamarine,
 	Color.rosybrown,
-	Color.green,
 	Color.purple,
 	Color.chartreuse,
 ]

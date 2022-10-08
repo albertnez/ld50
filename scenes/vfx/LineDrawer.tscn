@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/vfx/line_drawer.gd" type="Script" id=1]
 
+[sub_resource type="CanvasItemMaterial" id=1]
+blend_mode = 1
+
 [node name="LineDrawer" type="Node2D"]
-self_modulate = Color( 1, 1, 1, 0.501961 )
+self_modulate = Color( 1, 1, 1, 0.862745 )
+material = SubResource( 1 )
 script = ExtResource( 1 )
 LINE_WIDTH = 5.0
 POINT_SHIFT_RADIUS = 1.0
