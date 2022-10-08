@@ -11,6 +11,10 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("unlock_levels") and OS.is_debug_build():
+		get_tree().set_input_as_handled()
+		GlobalState.latest_level_unlocked = GlobalState.LEVEL_LIST.size()
+		return
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().set_input_as_handled()
 		return

@@ -16,7 +16,7 @@ margin_bottom = 66.0
 zoom = Vector2( 0.531, 0.531 )
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 6
+frame = 5
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 3
+frame = 1
