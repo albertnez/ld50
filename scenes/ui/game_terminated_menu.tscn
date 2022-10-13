@@ -130,6 +130,10 @@ custom_fonts/font = ExtResource( 6 )
 text = "game over description"
 align = 1
 
+[node name="TimeUntilActive" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
 [connection signal="pressed" from="VBoxContainer/NextLevelButton" to="." method="_on_NextLevelButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/RestartLevelButton" to="." method="_on_RestartLevelButton_pressed"]
 [connection signal="confirmed" from="VBoxContainer/QuitToLevelSelectionButton" to="." method="_on_QuitToLevelSelectionButton_confirmed"]

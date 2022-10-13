@@ -12,6 +12,8 @@ onready var _full_game_completed_node := $"%FullGameCompleted"
 onready var _game_over_label := $"%GameOverLabel"
 onready var _game_over_reason_label := $"%GameOverReasonLabel"
 
+onready var _time_until_active := $"%TimeUntilActive"
+
 onready var ALL_HIDEABLE_NODES = [
 	_first_level_completed_label,
 	_next_level_button,
@@ -27,6 +29,10 @@ func show_normal_level_completed() -> void:
 	_update_visibility()
 	_level_completed_label.show()
 	_next_level_button.show()
+
+	_time_until_active.start()
+	yield(_time_until_active, "timeout")
+
 	_next_level_button.grab_focus()
 
 
@@ -34,12 +40,20 @@ func show_first_level_completed() -> void:
 	_update_visibility()
 	_first_level_completed_label.show()
 	_next_level_button.show()
+	
+	_time_until_active.start()
+	yield(_time_until_active, "timeout")
+
 	_next_level_button.grab_focus()
 
 
 func show_full_game_completed() -> void:
 	_update_visibility()
 	_full_game_completed_node.show()
+	
+	_time_until_active.start()
+	yield(_time_until_active, "timeout")
+
 	_quit_to_level_selection_button.grab_focus()
 
 
@@ -49,6 +63,10 @@ func show_game_over(reason: String) -> void:
 	_game_over_reason_label.show()
 	_game_over_label.show()
 	_restart_level_button.show()
+	
+	_time_until_active.start()
+	yield(_time_until_active, "timeout")
+
 	_restart_level_button.grab_focus()
 
 
