@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/audio/ui_beep.wav" type="AudioStream" id=1]
+[ext_resource path="res://scenes/ui/volume_menu.gd" type="Script" id=2]
+
+[node name="VolumeMenu" type="Control"]
+margin_right = 202.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="LabelsContainer" type="VBoxContainer" parent="VBoxContainer"]
+margin_right = 42.0
+margin_bottom = 40.0
+
+[node name="SfxSlider" type="Label" parent="VBoxContainer/LabelsContainer"]
+margin_right = 42.0
+margin_bottom = 14.0
+text = "SFX"
+align = 2
+
+[node name="MusicSlider" type="Label" parent="VBoxContainer/LabelsContainer"]
+margin_top = 18.0
+margin_right = 42.0
+margin_bottom = 32.0
+text = "MUSIC"
+
+[node name="Sliders" type="VBoxContainer" parent="VBoxContainer"]
+margin_left = 46.0
+margin_right = 196.0
+margin_bottom = 40.0
+
+[node name="SfxSlider" type="HSlider" parent="VBoxContainer/Sliders"]
+unique_name_in_owner = true
+margin_right = 150.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 150, 0 )
+max_value = 5.0
+value = 5.0
+tick_count = 6
+ticks_on_borders = true
+
+[node name="MusicSlider" type="HSlider" parent="VBoxContainer/Sliders"]
+unique_name_in_owner = true
+margin_top = 20.0
+margin_right = 150.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 150, 0 )
+max_value = 5.0
+value = 5.0
+tick_count = 6
+ticks_on_borders = true
+
+[node name="BeepPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource( 1 )
+bus = "Sfx"
+
+[connection signal="value_changed" from="VBoxContainer/Sliders/SfxSlider" to="." method="_on_SfxSlider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Sliders/MusicSlider" to="." method="_on_MusicSlider_value_changed"]

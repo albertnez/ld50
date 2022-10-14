@@ -36,19 +36,24 @@ script = ExtResource( 10 )
 
 [node name="WalkPlayer" type="AudioStreamPlayer" parent="AudioController"]
 stream = ExtResource( 6 )
+bus = "Sfx"
 
 [node name="LevelUpPlayer" type="AudioStreamPlayer" parent="AudioController"]
 stream = ExtResource( 7 )
+bus = "Sfx"
 
 [node name="TogglePlayer" type="AudioStreamPlayer" parent="AudioController"]
 stream = ExtResource( 8 )
 volume_db = -8.74
+bus = "Sfx"
 
 [node name="CrashPlayer" type="AudioStreamPlayer" parent="AudioController"]
 stream = ExtResource( 9 )
+bus = "Sfx"
 
 [node name="ClickPlayer" type="AudioStreamPlayer" parent="AudioController"]
 stream = ExtResource( 11 )
+bus = "Sfx"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
