@@ -23,7 +23,7 @@ margin_right = 52.0
 margin_bottom = 24.0
 custom_fonts/font = ExtResource( 5 )
 text = "SFX"
-align = 2
+align = 1
 
 [node name="SfxSlider" type="HSlider" parent="VBoxContainer"]
 unique_name_in_owner = true
