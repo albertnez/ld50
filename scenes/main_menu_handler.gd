@@ -6,6 +6,7 @@ onready var _canvas_layer_node := $"%CanvasLayer"
 
 const LEVEL_SELECT_SCENE = preload("res://scenes/ui/level_select.tscn")
 const MAIN_MENU_SCENE = preload("res://scenes/ui/menu.tscn")
+const OPTIONS_SCENE = preload("res://scenes/ui/options_menu.tscn")
 
 func _ready() -> void:
 	var _unused = EventBus.connect("change_menu_scene", self, "_on_EventBus_change_menu_scene")
@@ -32,5 +33,10 @@ func _on_EventBus_change_menu_scene(target_scene: int, starting_level: int) -> v
 		EventBus.TargetMenuScene.MAIN_MENU:
 			_current_menu_node.queue_free()
 			_current_menu_node = MAIN_MENU_SCENE.instance()
+			# These nodes need to be above Overlay buttons, or they won't be clickable.
+			_root_for_menu.add_child_below_node(_canvas_layer_node.get_child(0), _current_menu_node)
+		EventBus.TargetMenuScene.OPTIONS:
+			_current_menu_node.queue_free()
+			_current_menu_node = OPTIONS_SCENE.instance()
 			# These nodes need to be above Overlay buttons, or they won't be clickable.
 			_root_for_menu.add_child_below_node(_canvas_layer_node.get_child(0), _current_menu_node)

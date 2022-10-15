@@ -5,6 +5,7 @@ enum TargetMenuScene {
 	LEVEL_SELECT,
 	MAIN_MENU,
 	MAIN_GAME,
+	OPTIONS,
 }
 signal change_menu_scene(target_menu_scene, starting_level)
 # Pause stuff

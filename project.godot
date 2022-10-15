@@ -48,6 +48,11 @@ _global_script_classes=[ {
 "class": "Trolley",
 "language": "GDScript",
 "path": "res://scenes/trolley.gd"
+}, {
+"base": "Control",
+"class": "VolumeMenu",
+"language": "GDScript",
+"path": "res://scenes/ui/volume_menu.gd"
 } ]
 _global_script_class_icons={
 "ConfirmationButton": "",
@@ -57,7 +62,8 @@ _global_script_class_icons={
 "MyTileMap": "",
 "ParentbuttonHoverGetsFocused": "",
 "Player": "",
-"Trolley": ""
+"Trolley": "",
+"VolumeMenu": ""
 }
 
 [application]

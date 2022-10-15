@@ -1,4 +1,5 @@
 extends Control
+class_name VolumeMenu
 
 
 onready var _sfx_bus_idx := AudioServer.get_bus_index("Sfx")
@@ -11,6 +12,8 @@ onready var _beep_player := $"%BeepPlayer"
 func _ready() -> void:
 	pass # Replace with function body.
 
+func grab_focus_for_first_slider() -> void:
+	_sfx_slider.grab_focus()
 
 
 func _on_SfxSlider_value_changed(value: float) -> void:

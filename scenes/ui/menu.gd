@@ -31,3 +31,7 @@ func _on_SelectLevelButton_pressed() -> void:
 
 func _on_ExitButton_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_OptionsMenu_pressed() -> void:
+	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.OPTIONS, 0)
