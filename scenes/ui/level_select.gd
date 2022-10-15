@@ -25,6 +25,8 @@ func _ready() -> void:
 		_grid_container.add_child(button)
 		if ind == 0:
 			button.grab_focus()
+		if ind < _grid_container.columns:
+			button.focus_neighbour_top = _back_button.get_path()
 		ind += 1
 		target_size.x = max(target_size.x, button.rect_size.x)
 		target_size.y = max(target_size.y, button.rect_size.y)
@@ -35,6 +37,7 @@ func _ready() -> void:
 
 	# warning-ignore:return_value_discarded
 	_back_button.connect("focus_entered", self, "_on_LevelButton_focus_entered", [-1])
+	_back_button.focus_neighbour_bottom = _grid_container.get_child(0).get_path()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

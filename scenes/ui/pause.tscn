@@ -32,6 +32,8 @@ unique_name_in_owner = true
 margin_top = 228.0
 margin_right = 220.0
 margin_bottom = 261.0
+focus_neighbour_top = NodePath("../QuitToMainMenuButton")
+focus_previous = NodePath("../QuitToMainMenuButton")
 text = "Resume"
 script = ExtResource( 1 )
 
@@ -59,6 +61,8 @@ unique_name_in_owner = true
 margin_top = 339.0
 margin_right = 220.0
 margin_bottom = 372.0
+focus_neighbour_bottom = NodePath("../ResumeButton")
+focus_next = NodePath("../ResumeButton")
 text = "Exit to main menu"
 script = ExtResource( 4 )
 
