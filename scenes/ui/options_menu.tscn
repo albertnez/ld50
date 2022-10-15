@@ -40,7 +40,7 @@ margin_right = 20.0
 margin_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_constants/separation = 40
+custom_constants/separation = 10
 
 [node name="VolumeMenu" parent="VBoxContainer" instance=ExtResource( 3 )]
 unique_name_in_owner = true
@@ -54,9 +54,9 @@ focus_neighbour_bottom = NodePath("../../../BackButton")
 [node name="BackButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
 margin_left = 18.0
-margin_top = 105.0
+margin_top = 75.0
 margin_right = 212.0
-margin_bottom = 138.0
+margin_bottom = 108.0
 rect_min_size = Vector2( 194, 0 )
 focus_neighbour_top = NodePath("../VolumeMenu/VBoxContainer/MusicSlider")
 focus_neighbour_bottom = NodePath("../VolumeMenu/VBoxContainer/SfxSlider")
