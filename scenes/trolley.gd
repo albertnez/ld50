@@ -5,8 +5,11 @@ export (float, 10.0, 100.0, 5.0) var SPEED = 32.0
 export (float, 0.1, 5.0, 0.1) var SECONDS_PER_CELL = 1.0
 export (float, 1.0, 3.0, 0.1) var FAST_SPEED_MODIFIER = 1.8
 
+const CRASH_ROTATION := TAU/16.0
+
 onready var _original_seconds_per_cell = SECONDS_PER_CELL
 onready var _slowdown_timer := $SlowDownTimer
+onready var _rotation_tween := $RotationTween
 
 var _tilemap: MyTileMap = null
 # There are N trolleys with ids [0, N-1], assigned by World.
@@ -52,6 +55,9 @@ func reset(tilemap: MyTileMap) -> void:
 	_from_position = _to_position - initial_dir*MyTileMap.CELL_SIZE
 	_from_dir = tilemap.get_from_dir(_to_position, _from_position)
 	position = _from_position
+
+	_rotation_tween.stop_all()
+	rotation = 0.0
 	
 	_is_resetted = true
 	_is_crashed = false
@@ -162,6 +168,9 @@ func _handle_trolley_crash(trolley_move_strategy: int) -> void:
 	_is_crashed = true
 	_slowdown_timer.start()
 	_on_SlowDownTimer_timeout()
+	var target_rotation := CRASH_ROTATION if (randi()%2) else -CRASH_ROTATION
+	_rotation_tween.interpolate_property(self, "rotation", 0, target_rotation, 0.5, Tween.TRANS_QUAD, Tween.EASE_OUT)
+	_rotation_tween.start()
 	if trolley_move_strategy == TrolleyMoveStrategy.STRAIGHT_LINE and _is_turning:
 		_is_turning = false
 		_from_position = _to_position + _from_dir*MyTileMap.CELL_SIZE
