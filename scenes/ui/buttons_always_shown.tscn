@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/theme/new_theme.tres" type="Theme" id=1]
-[ext_resource path="res://assets/icons/volume_off.svg" type="Texture" id=2]
 [ext_resource path="res://assets/icons/fast_forward.svg" type="Texture" id=3]
 [ext_resource path="res://scenes/ui/buttons_always_shown.gd" type="Script" id=4]
 
@@ -30,8 +29,8 @@ alignment = 2
 
 [node name="FastForwardButton" type="Button" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 920.0
-margin_right = 957.0
+margin_left = 967.0
+margin_right = 1004.0
 margin_bottom = 37.0
 rect_min_size = Vector2( 37, 37 )
 hint_tooltip = "[F] Fast Forward"
@@ -45,22 +44,4 @@ icon = ExtResource( 3 )
 icon_align = 1
 expand_icon = true
 
-[node name="MuteButton" type="Button" parent="MarginContainer/HBoxContainer"]
-unique_name_in_owner = true
-margin_left = 967.0
-margin_right = 1004.0
-margin_bottom = 37.0
-rect_min_size = Vector2( 37, 37 )
-hint_tooltip = "[M] Mute"
-focus_mode = 0
-mouse_filter = 1
-size_flags_vertical = 0
-theme = ExtResource( 1 )
-toggle_mode = true
-enabled_focus_mode = 0
-icon = ExtResource( 2 )
-icon_align = 1
-expand_icon = true
-
 [connection signal="toggled" from="MarginContainer/HBoxContainer/FastForwardButton" to="." method="_on_FastForwardButton_toggled"]
-[connection signal="toggled" from="MarginContainer/HBoxContainer/MuteButton" to="." method="_on_MuteButton_toggled"]
