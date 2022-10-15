@@ -17,7 +17,7 @@ func _ready() -> void:
 		var button := Button.new()
 		if ind > GlobalState.latest_level_unlocked:
 			button.disabled = true
-		button.text = str(ind).pad_zeros(2)
+		button.text = str(ind+1).pad_zeros(2)
 		button.set_script(BUTTON_HOVER_GETS_FOCUSED)
 		var _u = null  # Unused connect return value
 		_u = button.connect("pressed", self, "_on_LevelButton_pressed", [ind])
@@ -60,5 +60,5 @@ func _on_LevelButton_focus_entered(level: int) -> void:
 	var description = "[LOCKED]"
 	if level <= GlobalState.latest_level_unlocked:
 		description = GlobalState.get_level_name(level)
-	var text := str("Level ", level, "\n", description)
+	var text := str("Level ", level+1, "\n", description)
 	_descritpion_label.text = text
