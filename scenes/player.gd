@@ -13,7 +13,19 @@ func is_dead() -> bool:
 
 
 func _ready() -> void:
-	var _unused = EventBus.connect("level_restart", self, "_on_Eventbus_level_restart")
+	# warning-ignore:return_value_discarded
+	EventBus.connect("level_restart", self, "_on_Eventbus_level_restart")
+	# warning-ignore:return_value_discarded
+	EventBus.connect("trolley_crashed", self, "_update_animation_on_level_fail")
+	# warning-ignore:return_value_discarded
+	EventBus.connect("trolley_killed_someone", self, "_update_animation_on_level_fail")
+	# warning-ignore:return_value_discarded
+	EventBus.connect("trolley_crash_with_trolley", self, "_update_animation_on_level_fail")
+
+
+func _update_animation_on_level_fail() -> void:
+	if _animation.animation == "walk":
+		_animation.play("default")
 
 
 func set_moving_bounds(bounds: Rect2) -> void:
