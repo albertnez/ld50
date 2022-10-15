@@ -41,8 +41,11 @@ margin_top = 27.0
 margin_right = 509.0
 margin_bottom = 65.0
 text = "speedup trolley with [F] or Gamepad's LB
-mute with [M] or gamepad's RB"
+"
 align = 2
 
+[node name="ActionHoverIndicator" parent="." index="5"]
+frame = 5
+
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 0
+frame = 5
