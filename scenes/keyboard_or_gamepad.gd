@@ -10,6 +10,9 @@ enum LastPressed {
 }
 onready var _last_pressed : int = LastPressed.KEYBOARD
 
+func current() -> int:
+	return _last_pressed
+
 
 func _update(new : int) -> void:
 	if _last_pressed == new:

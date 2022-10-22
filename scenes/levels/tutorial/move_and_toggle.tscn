@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://scenes/ui/font_tilemap.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/tilemap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/input_daptive_label.tscn" type="PackedScene" id=3]
 
 [node name="TileMap" instance=ExtResource( 2 )]
 cell_custom_transform = Transform2D( 32, 0, 0, 32, 0, 0 )
@@ -11,41 +11,55 @@ TROLLEY_WAIT_TIME = -1.0
 [node name="IndicatorTilemap" parent="." index="1"]
 tile_data = PoolIntArray( 393225, -536870912, 1 )
 
-[node name="Label" type="Label" parent="Control" index="0"]
-margin_left = 43.0
-margin_top = 108.0
-margin_right = 250.0
-margin_bottom = 153.0
-custom_constants/line_spacing = -4
-custom_fonts/font = ExtResource( 1 )
-text = "use WASD, JOYSTICK or D-pad
-to move your character around"
-align = 1
-
-[node name="Label2" type="Label" parent="Control" index="1"]
-margin_left = 160.0
-margin_top = 223.0
-margin_right = 453.0
-margin_bottom = 292.0
-custom_constants/line_spacing = -4
-custom_fonts/font = ExtResource( 1 )
-text = "bifurcations can be toggled with
-SPACEBAR or Button A,
- while standing on top of them"
-align = 1
-
-[node name="AdditionalLabel" parent="Control" index="3"]
+[node name="AdditionalLabel" parent="Control" index="1"]
 visible = true
 margin_left = 234.0
 margin_top = 27.0
 margin_right = 509.0
 margin_bottom = 65.0
-text = "speedup trolley with [F] or Gamepad's LB
-"
 align = 2
 
+[node name="MovingLabel" parent="Control" index="3" instance=ExtResource( 3 )]
+margin_left = 23.0
+margin_top = 99.0
+margin_right = 23.0
+margin_bottom = 99.0
+
+[node name="KeyboardText" parent="Control/MovingLabel" index="0"]
+visible = true
+bbcode_text = "[center]Use [font=res://scenes/ui/bbcode_img_offset_smaller.tres][img=50]res://assets/icons/wasd.png[/img][/font] to move"
+text = "Use  to move"
+
+[node name="GamepadText" parent="Control/MovingLabel" index="1"]
+visible = false
+bbcode_text = "[center]Use [font=res://scenes/ui/bbcode_img_offset.tres][img=30]res://assets/icons/WiiU_Dpad.png[/img][/font] or [font=res://scenes/ui/bbcode_img_offset.tres][img=30]res://assets/icons/WiiU_Left_Stick.png[/img][/font] to move"
+text = "Use  or  to move"
+
+[node name="BifurcationLabel" parent="Control" index="4" instance=ExtResource( 3 )]
+margin_left = 208.0
+margin_top = 229.0
+margin_right = 208.0
+margin_bottom = 229.0
+
+[node name="KeyboardText" parent="Control/BifurcationLabel" index="0"]
+visible = true
+margin_right = 284.0
+margin_bottom = 63.0
+bbcode_text = "[center]bifurcations can be toggled with 
+[font=res://scenes/ui/bbcode_img_offset_smaller.tres] [img=45]res://assets/icons/Space_Key_Light.png[/img][/font] while standing on top of them"
+text = "bifurcations can be toggled with 
+  while standing on top of them"
+
+[node name="GamepadText" parent="Control/BifurcationLabel" index="1"]
+visible = false
+bbcode_text = "[center]bifurcations can be toggled with [font=res://scenes/ui/bbcode_img_offset.tres] [img=27]res://assets/icons/Positional_Prompts_Down.png[/img][/font] while standing on top of them"
+text = "bifurcations can be toggled with   while standing on top of them"
+
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 2
+frame = 6
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 2
+frame = 8
+
+[editable path="Control/MovingLabel"]
+[editable path="Control/BifurcationLabel"]

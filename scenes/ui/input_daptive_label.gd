@@ -10,8 +10,7 @@ onready var _gamepad_text := $GamepadText
 
 func _ready() -> void:
 	KeyboardOrGamepad.connect("keyboard_or_gamepad_changed", self, "_update")
-	_keyboard_text.show()
-	_gamepad_text.hide()
+	_update(KeyboardOrGamepad.current())
 
 
 func _update(new_input: int) -> void:
