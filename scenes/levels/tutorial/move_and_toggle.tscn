@@ -45,4 +45,7 @@ text = "speedup trolley with [F] or Gamepad's LB
 align = 2
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 9
+frame = 2
+
+[node name="LevelTileHintSprite" parent="." index="7"]
+frame = 2
