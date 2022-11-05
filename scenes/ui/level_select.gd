@@ -31,6 +31,13 @@ func _ready() -> void:
 		target_size.x = max(target_size.x, button.rect_size.x)
 		target_size.y = max(target_size.y, button.rect_size.y)
 	
+	# Connect the top right button with the bottom left when moving horizontally
+	var top_right := _grid_container.get_child(_grid_container.columns-1) as Button
+	var bottom_left := _grid_container.get_child(_grid_container.columns) as Button
+	top_right.focus_neighbour_right = bottom_left.get_path()
+	bottom_left.focus_neighbour_left = top_right.get_path()
+	
+	
 	for child in _grid_container.get_children():
 		var button := child as Button
 		button.rect_min_size = target_size

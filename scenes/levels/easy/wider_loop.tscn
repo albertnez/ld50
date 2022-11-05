@@ -17,4 +17,4 @@ text = "
 frame = 7
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 4
+frame = 2

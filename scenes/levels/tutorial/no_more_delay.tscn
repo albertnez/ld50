@@ -61,9 +61,9 @@ step = 1.0
 current = false
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 7
+frame = 2
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 2
+frame = 0
 
 [editable path="Control/SpeedupLabel"]
