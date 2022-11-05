@@ -11,6 +11,8 @@ onready var _full_game_completed_node := $"%FullGameCompleted"
 
 onready var _game_over_label := $"%GameOverLabel"
 onready var _game_over_reason_label := $"%GameOverReasonLabel"
+onready var _rich_game_over_reason := $"%RichGameOverReason"
+
 
 onready var _time_until_active := $"%TimeUntilActive"
 
@@ -57,12 +59,20 @@ func show_full_game_completed() -> void:
 	_quit_to_level_selection_button.grab_focus()
 
 
-func show_game_over(reason: String) -> void:
+func show_game_over(color: Color, reason: String) -> void:
 	_update_visibility()
 	_game_over_reason_label.text = reason
-	_game_over_reason_label.show()
+#	_game_over_reason_label.show()
 	_game_over_label.show()
 	_restart_level_button.show()
+	# Handling rich text.
+	# TODO: Handle second color?
+	var colored_word = "[color=#{}]trolley[/color]".format([color.to_html(false)])
+	var bbcode_reason := "[center]" + reason.replace("trolley", colored_word)
+	_rich_game_over_reason.bbcode_text = bbcode_reason
+	_rich_game_over_reason.show()
+	
+	
 	
 	_time_until_active.start()
 	yield(_time_until_active, "timeout")

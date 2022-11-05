@@ -17,7 +17,7 @@ func _ready() -> void:
 	_u = EventBus.connect("trolley_crash_with_trolley", self, "_on_game_over", ["The trolleys crashed with each other!", true])
 
 
-func _on_game_over(msg: String, killed_someone: bool) -> void:
+func _on_game_over(color: Color, msg: String, killed_someone: bool) -> void:
 	""" Handles 3 situations of 'Game Over':
 		- First level (tutorial), the trolley inevitably kills person on tracks.
 		- Last level (true end), the trolley inevitably kills person on tracks.
@@ -29,7 +29,7 @@ func _on_game_over(msg: String, killed_someone: bool) -> void:
 	elif GlobalState.in_true_end:
 		_level_terminated_menu.show_full_game_completed()
 	else:
-		_level_terminated_menu.show_game_over(msg)
+		_level_terminated_menu.show_game_over(color, msg)
 	return
 
 

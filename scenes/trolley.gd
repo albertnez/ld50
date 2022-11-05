@@ -96,7 +96,7 @@ func _process(delta: float) -> void:
 			if _tilemap.is_out_of_bounds(pos_in_new_tile):
 				# Went out in the emptyness
 				_time_in_cell = old_time_in_cell
-				EventBus.emit_signal("trolley_crashed")
+				EventBus.emit_signal("trolley_crashed", modulate)
 				return
 			_tilemap.mark_world_pos_cell_as_visited(pos_in_old_tile, from_pos_in_old_tile, _id)
 			var next_position = _tilemap.get_next_world_pos(pos_in_new_tile, pos_in_old_tile)
@@ -104,7 +104,7 @@ func _process(delta: float) -> void:
 				# Took rail the wrong way
 				# Undo the time subtraction from earlier:
 				_time_in_cell = old_time_in_cell
-				EventBus.emit_signal("trolley_crashed")
+				EventBus.emit_signal("trolley_crashed", modulate)
 				return
 			_from_position = _to_position
 			_to_position = next_position
@@ -144,7 +144,7 @@ func _on_Trolley_body_entered(body: Node) -> void:
 			GlobalState.set_level_completed()
 		if GlobalState.is_last_level():
 			GlobalState.in_true_end = true
-		EventBus.emit_signal("trolley_killed_someone")
+		EventBus.emit_signal("trolley_killed_someone", modulate)
 
 
 func _on_Trolley_area_entered(area: Area2D) -> void:
@@ -153,7 +153,8 @@ func _on_Trolley_area_entered(area: Area2D) -> void:
 	# Trolley as a group, because using 'Trolley' class check causes dependency cycle in godot3
 	# Also check indices, to avoid triggering twice unnecessarily.
 	if area.is_in_group("Trolley") and area.get_index() < get_index():
-		EventBus.emit_signal("trolley_crash_with_trolley")
+		GlobalState.second_trolley_crash_color = (area as Trolley).modulate
+		EventBus.emit_signal("trolley_crash_with_trolley", modulate)
 
 
 enum TrolleyMoveStrategy {
@@ -162,7 +163,7 @@ enum TrolleyMoveStrategy {
 	RANDOM_DIR,
 }
 	
-func _handle_trolley_crash(trolley_move_strategy: int) -> void:
+func _handle_trolley_crash(_unused_trolley_color, trolley_move_strategy: int) -> void:
 	assert(TrolleyMoveStrategy.values().has(trolley_move_strategy))
 	GlobalState.level_lost = true
 	_is_crashed = true

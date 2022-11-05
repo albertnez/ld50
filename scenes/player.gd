@@ -23,7 +23,7 @@ func _ready() -> void:
 	EventBus.connect("trolley_crash_with_trolley", self, "_update_animation_on_level_fail")
 
 
-func _update_animation_on_level_fail() -> void:
+func _update_animation_on_level_fail(_unused_color) -> void:
 	if _animation.animation == "walk":
 		_animation.play("default")
 
@@ -62,7 +62,8 @@ func _process(delta: float) -> void:
 
 func _on_Player_area_entered(area: Area2D) -> void:
 	if area is Trolley and not GlobalState.level_lost and not GlobalState.level_completed:
-		EventBus.emit_signal("person_crashed")
+		var trolley_color := (area as Trolley).modulate
+		EventBus.emit_signal("person_crashed", trolley_color)
 		_dead = true
 		GlobalState.level_lost = true
 		_animation.play("dead")

@@ -27,6 +27,10 @@ const TROLLEY_COLOR_LIST := [
 	Color.purple,
 	Color.chartreuse,
 ]
+# This is needed because when trolley crashes with trolley, we don't propagate
+# the information of the second trolley. Instead of wiring signals with different
+# number of signals, I got tired and added a global variable.
+var second_trolley_crash_color := Color.white
 
 const MENU_LEVEL := preload("res://scenes/levels/menu/menu_level.tscn")
 
