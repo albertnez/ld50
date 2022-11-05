@@ -16,15 +16,15 @@ text = "Now hurry up, the TROLLEY
 won't wait for you anymore"
 
 [node name="SpeedupLabel" parent="Control" index="3" instance=ExtResource( 2 )]
-margin_left = 267.0
-margin_top = 4.0
-margin_right = 267.0
-margin_bottom = 4.0
+margin_left = 214.0
+margin_top = 2.0
+margin_right = 214.0
+margin_bottom = 2.0
 
 [node name="KeyboardText" parent="Control/SpeedupLabel" index="0"]
 visible = true
-bbcode_text = "Speedup the [color=#ee8695]TROLLEY[/color] with [font=res://scenes/ui/bbcode_img_offset.tres] [img=30]res://assets/icons/F_Key_Light.png[/img][/font]"
-text = "Speedup the TROLLEY with  "
+bbcode_text = "you can speedup the [color=#ee8695]TROLLEY[/color] with [font=res://scenes/ui/bbcode_img_offset.tres] [img=30]res://assets/icons/F_Key_Light.png[/img][/font]"
+text = "you can speedup the TROLLEY with  "
 
 [node name="VScrollBar2" type="VScrollBar" parent="Control/SpeedupLabel/KeyboardText" index="0"]
 visible = false
@@ -40,8 +40,9 @@ step = 1.0
 
 [node name="GamepadText" parent="Control/SpeedupLabel" index="1"]
 visible = false
-bbcode_text = "Speedup the [color=#ee8695]TROLLEY[/color] with [font=res://scenes/ui/bbcode_img_offset.tres][img=30]res://assets/icons/Positional_Prompts_Left.png[/img][/font]"
-text = "Speedup the TROLLEY with "
+margin_right = 281.0
+bbcode_text = "you can speedup the [color=#ee8695]TROLLEY[/color] with [font=res://scenes/ui/bbcode_img_offset.tres][img=30]res://assets/icons/Positional_Prompts_Left.png[/img][/font]"
+text = "you can speedup the TROLLEY with "
 
 [node name="VScrollBar2" type="VScrollBar" parent="Control/SpeedupLabel/GamepadText" index="0"]
 visible = false
@@ -61,9 +62,9 @@ step = 1.0
 current = false
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 2
+frame = 6
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 0
+frame = 1
 
 [editable path="Control/SpeedupLabel"]
