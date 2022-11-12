@@ -35,18 +35,8 @@ func _process(delta: float) -> void:
 	if _dead or not GlobalState.is_playing():
 		return
 
-	var dir := Vector2.ZERO
+	var dir : Vector2 = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down") * SPEED * delta
 	
-	if Input.is_action_pressed("ui_down"):
-		dir += Vector2.DOWN
-	if Input.is_action_pressed("ui_up"):
-		dir += Vector2.UP
-	if Input.is_action_pressed("ui_left"):
-		dir += Vector2.LEFT
-	if Input.is_action_pressed("ui_right"):
-		dir += Vector2.RIGHT
-	
-	dir = dir.normalized() * SPEED * delta
 	var vertical = Vector2(0, dir.y)
 	var horizontal = Vector2(dir.x, 0)
 	if _move_bounds.has_point(position + vertical):
