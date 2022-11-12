@@ -23,7 +23,7 @@ margin_right = 497.0
 margin_bottom = 105.0
 custom_constants/line_spacing = -6
 custom_fonts/font = ExtResource( 1 )
-text = "you can't take bifurcations
+text = "you can't take junction
 that split into two paths..."
 
 [node name="Label2" type="Label" parent="Control" index="2"]
@@ -33,7 +33,7 @@ margin_right = 221.0
 margin_bottom = 287.0
 custom_constants/line_spacing = -6
 custom_fonts/font = ExtResource( 1 )
-text = "...but you can take bifurcations
+text = "...but you can take junctions
 that converge into one path"
 align = 2
 
@@ -44,4 +44,4 @@ current = false
 frame = 0
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 4
+frame = 1

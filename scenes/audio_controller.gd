@@ -11,6 +11,7 @@ func _ready() -> void:
 	_u = EventBus.connect("trolley_crashed", self, "_play_crash")
 	_u = EventBus.connect("trolley_killed_someone", self, "_play_crash")
 	_u = EventBus.connect("trolley_crash_with_trolley", self, "_play_crash")
+	_u = EventBus.connect("trolley_wrong_bifurcation", self, "_play_crash")
 
 
 # Needed only because some signals have one argument, and thus cannot call 'play' directly.

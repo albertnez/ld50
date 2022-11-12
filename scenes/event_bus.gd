@@ -15,6 +15,7 @@ signal resume_game()
 signal trolley_crashed(trolley_color)
 signal trolley_killed_someone(trolley_color)
 signal trolley_crash_with_trolley(trolley_color)  # Color of the first one, for calling convenience.
+signal trolley_wrong_bifurcation(trolley_color)
 
 # Level handling
 signal go_to_next_level()

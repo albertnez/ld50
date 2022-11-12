@@ -21,6 +21,9 @@ func _ready() -> void:
 	EventBus.connect("trolley_killed_someone", self, "_update_animation_on_level_fail")
 	# warning-ignore:return_value_discarded
 	EventBus.connect("trolley_crash_with_trolley", self, "_update_animation_on_level_fail")
+	# warning-ignore:return_value_discarded
+	EventBus.connect("trolley_wrong_bifurcation", self, "_update_animation_on_level_fail")
+	
 
 
 func _update_animation_on_level_fail(_unused_color) -> void:

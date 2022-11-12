@@ -67,6 +67,7 @@ func reset(tilemap: MyTileMap) -> void:
 func _ready() -> void:
 	var _s = null
 	_s = EventBus.connect("trolley_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.STRAIGHT_LINE])
+	_s = EventBus.connect("trolley_wrong_bifurcation", self, "_handle_trolley_crash", [TrolleyMoveStrategy.STRAIGHT_LINE])
 	_s = EventBus.connect("trolley_killed_someone", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
 	_s = EventBus.connect("trolley_crash_with_trolley", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
 	_s = EventBus.connect("person_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
@@ -104,7 +105,7 @@ func _process(delta: float) -> void:
 				# Took rail the wrong way
 				# Undo the time subtraction from earlier:
 				_time_in_cell = old_time_in_cell
-				EventBus.emit_signal("trolley_crashed", modulate)
+				EventBus.emit_signal("trolley_wrong_bifurcation", modulate)
 				return
 			_from_position = _to_position
 			_to_position = next_position
