@@ -11,10 +11,10 @@ func _ready() -> void:
 	_u = EventBus.connect("level_restart", self, "_on_EventBus_level_restart")
 	_u = EventBus.connect("new_level_waiting_for_trolley", self, "_on_EventBus_new_level_waiting_for_trolley")
 	_u = EventBus.connect("level_completed", self, "_on_EventBus_level_completed")
-	_u = EventBus.connect("trolley_crashed", self, "_on_game_over", ["The trolley crashed off piste!", false])
-	_u = EventBus.connect("person_crashed", self, "_on_game_over", ["You died!", false])
-	_u = EventBus.connect("trolley_killed_someone", self, "_on_game_over", ["The trolley killed someone", true])
-	_u = EventBus.connect("trolley_crash_with_trolley", self, "_on_game_over", ["The trolleys crashed with each other!", true])
+	_u = EventBus.connect("trolley_crashed", self, "_on_game_over", ["The {0} crashed off piste!", false])
+	_u = EventBus.connect("person_crashed", self, "_on_game_over", ["The {0} killed you!", false])
+	_u = EventBus.connect("trolley_killed_someone", self, "_on_game_over", ["The {0} killed someone!", true])
+	_u = EventBus.connect("trolley_crash_with_trolley", self, "_on_game_over", ["The {0} crashed with another {1}!", true])
 
 
 func _on_game_over(color: Color, msg: String, killed_someone: bool) -> void:

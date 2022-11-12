@@ -23,7 +23,8 @@ onready var ALL_HIDEABLE_NODES = [
 	_full_game_completed_node,
 	_restart_level_button,
 	_game_over_label,
-	_game_over_reason_label
+#	_game_over_reason_label,
+	_rich_game_over_reason,
 ]
 
 
@@ -59,6 +60,7 @@ func show_full_game_completed() -> void:
 	_quit_to_level_selection_button.grab_focus()
 
 
+const COLORED_WORD_TEMPLATE = "[color=#{0}]trolley[/color]"
 func show_game_over(color: Color, reason: String) -> void:
 	_update_visibility()
 	_game_over_reason_label.text = reason
@@ -67,8 +69,11 @@ func show_game_over(color: Color, reason: String) -> void:
 	_restart_level_button.show()
 	# Handling rich text.
 	# TODO: Handle second color?
-	var colored_word = "[color=#{}]trolley[/color]".format([color.to_html(false)])
-	var bbcode_reason := "[center]" + reason.replace("trolley", colored_word)
+	var colored_word := COLORED_WORD_TEMPLATE.format([color.to_html(false)])
+	var second_colored_word := ""
+	if GlobalState.second_trolley_crash_color != null:
+		second_colored_word = COLORED_WORD_TEMPLATE.format([GlobalState.second_trolley_crash_color.to_html(false)])
+	var bbcode_reason := "[center]" + reason.format([colored_word, second_colored_word])
 	_rich_game_over_reason.bbcode_text = bbcode_reason
 	_rich_game_over_reason.show()
 	

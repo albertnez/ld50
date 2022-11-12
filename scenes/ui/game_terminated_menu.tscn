@@ -122,6 +122,7 @@ align = 1
 
 [node name="GameOverReasonLabel" type="Label" parent="."]
 unique_name_in_owner = true
+visible = false
 anchor_right = 1.0
 margin_top = 103.0
 margin_bottom = 151.0
