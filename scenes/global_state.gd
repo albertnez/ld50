@@ -47,7 +47,7 @@ const LEVEL_LIST := [
 	# 1
 	preload("res://scenes/levels/tutorial/move_and_toggle.tscn"),
 	preload("res://scenes/levels/tutorial/first_loop.tscn"),
-	preload("res://scenes/levels/tutorial/bifurcation_direction.tscn"),
+	preload("res://scenes/levels/tutorial/junction_direction.tscn"),
 	preload("res://scenes/levels/tutorial/no_more_delay.tscn"),
 	# 5
 	preload("res://scenes/levels/easy/first_offpiste.tscn"),

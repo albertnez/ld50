@@ -45,21 +45,18 @@ margin_bottom = 229.0
 visible = true
 margin_right = 284.0
 margin_bottom = 63.0
-bbcode_text = "[center]bifurcations can be toggled with 
+bbcode_text = "[center]junctions can be toggled with 
 [font=res://scenes/ui/bbcode_img_offset_smaller.tres] [img=45]res://assets/icons/Space_Key_Light.png[/img][/font] while standing on top of them"
-text = "bifurcations can be toggled with 
+text = "junctions can be toggled with 
   while standing on top of them"
 
 [node name="GamepadText" parent="Control/BifurcationLabel" index="1"]
 visible = false
-bbcode_text = "[center]bifurcations can be toggled with [font=res://scenes/ui/bbcode_img_offset.tres] [img=27]res://assets/icons/Positional_Prompts_Down.png[/img][/font] while standing on top of them"
-text = "bifurcations can be toggled with   while standing on top of them"
-
-[node name="ActionHoverIndicator" parent="." index="5"]
-frame = 6
+bbcode_text = "[center]junctions can be toggled with [font=res://scenes/ui/bbcode_img_offset.tres] [img=27]res://assets/icons/Positional_Prompts_Down.png[/img][/font] while standing on top of them"
+text = "junctions can be toggled with   while standing on top of them"
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 8
+frame = 7
 
 [editable path="Control/MovingLabel"]
 [editable path="Control/BifurcationLabel"]
