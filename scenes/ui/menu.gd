@@ -35,3 +35,7 @@ func _on_ExitButton_pressed() -> void:
 
 func _on_OptionsMenu_pressed() -> void:
 	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.OPTIONS, 0)
+
+
+func _on_CreditsMenu_pressed() -> void:
+	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.CREDITS, 0)

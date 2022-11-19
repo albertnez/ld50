@@ -1,9 +1,10 @@
 extends Control
 
-onready var _volume_menu := $"%VolumeMenu"
+onready var _back_button: Button = $"%BackButton"
+
 
 func _ready() -> void:
-	_volume_menu.grab_focus_for_first_slider()
+	_back_button.grab_focus()
 
 
 func _input(event: InputEvent) -> void:
@@ -14,3 +15,7 @@ func _input(event: InputEvent) -> void:
 
 func _on_BackButton_pressed() -> void:
 	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_MENU, 0)
+
+
+func _on_RichTextLabel_meta_clicked(meta) -> void:
+	OS.shell_open(str(meta))

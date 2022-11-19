@@ -28,12 +28,12 @@ margin_bottom = 99.0
 [node name="KeyboardText" parent="Control/MovingLabel" index="0"]
 visible = true
 bbcode_text = "[center]Use [font=res://scenes/ui/bbcode_img_offset_smaller.tres][img=50]res://assets/icons/wasd.png[/img][/font] to move"
-text = "[center]Use [font=res://scenes/ui/bbcode_img_offset_smaller.tres][img=50]res://assets/icons/wasd.png[/img][/font] to move"
+text = "Use  to move"
 
 [node name="GamepadText" parent="Control/MovingLabel" index="1"]
 visible = false
 bbcode_text = "[center]Use [font=res://scenes/ui/bbcode_img_offset.tres][img=30]res://assets/icons/WiiU_Dpad.png[/img][/font] or [font=res://scenes/ui/bbcode_img_offset.tres][img=30]res://assets/icons/WiiU_Left_Stick.png[/img][/font] to move"
-text = "[center]Use [font=res://scenes/ui/bbcode_img_offset.tres][img=30]res://assets/icons/WiiU_Dpad.png[/img][/font] or [font=res://scenes/ui/bbcode_img_offset.tres][img=30]res://assets/icons/WiiU_Left_Stick.png[/img][/font] to move"
+text = "Use  or  to move"
 
 [node name="BifurcationLabel" parent="Control" index="4" instance=ExtResource( 3 )]
 margin_left = 208.0
@@ -47,19 +47,19 @@ margin_right = 284.0
 margin_bottom = 63.0
 bbcode_text = "[center]junctions can be toggled with 
 [font=res://scenes/ui/bbcode_img_offset_smaller.tres] [img=45]res://assets/icons/Space_Key_Light.png[/img][/font] while standing on top of them"
-text = "[center]junctions can be toggled with 
-[font=res://scenes/ui/bbcode_img_offset_smaller.tres] [img=45]res://assets/icons/Space_Key_Light.png[/img][/font] while standing on top of them"
+text = "junctions can be toggled with 
+  while standing on top of them"
 
 [node name="GamepadText" parent="Control/BifurcationLabel" index="1"]
 visible = false
 bbcode_text = "[center]junctions can be toggled with [font=res://scenes/ui/bbcode_img_offset.tres] [img=27]res://assets/icons/Positional_Prompts_Down.png[/img][/font] while standing on top of them"
-text = "[center]junctions can be toggled with [font=res://scenes/ui/bbcode_img_offset.tres] [img=27]res://assets/icons/Positional_Prompts_Down.png[/img][/font] while standing on top of them"
+text = "junctions can be toggled with   while standing on top of them"
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 1
+frame = 2
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 4
+frame = 9
 
 [editable path="Control/MovingLabel"]
 [editable path="Control/BifurcationLabel"]
