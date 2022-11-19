@@ -9,6 +9,7 @@ onready var _gamepad_text := $GamepadText
 
 
 func _ready() -> void:
+	# warning-ignore:return_value_discarded
 	KeyboardOrGamepad.connect("keyboard_or_gamepad_changed", self, "_update")
 	_update(KeyboardOrGamepad.current())
 
