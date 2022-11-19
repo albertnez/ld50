@@ -29,10 +29,10 @@ alignment = 2
 
 [node name="FastForwardButton" type="Button" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 967.0
+margin_left = 954.0
 margin_right = 1004.0
 margin_bottom = 37.0
-rect_min_size = Vector2( 37, 37 )
+rect_min_size = Vector2( 50, 37 )
 hint_tooltip = "Toogle speedup"
 focus_mode = 0
 mouse_filter = 1
