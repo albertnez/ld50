@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/theme/new_theme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/ui/button_hover_gets_focused.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ui/font_med.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/ui/options_menu.gd" type="Script" id=4]
 
 [node name="CreditsMenu" type="Control"]
@@ -32,25 +33,30 @@ grow_vertical = 2
 custom_constants/separation = 10
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
-margin_right = 194.0
-margin_bottom = 60.0
+margin_right = 250.0
+margin_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 250, 0 )
 theme = ExtResource( 1 )
+custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
-bbcode_text = "[center]A game by [url=https://albertnez.itch.io]albertnez[/url]
+bbcode_text = "[center]A game by [url=https://albertnez.itch.io]ALBERTNEZ[/url]
 
-
+using [url=https://godotengine.org/]Godot Engine[/url]
 "
-text = "A game by albertnez
+text = "A game by ALBERTNEZ
 
-
+using Godot Engine
 "
 fit_content_height = true
 
 [node name="BackButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 70.0
-margin_right = 194.0
-margin_bottom = 103.0
+margin_left = 28.0
+margin_top = 134.0
+margin_right = 222.0
+margin_bottom = 167.0
 rect_min_size = Vector2( 194, 0 )
 size_flags_horizontal = 4
 text = "Back"

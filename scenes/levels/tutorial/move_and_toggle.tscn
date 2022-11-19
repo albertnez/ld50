@@ -59,7 +59,7 @@ text = "junctions can be toggled with   while standing on top of them"
 frame = 2
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 9
+frame = 5
 
 [editable path="Control/MovingLabel"]
 [editable path="Control/BifurcationLabel"]
