@@ -25,3 +25,5 @@ func _input(event: InputEvent) -> void:
 		_update(LastPressed.KEYBOARD)
 	elif event is InputEventJoypadButton:
 		_update(LastPressed.GAMEPAD)
+	elif event is InputEventJoypadMotion and (event as InputEventJoypadMotion).axis_value > 0.45:
+		_update(LastPressed.GAMEPAD)
