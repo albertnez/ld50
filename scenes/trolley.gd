@@ -73,7 +73,7 @@ func _ready() -> void:
 	_s = EventBus.connect("person_crashed", self, "_handle_trolley_crash", [TrolleyMoveStrategy.FOLLOW_TRACK])
 
 	add_to_group("Trolley")
-	pass
+	
 
 
 func _process(delta: float) -> void:
@@ -164,12 +164,16 @@ enum TrolleyMoveStrategy {
 	RANDOM_DIR,
 }
 	
-func _handle_trolley_crash(_unused_trolley_color, trolley_move_strategy: int) -> void:
+func _handle_trolley_crash(trolley_color, trolley_move_strategy: int) -> void:
 	assert(TrolleyMoveStrategy.values().has(trolley_move_strategy))
 	GlobalState.level_lost = true
 	_is_crashed = true
 	_slowdown_timer.start()
 	_on_SlowDownTimer_timeout()
+	
+	# Don't change Trolley's move if it didn't really crash
+	if trolley_color != modulate:
+		return
 	var target_rotation := CRASH_ROTATION if (randi()%2) else -CRASH_ROTATION
 	_rotation_tween.interpolate_property(self, "rotation", 0, target_rotation, 0.5, Tween.TRANS_QUAD, Tween.EASE_OUT)
 	_rotation_tween.start()
