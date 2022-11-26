@@ -23,7 +23,7 @@ margin_right = 497.0
 margin_bottom = 105.0
 custom_constants/line_spacing = -6
 custom_fonts/font = ExtResource( 1 )
-text = "you can't take junction
+text = "you can't take a junction
 that split into two paths..."
 
 [node name="Label2" type="Label" parent="Control" index="2"]
@@ -41,7 +41,7 @@ align = 2
 current = false
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 6
+frame = 9
 
 [node name="LevelTileHintSprite" parent="." index="7"]
 frame = 5
