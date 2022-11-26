@@ -3,6 +3,8 @@ extends Node2D
 onready var _root_for_menu := $CanvasLayer
 onready var _current_menu_node := $CanvasLayer/Menu
 onready var _canvas_layer_node := $"%CanvasLayer"
+onready var _boot_splash_dimmer := $"%BootSplashDimmer"
+
 
 const LEVEL_SELECT_SCENE = preload("res://scenes/ui/level_select.tscn")
 const MAIN_MENU_SCENE = preload("res://scenes/ui/menu.tscn")
@@ -16,6 +18,16 @@ func _ready() -> void:
 	
 	if GlobalState.menu_scene != EventBus.TargetMenuScene.MAIN_MENU:
 		_on_EventBus_change_menu_scene(GlobalState.menu_scene, -1)
+	
+	if not GlobalState.game_launched:
+		GlobalState.game_launched = true
+		_boot_splash_dimmer.modulate = Color.black
+		_boot_splash_dimmer.show()
+		var tween := get_tree().create_tween()
+		# warning-ignore:return_value_discarded
+		tween.tween_property(_boot_splash_dimmer, "modulate", Color.transparent, 0.7)
+		tween.tween_callback(_boot_splash_dimmer, "hide")
+		tween.play()
 
 
 func _on_EventBus_change_menu_scene(target_scene: int, starting_level: int) -> void:

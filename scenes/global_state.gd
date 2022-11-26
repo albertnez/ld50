@@ -15,6 +15,9 @@ var in_true_end = false
 var fast_forward := false
 var mute := false
 
+# First time that we launch the game for the splash screen.
+var game_launched := false
+
 const TROLLEY_COLOR_LIST := [
 	Color("ee8695"),  # Palette Red.
 	Color.lawngreen,
