@@ -56,10 +56,10 @@ bbcode_text = "[center]junctions can be toggled with [font=res://scenes/ui/bbcod
 text = "junctions can be toggled with   while standing on top of them"
 
 [node name="ActionHoverIndicator" parent="." index="5"]
-frame = 2
+frame = 4
 
 [node name="LevelTileHintSprite" parent="." index="7"]
-frame = 5
+frame = 2
 
 [editable path="Control/MovingLabel"]
 [editable path="Control/BifurcationLabel"]
