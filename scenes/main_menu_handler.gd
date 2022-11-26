@@ -19,6 +19,7 @@ func _ready() -> void:
 	if GlobalState.menu_scene != EventBus.TargetMenuScene.MAIN_MENU:
 		_on_EventBus_change_menu_scene(GlobalState.menu_scene, -1)
 	
+	# The first time we boot the game, we do a smooth transition from SplashScreen -> Menu
 	if not GlobalState.game_launched:
 		GlobalState.game_launched = true
 		_boot_splash_dimmer.modulate = Color.black
@@ -28,6 +29,7 @@ func _ready() -> void:
 		tween.tween_property(_boot_splash_dimmer, "modulate", Color.transparent, 0.7)
 		tween.tween_callback(_boot_splash_dimmer, "hide")
 		tween.play()
+	
 
 
 func _on_EventBus_change_menu_scene(target_scene: int, starting_level: int) -> void:
