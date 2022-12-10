@@ -20,3 +20,7 @@ func _on_BackButton_pressed() -> void:
 func _on_RichTextLabel_meta_clicked(meta) -> void:
 	# warning-ignore:return_value_discarded
 	OS.shell_open(str(meta))
+
+
+func _on_DeleteSavedataButton_confirmed() -> void:
+	GlobalState.reset_savedata()

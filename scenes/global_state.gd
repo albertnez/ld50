@@ -146,6 +146,12 @@ func set_level_completed() -> void:
 		_save_data()
 
 
+func reset_savedata() -> void:
+	latest_level_unlocked = 0
+	level = 0
+	_save_data()
+
+
 func get_level_scene() -> PackedScene:
 	if in_main_menu:
 		return MENU_LEVEL
