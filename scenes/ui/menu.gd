@@ -21,7 +21,8 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_NewGameButton_pressed() -> void:
-	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_GAME, GlobalState.latest_level_unlocked)
+	var target_level = min(GlobalState.latest_level_unlocked, GlobalState.LEVEL_LIST.size()-1)
+	EventBus.emit_signal("change_menu_scene", EventBus.TargetMenuScene.MAIN_GAME, target_level)
 	return
 
 
