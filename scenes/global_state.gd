@@ -74,6 +74,14 @@ const LEVEL_LIST := [
 	preload("res://scenes/levels/ending/the_end.tscn"),
 ]
 
+const TILEMAP_BACKGROUND_TEXTURES := [
+	preload("res://assets/images/background/horizontal_teeth.png"),
+	preload("res://assets/images/background/stairs.png"),
+	preload("res://assets/images/background/diagonal_perspectives.png"),
+	preload("res://assets/images/background/vertical_z.png"),
+	preload("res://assets/images/background/diamonds.png"),
+]
+
 
 const NUM_MAX_TROLLEYS = 9
 var _trolley_has_loop : Array
@@ -148,6 +156,10 @@ func get_level_name(level_idx: int) -> String:
 	# We asume the scene file name will be our description.
 	var scene_path : String = LEVEL_LIST[level_idx].resource_path
 	return scene_path.get_file().trim_suffix(".tscn").replace("_", " ")
+
+
+func get_current_level_background_texture() -> Texture:
+	return TILEMAP_BACKGROUND_TEXTURES[level%TILEMAP_BACKGROUND_TEXTURES.size()]
 
 
 func is_last_level() -> bool:

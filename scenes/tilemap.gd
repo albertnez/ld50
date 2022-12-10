@@ -11,6 +11,7 @@ onready var _action_hover_indicator := $ActionHoverIndicator
 onready var _trolley_warning_sprites := $TrolleyWarningSprites
 onready var _trolley_warning_timer := $TrolleyWarningTimer
 onready var _level_tile_hint_sprite := $LevelTileHintSprite
+onready var _background_sprite := $ChessBackground
 
 onready var _line_drawers := $LineDrawers
 # onready var _line_drawer := $LineDrawer
@@ -410,6 +411,8 @@ func _ready() -> void:
 	if not trolley_waits_for_player():
 		_start_warning_sign(TROLLEY_WAIT_TIME)
 	
+	_background_sprite.texture = GlobalState.get_current_level_background_texture()
+
 	for pos in get_used_cells_by_id(_current_main_tileset_id):
 		var coord := get_cell_autotile_coord(pos.x, pos.y)
 		if coord == PLAYER_START_COORD:
