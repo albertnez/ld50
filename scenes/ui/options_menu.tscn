@@ -41,17 +41,24 @@ unique_name_in_owner = true
 focus_neighbour_top = NodePath("../../../BackButton")
 
 [node name="MusicSlider" parent="VBoxContainer/VolumeMenu/VBoxContainer" index="3"]
-focus_neighbour_bottom = NodePath("../../../BackButton")
+focus_neighbour_bottom = NodePath("../../../DeleteSavedataButton")
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 64.0
+margin_right = 236.0
+margin_bottom = 69.0
+custom_constants/separation = 5
 
 [node name="DeleteSavedataButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
 margin_left = 21.0
-margin_top = 64.0
+margin_top = 79.0
 margin_right = 215.0
-margin_bottom = 97.0
+margin_bottom = 112.0
 rect_min_size = Vector2( 194, 0 )
 focus_neighbour_top = NodePath("../VolumeMenu/VBoxContainer/MusicSlider")
-focus_neighbour_bottom = NodePath("../VolumeMenu/VBoxContainer/SfxSlider")
+focus_neighbour_bottom = NodePath("../BackButton")
 size_flags_horizontal = 4
 text = "Delete Savedata"
 script = ExtResource( 6 )
@@ -59,14 +66,21 @@ script = ExtResource( 6 )
 [node name="ParentbuttonHoverGetsFocused" type="Node" parent="VBoxContainer/DeleteSavedataButton"]
 script = ExtResource( 5 )
 
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 122.0
+margin_right = 236.0
+margin_bottom = 158.0
+custom_constants/separation = 36
+
 [node name="BackButton" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
 margin_left = 21.0
-margin_top = 107.0
+margin_top = 168.0
 margin_right = 215.0
-margin_bottom = 140.0
+margin_bottom = 201.0
 rect_min_size = Vector2( 194, 0 )
-focus_neighbour_top = NodePath("../VolumeMenu/VBoxContainer/MusicSlider")
+focus_neighbour_top = NodePath("../DeleteSavedataButton")
 focus_neighbour_bottom = NodePath("../VolumeMenu/VBoxContainer/SfxSlider")
 size_flags_horizontal = 4
 text = "Back"
